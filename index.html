@@ -13,7 +13,6 @@
   --graphite:#22302A; --graphite-soft:#5b6b60; --gold:#B8863D; --gold-bright:#E8CE9A;
   --line:rgba(34,48,42,0.14); --line-dark:rgba(244,239,224,0.14);
   --font-display:'Fraunces',serif; --font-body:'Inter',sans-serif; --font-mono:'IBM Plex Mono',monospace;
-  --whatsapp:#25D366; --whatsapp-dark:#1EBE5D;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -109,17 +108,31 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 @media (max-width:850px){.trust-row{justify-content:center;}}
 
 section{padding:50px 0;position:relative;z-index:1;}
-.grid-3{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:20px;}
+
+/* VISTA DE CATÁLOGO EN VENTANA FIJA */
+.catalog-window {
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(244, 239, 224, 0.5);
+}
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
 
 .catalog-card{background:rgba(244,239,224,0.95);backdrop-filter:blur(4px);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:100%;}
-.catalog-img{aspect-ratio:1;background:rgba(234,225,199,0.5);position:relative;display:flex;align-items:center;justify-content:center;padding:16px;}
-.catalog-img img{max-height:100%;object-fit:contain;}
-.badge-gender{position:absolute;top:12px;right:12px;background:var(--ink);color:var(--gold-bright);font-family:var(--font-mono);font-size:10px;padding:4px 8px;border-radius:12px;}
-.catalog-body{padding:16px;display:flex;flex-direction:column;flex:1;justify-content:space-between;}
-.catalog-brand{font-family:var(--font-mono);font-size:11px;color:var(--gold);text-transform:uppercase;}
-.catalog-price{font-family:var(--font-display);font-size:20px;margin:6px 0;}
+.catalog-img{aspect-ratio:1;background:rgba(234,225,199,0.5);position:relative;display:flex;align-items:center;justify-content:center;padding:12px;}
+.catalog-img img{max-height:140px;object-fit:contain;}
+.badge-gender{position:absolute;top:8px;right:8px;background:var(--ink);color:var(--gold-bright);font-family:var(--font-mono);font-size:9px;padding:3px 6px;border-radius:10px;}
+.catalog-body{padding:12px;display:flex;flex-direction:column;flex:1;justify-content:space-between;}
+.catalog-brand{font-family:var(--font-mono);font-size:10px;color:var(--gold);text-transform:uppercase;}
+.catalog-price{font-family:var(--font-display);font-size:18px;margin:4px 0;}
 
-/* ESTILOS PANEL DE ADMINISTRACIÓN */
+/* ESTILOS PANEL DE ADMINISTRACIÓN PROTEGIDO */
 .admin-section {
   background: var(--ink);
   color: var(--paper);
@@ -140,6 +153,14 @@ section{padding:50px 0;position:relative;z-index:1;}
   background: var(--ink-soft);
   color: #fff;
   font-family: var(--font-body);
+}
+
+.login-box {
+  max-width: 380px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(12,32,26,.85);backdrop-filter:blur(4px);}
@@ -192,37 +213,60 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
   </div>
 </section>
 
-<!-- PANEL DE ADMINISTRACIÓN -->
-<section id="admin">
-  <div class="container">
-    <div class="admin-section">
-      <span class="section-label" style="color:var(--gold-bright);">Panel de Administración</span>
-      <h2 style="color:#fff;font-size:1.8rem;margin:8px 0 16px;">Cargar Nuevo Producto</h2>
-      <form class="admin-form" id="addProductForm">
-        <input type="text" id="pBrand" placeholder="Marca (ej. Lattafa)" required>
-        <input type="text" id="pName" placeholder="Nombre (ej. Khamrah)" required>
-        <input type="text" id="pStyle" placeholder="Estilo (ej. Oriental ahumado)" required>
-        <input type="url" id="pImg" placeholder="URL Imagen (.webp, .jpg, .png)" required>
-        <input type="text" id="pPrice" placeholder="Precio Frasco (ej. $55.000)" required>
-        <input type="text" id="pDecant" placeholder="Precio Decant (ej. $6.000)" required>
-        <select id="pGender">
-          <option value="Masculino">Masculino</option>
-          <option value="Femenino">Femenino</option>
-          <option value="Unisex">Unisex</option>
-        </select>
-        <input type="text" id="pDur" placeholder="Duración (ej. 8–10 horas)" required>
-        <button type="submit" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto en Google Sheets</button>
-      </form>
-      <div id="adminStatus" style="margin-top:12px;font-family:var(--font-mono);font-size:12px;color:var(--gold-bright);"></div>
-    </div>
-  </div>
-</section>
-
+<!-- SECCIÓN CATÁLOGO EN VENTANA FIJA -->
 <section id="catalogo" style="background:rgba(234,225,199,0.7);backdrop-filter:blur(4px);">
   <div class="container">
     <span class="section-label">Catálogo Oficial</span>
     <h2 style="font-size:2rem;margin-bottom:24px;color:var(--ink);">Fragancias Seleccionadas</h2>
-    <div class="grid-3" id="catalogGrid">Cargando catálogo desde la base de datos...</div>
+    
+    <div class="catalog-window">
+      <div class="catalog-grid" id="catalogGrid">Cargando catálogo desde la base de datos...</div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL DE ADMINISTRACIÓN CON LOGIN -->
+<section id="admin">
+  <div class="container">
+    <div class="admin-section">
+      <span class="section-label" style="color:var(--gold-bright);">Panel de Administración</span>
+      <h2 style="color:#fff;font-size:1.8rem;margin:8px 0 16px;">Gestión de Productos</h2>
+      
+      <!-- FORMULARIO DE AUTENTICACIÓN -->
+      <div id="loginForm" class="login-box">
+        <p style="font-size:13px;color:#ccc;">Ingresa tus credenciales para acceder:</p>
+        <input type="text" id="authUser" placeholder="Usuario" style="padding:10px;border-radius:4px;border:1px solid var(--line-dark);background:var(--ink-soft);color:#fff;">
+        <input type="password" id="authPass" placeholder="Contraseña" style="padding:10px;border-radius:4px;border:1px solid var(--line-dark);background:var(--ink-soft);color:#fff;">
+        <button type="button" onclick="login()" class="btn btn-primary" style="background:var(--gold);color:var(--ink);">Ingresar al Panel</button>
+        <div id="loginStatus" style="font-family:var(--font-mono);font-size:12px;color:#ff6b6b;margin-top:6px;"></div>
+      </div>
+
+      <!-- CONTENIDO PROTEGIDO DEL PANEL -->
+      <div id="adminContent" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-size:13px;color:var(--gold-bright);">✓ Sesión iniciada como Administrador</span>
+          <button onclick="logout()" style="color:#ff6b6b;font-size:12px;text-decoration:underline;">Cerrar sesión</button>
+        </div>
+        
+        <form class="admin-form" id="addProductForm">
+          <input type="text" id="pBrand" placeholder="Marca (ej. Lattafa)" required>
+          <input type="text" id="pName" placeholder="Nombre (ej. Khamrah)" required>
+          <input type="text" id="pStyle" placeholder="Estilo (ej. Oriental ahumado)" required>
+          <input type="url" id="pImg" placeholder="URL Imagen (.webp, .jpg, .png)" required>
+          <input type="text" id="pPrice" placeholder="Precio Frasco (ej. $55.000)" required>
+          <input type="text" id="pDecant" placeholder="Precio Decant (ej. $6.000)" required>
+          <select id="pGender">
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Unisex">Unisex</option>
+          </select>
+          <input type="text" id="pDur" placeholder="Duración (ej. 8–10 horas)" required>
+          <button type="submit" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto en Google Sheets</button>
+        </form>
+        <div id="adminStatus" style="margin-top:12px;font-family:var(--font-mono);font-size:12px;color:var(--gold-bright);"></div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -257,11 +301,38 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
 const API_URL = 'https://script.google.com/macros/s/AKfycbw9Zn--Ob6VJZEAUqaWV6D4d_Na1-7rno5E-t1LYdzma3InnmSyg_f3iDNk3gzITykQkQ/exec';
 
 let perfumes = [];
+let isAuthenticated = false;
+
+// AUTENTICACIÓN INSENSIBLE A MAYÚSCULAS/MINÚSCULAS
+function login() {
+  const userInput = document.getElementById('authUser').value.trim().toLowerCase();
+  const passInput = document.getElementById('authPass').value.trim().toLowerCase();
+  const status = document.getElementById('loginStatus');
+
+  if (userInput === 'ramiro' && passInput === 'adminramiro') {
+    isAuthenticated = true;
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    status.innerText = '';
+    renderCatalog(); // Re-renderizar catálogo para habilitar funciones admin si corresponde
+  } else {
+    status.innerText = 'Usuario o contraseña incorrectos.';
+  }
+}
+
+function logout() {
+  isAuthenticated = false;
+  document.getElementById('authUser').value = '';
+  document.getElementById('authPass').value = '';
+  document.getElementById('loginForm').style.display = 'flex';
+  document.getElementById('adminContent').style.display = 'none';
+  renderCatalog();
+}
 
 async function loadProducts() {
   const catalogGrid = document.getElementById('catalogGrid');
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, { redirect: 'follow' });
     perfumes = await res.json();
     renderCatalog();
   } catch (err) {
@@ -277,7 +348,6 @@ function renderCatalog() {
   }
   
   catalogGrid.innerHTML = perfumes.map((p, i) => {
-    // Si la imagen es .webp genera el fallback secundario en .jpg automáticamente
     const fallbackImg = p.img && p.img.endsWith('.webp') ? p.img.replace('.webp', '.jpg') : p.img;
 
     return `
@@ -292,11 +362,11 @@ function renderCatalog() {
         <div class="catalog-body">
           <div>
             <span class="catalog-brand">${p.brand}</span>
-            <h3 style="font-size:16px;color:var(--ink);">${p.name}</h3>
-            <div class="catalog-price">${p.price} <span style="font-size:12px;color:var(--graphite-soft);">/ 100ml</span></div>
-            <p style="font-size:13px;color:var(--gold);margin-bottom:14px;">Decant 5ml: <strong>${p.decant}</strong></p>
+            <h3 style="font-size:15px;color:var(--ink);">${p.name}</h3>
+            <div class="catalog-price">${p.price} <span style="font-size:11px;color:var(--graphite-soft);">/ 100ml</span></div>
+            <p style="font-size:12px;color:var(--gold);margin-bottom:10px;">Decant 5ml: <strong>${p.decant}</strong></p>
           </div>
-          <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:12px;">Ver detalles / Editar precio</button>
+          <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:11px;padding:8px 12px;min-height:auto;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
         </div>
       </div>
     `;
@@ -306,6 +376,8 @@ function renderCatalog() {
 // ENVIAR PRODUCTO A GOOGLE SHEETS
 document.getElementById('addProductForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+  if(!isAuthenticated) return;
+
   const status = document.getElementById('adminStatus');
   status.innerText = 'Enviando producto a Google Sheets...';
 
@@ -339,26 +411,34 @@ document.getElementById('addProductForm').addEventListener('submit', async (e) =
 function openInfoModal(i) {
   const p = perfumes[i];
 
+  let adminEditBlock = '';
+  if (isAuthenticated) {
+    adminEditBlock = `
+      <div style="background:var(--ink-soft);padding:14px;border-radius:6px;margin-top:16px;">
+        <h4 style="color:var(--gold-bright);margin-bottom:10px;font-size:13px;">Actualizar Precio (Admin)</h4>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <input type="text" id="editPrice" value="${p.price}" placeholder="Precio 100ml" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
+          <input type="text" id="editDecant" value="${p.decant}" placeholder="Precio Decant" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
+        </div>
+        <button onclick="updatePrice('${p.brand}', '${p.name}')" class="btn btn-primary" style="width:100%;font-size:12px;min-height:36px;">Guardar Cambios</button>
+      </div>
+    `;
+  }
+
   document.getElementById('modalContent').innerHTML = `
     <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);">${p.brand}</span>
     <h2 style="color:#fff;margin-bottom:6px;font-size:1.5rem;">${p.name}</h2>
     <p style="color:#b3c0b8;margin-bottom:14px;font-size:13px;">${p.style}</p>
     <p style="margin-bottom:10px;font-size:14px;"><strong>Duración:</strong> ${p.dur}</p>
-    
-    <div style="background:var(--ink-soft);padding:14px;border-radius:6px;margin-top:16px;">
-      <h4 style="color:var(--gold-bright);margin-bottom:10px;font-size:13px;">Actualizar Precio (Admin)</h4>
-      <div style="display:flex;gap:8px;margin-bottom:8px;">
-        <input type="text" id="editPrice" value="${p.price}" placeholder="Precio 100ml" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
-        <input type="text" id="editDecant" value="${p.decant}" placeholder="Precio Decant" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
-      </div>
-      <button onclick="updatePrice('${p.brand}', '${p.name}')" class="btn btn-primary" style="width:100%;font-size:12px;min-height:36px;">Guardar Cambios</button>
-    </div>
+    ${adminEditBlock}
   `;
   document.getElementById('infoModal').classList.add('open');
 }
 
 // ACTUALIZAR PRECIO
 async function updatePrice(brand, name) {
+  if(!isAuthenticated) return;
+
   const newPrice = document.getElementById('editPrice').value;
   const newDecant = document.getElementById('editDecant').value;
   
