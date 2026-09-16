@@ -433,7 +433,7 @@ function renderCatalog() {
   `).join('');
 }
 
-/* LÓGICA DE GUARDAR PRODUCTO E IMAGEN BASE64 */
+/* COMPRESIÓN Y GUARDADO DE IMAGEN EN CLIENTE */
 async function saveProduct(event) {
   event.preventDefault();
   const statusDiv = document.getElementById('adminStatus');
@@ -444,12 +444,12 @@ async function saveProduct(event) {
   const urlInput = document.getElementById('pImg').value.trim();
 
   if (!file && !urlInput) {
-    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Sube un archivo o ingresa una URL.</span>';
+    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Selecciona un archivo o ingresa una URL.</span>';
     return;
   }
 
   saveBtn.disabled = true;
-  statusDiv.innerText = 'Cargando producto e imagen... Aguarde por favor.';
+  statusDiv.innerText = 'Procesando e imprevistamente optimizando imagen...';
 
   let payload = {
     brand: document.getElementById('pBrand').value,
@@ -463,17 +463,52 @@ async function saveProduct(event) {
   };
 
   if (file) {
-    const reader = new FileReader();
-    reader.onload = async function(e) {
-      payload.fileData = e.target.result;
+    try {
+      // Redimensionar y comprimir la foto del cliente para evitar fallos de transmisión
+      const compressedImage = await compressImage(file, 800, 0.7);
+      payload.fileData = compressedImage.base64;
       payload.fileName = file.name;
-      payload.mimeType = file.type;
+      payload.mimeType = 'image/jpeg';
       await sendPayload(payload);
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error al procesar la imagen seleccionada.</span>';
+      saveBtn.disabled = false;
+    }
   } else {
     await sendPayload(payload);
   }
+}
+
+// Función auxiliar para redimensionar la imagen mediante HTML5 Canvas
+function compressImage(file, maxWidth, quality) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const base64 = canvas.toDataURL('image/jpeg', quality);
+        resolve({ base64 });
+      };
+      img.onerror = (error) => reject(error);
+    };
+    reader.onerror = (error) => reject(error);
+  });
 }
 
 async function sendPayload(payload) {
@@ -481,16 +516,26 @@ async function sendPayload(payload) {
   const saveBtn = document.getElementById('saveBtn');
 
   try {
-    await fetch(API_URL, {
+    statusDiv.innerText = 'Subiendo a Google Drive y guardando en Google Sheets...';
+
+    // Usar 'text/plain' evita bloqueos por políticas CORS en Apps Script
+    const response = await fetch(API_URL, {
       method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
-    
-    statusDiv.innerHTML = '<span style="color:#25D366;">✓ Producto cargado exitosamente.</span>';
-    document.getElementById('addProductForm').reset();
-    await loadProducts();
+
+    const result = await response.json();
+
+    if (result.result === 'success') {
+      statusDiv.innerHTML = '<span style="color:#25D366;">✓ ¡Producto e imagen guardados con éxito!</span>';
+      document.getElementById('addProductForm').reset();
+      await loadProducts();
+    } else {
+      statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error de servidor: ' + result.error + '</span>';
+    }
   } catch (err) {
-    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error al guardar producto.</span>';
+    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error de conexión al guardar el producto.</span>';
   } finally {
     saveBtn.disabled = false;
   }
