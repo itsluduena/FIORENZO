@@ -2,7 +2,7 @@
 <html lang="es-AR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Fiorenzo — Perfumería Árabe &amp; de Diseñador</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,8 +40,9 @@ body{
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  width: 100%;
 }
-img,svg{display:block; max-width:100%;}
+img,svg{display:block; max-width:100%; height:auto;}
 a{color:inherit; text-decoration:none;}
 button{font-family:inherit; cursor:pointer; border:none; background:none;}
 .container{max-width:1180px; margin:0 auto; padding:0 32px;}
@@ -83,6 +84,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:500; letter-spacing:-0.01
 .btn{
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:10px;
   padding:14px 26px;
   border-radius:var(--radius);
@@ -92,6 +94,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:500; letter-spacing:-0.01
   letter-spacing:0.01em;
   transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
   white-space:nowrap;
+  min-height: 48px; /* Touch target */
 }
 .btn-primary{
   background:var(--ink);
@@ -115,21 +118,21 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:500; letter-spacing:-0.01
 .btn-arrow{ transition:transform .25s var(--ease); }
 .btn:hover .btn-arrow{ transform:translateX(3px); }
 
-/* ============ TOP BANNER (masthead) ============ */
+/* ============ TOP BANNER ============ */
 .top-banner{
   background:linear-gradient(90deg, #0C201A 0%, #163A2F 55%, #0C201A 100%);
   border-bottom:1px solid rgba(232,206,154,0.25);
-  padding:12px 0;
+  padding:10px 0;
 }
 .top-banner-inner{
-  max-width:1180px; margin:0 auto; padding:0 32px;
-  display:flex; align-items:center; justify-content:center; gap:14px;
+  max-width:1180px; margin:0 auto; padding:0 20px;
+  display:flex; align-items:center; justify-content:center; gap:12px;
   flex-wrap:wrap;
 }
-.top-banner-mark{ width:26px; height:26px; flex-shrink:0; }
+.top-banner-mark{ width:22px; height:22px; flex-shrink:0; }
 .top-banner-name{
   font-family:var(--font-display);
-  font-size:19px;
+  font-size:16px;
   letter-spacing:0.14em;
   color:var(--gold-bright);
   font-weight:600;
@@ -154,16 +157,18 @@ header{
   position:fixed; top:0; left:0; right:0; z-index:100;
 }
 .nav-bar{
-  background:rgba(244,239,224,0.86);
+  background:rgba(244,239,224,0.92);
   backdrop-filter:blur(14px) saturate(140%);
   -webkit-backdrop-filter:blur(14px) saturate(140%);
   border-bottom:1px solid var(--line);
+  position: relative;
 }
 nav{
   display:flex; align-items:center; justify-content:space-between;
-  padding:18px 32px;
+  padding:14px 32px;
   max-width:1180px; margin:0 auto;
 }
+@media (max-width:640px){ nav{ padding: 12px 20px; } }
 .logo{
   font-family:var(--font-display);
   font-size:22px;
@@ -177,79 +182,101 @@ nav{
   display:flex; align-items:center; gap:36px;
   font-size:14px; font-weight:500;
 }
-.nav-links a{ color:var(--graphite-soft); transition:color .2s; position:relative; }
+.nav-links a{ color:var(--graphite-soft); transition:color .2s; position:relative; padding: 6px 0; }
 .nav-links a:hover{ color:var(--ink); }
-.nav-cta{ display:flex; align-items:center; gap:16px; }
-.nav-mobile-toggle{ display:none; flex-direction:column; gap:5px; padding:6px; }
-.nav-mobile-toggle span{ width:22px; height:2px; background:var(--ink); }
+.nav-cta{ display:flex; align-items:center; gap:12px; }
+.nav-mobile-toggle{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  padding:8px;
+  min-height: 44px;
+  min-width: 44px;
+}
+.nav-mobile-toggle span{ width:22px; height:2px; background:var(--ink); transition: 0.3s var(--ease); }
 
 @media (max-width:900px){
-  .nav-links{ display:none; }
+  .nav-links{
+    display:none;
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--paper);
+    flex-direction:column;
+    padding:24px 32px;
+    border-bottom:1px solid var(--line);
+    gap:18px;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+  }
+  .nav-links.mobile-open{ display:flex; }
   .nav-mobile-toggle{ display:flex; }
   .nav-cta .btn-ghost{ display:none; }
 }
 
 /* ============ HERO ============ */
 .hero{
-  padding:222px 0 100px;
+  padding:180px 0 60px;
   position:relative;
   overflow:hidden;
 }
 .hero-grid{
   display:grid;
   grid-template-columns:1.05fr 0.95fr;
-  gap:64px;
+  gap:48px;
   align-items:center;
 }
 @media (max-width:960px){
-  .hero-grid{ grid-template-columns:1fr; gap:56px; }
-  .hero{ padding:196px 0 72px; }
+  .hero-grid{ grid-template-columns:1fr; gap:36px; }
+  .hero{ padding:150px 0 48px; }
 }
 .hero h1{
-  font-size:clamp(2.4rem, 4.6vw, 4.1rem);
-  line-height:1.06;
+  font-size:clamp(2.1rem, 6vw, 4.1rem);
+  line-height:1.08;
   color:var(--ink);
-  margin:22px 0 24px;
+  margin:18px 0 20px;
 }
-.hero h1 em{
-  font-style:italic;
-  color:var(--gold);
-}
+.hero h1 em{ font-style:italic; color:var(--gold); }
 .hero p.lede{
-  font-size:18px;
+  font-size:clamp(15px, 2.5vw, 18px);
   color:var(--graphite-soft);
   max-width:520px;
-  line-height:1.6;
-  margin-bottom:34px;
+  line-height:1.55;
+  margin-bottom:28px;
 }
-.hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:36px; }
+.hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px; }
+@media (max-width:480px){
+  .hero-ctas{ flex-direction:column; }
+  .hero-ctas .btn{ width:100%; }
+}
 .trust-row{
-  display:flex; gap:28px; flex-wrap:wrap;
+  display:flex; gap:20px; flex-wrap:wrap;
   font-family:var(--font-mono);
   font-size:12px;
   color:var(--graphite-soft);
 }
-.trust-row span{ display:flex; align-items:center; gap:8px; }
+.trust-row span{ display:flex; align-items:center; gap:6px; }
 .trust-row svg{ width:14px; height:14px; stroke:var(--gold); flex-shrink:0; }
 
 /* hero visual */
 .hero-visual{
   position:relative;
-  height:520px;
+  height:420px;
   display:flex; align-items:center; justify-content:center;
+  width: 100%;
 }
-@media (max-width:960px){ .hero-visual{ height:400px; } }
+@media (max-width:960px){ .hero-visual{ height:360px; } }
+@media (max-width:480px){ .hero-visual{ height:300px; } }
+
 .bottle-stage{
   position:relative; width:100%; height:100%;
   display:flex; align-items:center; justify-content:center;
 }
 .bottle-glow{
   position:absolute;
-  width:320px; height:320px;
+  width:260px; height:260px;
   background:radial-gradient(circle, rgba(173,138,61,0.28) 0%, rgba(173,138,61,0) 70%);
   filter:blur(10px);
 }
-.bottle-svg{ position:relative; z-index:2; width:190px; animation:float 6s ease-in-out infinite; }
+.bottle-svg{ position:relative; z-index:2; width:160px; animation:float 6s ease-in-out infinite; }
 @keyframes float{
   0%,100%{ transform:translateY(0px); }
   50%{ transform:translateY(-14px); }
@@ -258,25 +285,26 @@ nav{
   position:absolute;
   background:var(--ink);
   color:var(--paper);
-  padding:12px 16px;
+  padding:10px 14px;
   border-radius:var(--radius);
   font-family:var(--font-mono);
-  font-size:11.5px;
-  line-height:1.4;
-  box-shadow:0 16px 40px rgba(19,17,16,0.28);
+  font-size:11px;
+  line-height:1.35;
+  box-shadow:0 12px 30px rgba(19,17,16,0.25);
   z-index:3;
   animation:floatCard 7s ease-in-out infinite;
+  white-space: nowrap;
 }
-.float-card b{ color:var(--gold-bright); display:block; font-size:15px; font-family:var(--font-mono); }
-.card-a{ top:6%; left:-6%; animation-delay:0s; }
-.card-b{ bottom:12%; left:-2%; animation-delay:1.2s; }
-.card-c{ top:38%; right:-8%; animation-delay:2.4s; }
-@media (max-width:960px){
-  .card-a{ left:0; } .card-b{ left:2%; } .card-c{ right:0; }
-}
+.float-card b{ color:var(--gold-bright); display:block; font-size:13.5px; font-family:var(--font-mono); }
+.card-a{ top:6%; left:2%; animation-delay:0s; }
+.card-b{ bottom:8%; left:4%; animation-delay:1.2s; }
+.card-c{ top:40%; right:2%; animation-delay:2.4s; }
 @media (max-width:520px){
-  .float-card{ font-size:10px; padding:9px 12px; }
-  .card-a{ top:0; } .card-c{ top:34%; }
+  .float-card{ font-size:10px; padding:7px 10px; }
+  .float-card b{ font-size:12px; }
+  .card-a{ top:0%; left:0%; } 
+  .card-b{ bottom:2%; left:0%; }
+  .card-c{ top:36%; right:0%; }
 }
 @keyframes floatCard{
   0%,100%{ transform:translateY(0); }
@@ -287,345 +315,275 @@ nav{
 .logo-strip{
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
-  padding:34px 0;
+  padding:24px 0;
 }
 .logo-strip-inner{
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:26px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:18px;
 }
 .logo-strip p{
-  font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.08em;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em;
   text-transform:uppercase; color:var(--graphite-soft); flex-shrink:0;
 }
-.brand-marks{ display:flex; gap:40px; flex-wrap:wrap; align-items:center; }
+.brand-marks{ display:flex; gap:24px; flex-wrap:wrap; align-items:center; }
 .brand-marks span{
-  font-family:var(--font-display); font-size:17px; color:var(--graphite-soft);
-  opacity:0.55; transition:opacity .2s;
+  font-family:var(--font-display); font-size:16px; color:var(--graphite-soft);
+  opacity:0.6; transition:opacity .2s;
 }
-.brand-marks span:hover{ opacity:1; color:var(--ink); }
 
 /* ============ STORY SECTION ============ */
-.story{ padding:120px 0; }
+.story{ padding:80px 0; }
 .story-grid{
-  display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px;
+  display:grid; grid-template-columns:0.85fr 1.15fr; gap:48px;
 }
-@media (max-width:900px){ .story-grid{ grid-template-columns:1fr; gap:36px; } }
-.story h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); line-height:1.15; margin-top:14px; }
-.story-body p{ font-size:16.5px; color:var(--graphite-soft); margin-bottom:20px; max-width:560px; }
+@media (max-width:900px){ .story-grid{ grid-template-columns:1fr; gap:24px; } }
+.story h2{ font-size:clamp(1.7rem, 4vw, 2.6rem); color:var(--ink); line-height:1.18; margin-top:10px; }
+.story-body p{ font-size:15.5px; color:var(--graphite-soft); margin-bottom:16px; max-width:560px; }
 .story-body p strong{ color:var(--ink); font-weight:600; }
-.stat-row{
-  display:flex; gap:48px; margin-top:36px; flex-wrap:wrap;
-}
-.stat{ }
-.stat b{ font-family:var(--font-display); font-size:2.4rem; color:var(--ink); display:block; line-height:1; }
-.stat span{ font-family:var(--font-mono); font-size:11.5px; color:var(--graphite-soft); text-transform:uppercase; letter-spacing:0.06em; }
+.stat-row{ display:flex; gap:32px; margin-top:28px; flex-wrap:wrap; }
+.stat b{ font-family:var(--font-display); font-size:2.1rem; color:var(--ink); display:block; line-height:1; }
+.stat span{ font-family:var(--font-mono); font-size:11px; color:var(--graphite-soft); text-transform:uppercase; letter-spacing:0.06em; }
 
-/* ============ ANATOMY / SIGNATURE SECTION ============ */
+/* ============ ANATOMY SECTION ============ */
 .anatomy{
   background:var(--ink);
   color:var(--paper);
-  padding:120px 0;
+  padding:80px 0;
   position:relative;
 }
 .anatomy .section-label{ color:var(--mist-dim); }
-.anatomy h2{ color:var(--paper); font-size:clamp(1.9rem,3vw,2.6rem); margin:14px 0 16px; max-width:640px; }
-.anatomy p.sub{ color:#bdb6ac; max-width:560px; font-size:16.5px; margin-bottom:64px; }
+.anatomy h2{ color:var(--paper); font-size:clamp(1.7rem, 4vw, 2.6rem); margin:10px 0 14px; max-width:640px; }
+.anatomy p.sub{ color:#bdb6ac; max-width:560px; font-size:15.5px; margin-bottom:40px; }
 
 .spec-sheet{
-  display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:start;
+  display:grid; grid-template-columns:0.9fr 1.1fr; gap:40px; align-items:start;
 }
-@media (max-width:900px){ .spec-sheet{ grid-template-columns:1fr; gap:44px; } }
+@media (max-width:900px){ .spec-sheet{ grid-template-columns:1fr; gap:32px; } }
 
 .spec-card{
   background:var(--ink-soft);
   border:1px solid var(--line-dark);
   border-radius:6px;
-  padding:32px;
+  padding:24px;
 }
 .spec-card-top{
   display:flex; justify-content:space-between; align-items:baseline;
   border-bottom:1px solid var(--line-dark);
-  padding-bottom:18px; margin-bottom:22px;
+  padding-bottom:14px; margin-bottom:18px; flex-wrap: wrap; gap: 8px;
 }
-.spec-card-top h3{ font-family:var(--font-display); font-size:22px; color:var(--paper); }
+.spec-card-top h3{ font-family:var(--font-display); font-size:20px; color:var(--paper); }
 .spec-card-top span{ font-family:var(--font-mono); font-size:11px; color:var(--mist-dim); }
 
-.note-row{ margin-bottom:22px; }
+.note-row{ margin-bottom:18px; }
 .note-row:last-child{ margin-bottom:0; }
-.note-row-head{ display:flex; justify-content:space-between; margin-bottom:8px; font-family:var(--font-mono); font-size:12px; }
+.note-row-head{ display:flex; justify-content:space-between; margin-bottom:6px; font-family:var(--font-mono); font-size:11.5px; }
 .note-row-head .label{ color:var(--mist-dim); text-transform:uppercase; letter-spacing:0.08em; }
 .note-row-head .value{ color:var(--gold-bright); }
 .bar-track{ width:100%; height:6px; background:rgba(245,241,232,0.1); border-radius:4px; overflow:hidden; }
 .bar-fill{ height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright)); border-radius:4px; width:0%; transition:width 1.4s var(--ease); }
-.note-desc{ font-size:13px; color:#a6a096; margin-top:6px; }
+.note-desc{ font-size:12.5px; color:#a6a096; margin-top:4px; }
 
-.anatomy-copy-list{ display:flex; flex-direction:column; gap:28px; }
-.anatomy-item{ display:flex; gap:18px; }
-.anatomy-item .idx{ font-family:var(--font-mono); font-size:13px; color:var(--gold-bright); flex-shrink:0; padding-top:3px; }
-.anatomy-item h4{ font-family:var(--font-body); font-weight:600; font-size:16.5px; color:var(--paper); margin-bottom:6px; }
-.anatomy-item p{ font-size:14.5px; color:#b6afa4; max-width:440px; }
-
-/* ============ HOW IT WORKS ============ */
-.how{ padding:120px 0; }
-.how-head{ max-width:640px; margin-bottom:64px; }
-.how-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
-.steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
-@media (max-width:860px){ .steps{ grid-template-columns:1fr; } }
-.step{
-  border-top:1px solid var(--line);
-  padding-top:24px;
-  position:relative;
-}
-.step .num{ font-family:var(--font-mono); font-size:13px; color:var(--gold); }
-.step h3{ font-size:22px; margin:14px 0 12px; color:var(--ink); }
-.step p{ color:var(--graphite-soft); font-size:15px; line-height:1.6; }
-.step-tag{
-  display:inline-block; margin-top:16px;
-  font-family:var(--font-mono); font-size:11px; color:var(--graphite-soft);
-  border:1px solid var(--line); padding:5px 10px; border-radius:20px;
-}
+.anatomy-copy-list{ display:flex; flex-direction:column; gap:20px; }
+.anatomy-item{ display:flex; gap:14px; }
+.anatomy-item .idx{ font-family:var(--font-mono); font-size:13px; color:var(--gold-bright); flex-shrink:0; padding-top:2px; }
+.anatomy-item h4{ font-family:var(--font-body); font-weight:600; font-size:15.5px; color:var(--paper); margin-bottom:4px; }
+.anatomy-item p{ font-size:14px; color:#b6afa4; max-width:440px; }
 
 /* ============ COLLECTIONS / PRICING ============ */
-.collections{ background:var(--paper-dim); padding:120px 0; }
-.coll-head{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; margin-bottom:56px; }
-.coll-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; max-width:520px; }
+.collections{ background:var(--paper-dim); padding:80px 0; }
+.coll-head{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; margin-bottom:40px; }
+.coll-head h2{ font-size:clamp(1.7rem, 4vw, 2.6rem); color:var(--ink); margin-top:10px; max-width:520px; }
 
-.plans{ display:grid; grid-template-columns:repeat(2,1fr); gap:24px; max-width:820px; margin:0 auto; }
+.plans{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:820px; margin:0 auto; }
 @media (max-width:760px){ .plans{ grid-template-columns:1fr; } }
 .plan{
   background:var(--paper);
   border:1px solid var(--line);
   border-radius:8px;
-  padding:36px 30px;
+  padding:28px 20px;
   display:flex; flex-direction:column;
   transition:transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
 }
-.plan:hover{ transform:translateY(-6px); box-shadow:0 20px 44px rgba(43,40,35,0.08); border-color:rgba(173,138,61,0.4); }
 .plan.featured{ border-color:var(--gold); position:relative; }
 .plan.featured::before{
   content:'BENEFICIO EXCLUSIVO';
-  position:absolute; top:-12px; left:30px;
+  position:absolute; top:-12px; left:20px;
   background:var(--gold); color:var(--ink);
   font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em;
-  padding:5px 10px; border-radius:4px;
+  padding:4px 8px; border-radius:4px;
 }
-.plan-name{ font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--graphite-soft); margin-bottom:14px; }
-.plan-price{ font-family:var(--font-display); font-size:2.2rem; color:var(--ink); margin-bottom:4px; }
-.plan-price span{ font-family:var(--font-body); font-size:13px; color:var(--graphite-soft); font-weight:500; }
-.plan-desc{ font-size:14px; color:var(--graphite-soft); margin-bottom:24px; min-height:40px; }
-.plan-feats{ list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:28px; flex:1; }
-.plan-feats li{ display:flex; gap:10px; font-size:14.5px; color:var(--graphite); align-items:flex-start; }
+.plan-name{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--graphite-soft); margin-bottom:10px; }
+.plan-price{ font-family:var(--font-display); font-size:1.9rem; color:var(--ink); margin-bottom:4px; }
+.plan-price span{ font-family:var(--font-body); font-size:12.5px; color:var(--graphite-soft); font-weight:500; }
+.plan-desc{ font-size:13.5px; color:var(--graphite-soft); margin-bottom:20px; }
+.plan-feats{ list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:24px; flex:1; }
+.plan-feats li{ display:flex; gap:8px; font-size:14px; color:var(--graphite); align-items:flex-start; }
 .plan-feats svg{ width:16px; height:16px; stroke:var(--gold); flex-shrink:0; margin-top:2px; }
 .plan .btn{ width:100%; justify-content:center; }
 
-/* Interactive Decants Prices Modal Trigger Container */
 .decants-interactive-box{
-  margin-top:40px;
+  margin-top:32px;
   background:var(--paper);
   border:1px solid var(--line);
   border-radius:8px;
-  padding:30px;
+  padding:24px 16px;
   text-align:center;
 }
-.decants-interactive-box h3{ font-family:var(--font-display); font-size:22px; color:var(--ink); margin-bottom:10px; }
-.decants-interactive-box p{ font-size:14.5px; color:var(--graphite-soft); margin-bottom:20px; max-width:600px; margin-left:auto; margin-right:auto; }
+.decants-interactive-box h3{ font-family:var(--font-display); font-size:20px; color:var(--ink); margin-bottom:8px; }
+.decants-interactive-box p{ font-size:14px; color:var(--graphite-soft); margin-bottom:16px; max-width:600px; margin-left:auto; margin-right:auto; }
 
 /* ============ CATALOG ============ */
-.catalog{ padding:120px 0; }
-.catalog-head{ max-width:640px; margin-bottom:56px; }
-.catalog-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
-.catalog-head p.sub{ color:var(--graphite-soft); font-size:16.5px; margin-top:14px; max-width:560px; }
+.catalog{ padding:80px 0; }
+.catalog-head{ max-width:640px; margin-bottom:40px; }
+.catalog-head h2{ font-size:clamp(1.7rem, 4vw, 2.6rem); color:var(--ink); margin-top:10px; }
+.catalog-head p.sub{ color:var(--graphite-soft); font-size:15.5px; margin-top:10px; }
 
-.catalog-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+.catalog-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
 @media (max-width:980px){ .catalog-grid{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:560px){ .catalog-grid{ grid-template-columns:1fr; } }
+@media (max-width:580px){ .catalog-grid{ grid-template-columns:1fr; } }
 
 .cc-card{
   background:var(--paper); border:1px solid var(--line); border-radius:8px;
   overflow:hidden; display:flex; flex-direction:column;
-  transition:transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
 }
-.cc-card:hover{ transform:translateY(-6px); box-shadow:0 20px 44px rgba(22,58,47,0.12); border-color:rgba(184,134,61,0.4); }
 .cc-image{
   aspect-ratio:1/1; background:var(--paper-dim);
   display:flex; align-items:center; justify-content:center;
   overflow:hidden; position:relative;
 }
-.cc-image img{ width:100%; height:100%; object-fit:cover; transform-origin:center center; will-change:transform; }
+.cc-image img{ width:100%; height:100%; object-fit:cover; }
 .cc-gender{
-  position:absolute; top:12px; right:12px;
+  position:absolute; top:10px; right:10px;
   font-family:var(--font-mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase;
-  background:rgba(12,32,26,0.78); color:var(--gold-bright); padding:5px 9px; border-radius:20px;
+  background:rgba(12,32,26,0.85); color:var(--gold-bright); padding:4px 8px; border-radius:20px;
 }
-.cc-body{ padding:20px 20px 22px; display:flex; flex-direction:column; flex:1; }
-.cc-brand{
-  font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--gold); margin-bottom:6px;
-}
-.cc-name{ font-family:var(--font-display); font-size:21px; color:var(--ink); margin-bottom:4px; line-height:1.15; }
-.cc-style{ font-size:13px; color:var(--graphite-soft); margin-bottom:14px; }
-.cc-meta{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+.cc-body{ padding:16px; display:flex; flex-direction:column; flex:1; }
+.cc-brand{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+.cc-name{ font-family:var(--font-display); font-size:19px; color:var(--ink); margin-bottom:4px; line-height:1.2; }
+.cc-style{ font-size:12.5px; color:var(--graphite-soft); margin-bottom:12px; }
+.cc-meta{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
 .cc-meta span{
-  font-family:var(--font-mono); font-size:10.5px; color:var(--graphite-soft);
-  border:1px solid var(--line); padding:4px 9px; border-radius:20px;
+  font-family:var(--font-mono); font-size:10px; color:var(--graphite-soft);
+  border:1px solid var(--line); padding:3px 8px; border-radius:20px;
 }
-.cc-price{
-  font-family:var(--font-display); font-size:19px; color:var(--ink);
-  margin-bottom:14px; display:flex; align-items:baseline; gap:6px;
-}
-.cc-price span{ font-family:var(--font-mono); font-size:11px; color:var(--graphite-soft); font-weight:500; }
-.cc-view{ margin-top:auto; width:100%; justify-content:center; font-size:13px; padding:11px 20px; }
+.cc-price{ font-family:var(--font-display); font-size:18px; color:var(--ink); margin-bottom:12px; display:flex; align-items:baseline; gap:4px; }
+.cc-price span{ font-family:var(--font-mono); font-size:11px; color:var(--graphite-soft); }
+.cc-view{ margin-top:auto; width:100%; justify-content:center; font-size:13px; padding:10px 16px; }
 
-/* modal */
+/* MODALS RESPONSIOS */
 .cc-modal{
   position:fixed; inset:0; z-index:200;
   display:none; align-items:center; justify-content:center;
-  padding:24px;
+  padding:16px;
 }
 .cc-modal.open{ display:flex; }
-.cc-modal-overlay{
-  position:absolute; inset:0; background:rgba(12,32,26,0.72); backdrop-filter:blur(4px);
-}
+.cc-modal-overlay{ position:absolute; inset:0; background:rgba(12,32,26,0.8); backdrop-filter:blur(4px); }
 .cc-modal-panel{
   position:relative; background:var(--ink); color:var(--paper);
   border:1px solid var(--line-dark); border-radius:10px;
-  max-width:880px; width:100%; max-height:88vh; overflow-y:auto;
+  max-width:840px; width:100%; max-height:90vh; overflow-y:auto;
+  -webkit-overflow-scrolling: touch;
 }
 .cc-modal-close{
-  position:absolute; top:16px; right:16px; z-index:2;
-  width:34px; height:34px; border-radius:50%; background:rgba(244,239,224,0.1);
-  color:var(--paper); font-size:20px; display:flex; align-items:center; justify-content:center;
-  transition:background .2s;
+  position:absolute; top:12px; right:12px; z-index:10;
+  width:36px; height:36px; border-radius:50%; background:rgba(244,239,224,0.15);
+  color:var(--paper); font-size:22px; display:flex; align-items:center; justify-content:center;
 }
-.cc-modal-close:hover{ background:rgba(244,239,224,0.2); }
 .cc-modal-grid{ display:grid; grid-template-columns:1fr 1.2fr; }
 @media (max-width:720px){ .cc-modal-grid{ grid-template-columns:1fr; } }
-.cc-modal-img{ background:var(--ink-soft); display:flex; align-items:center; justify-content:center; padding:20px; }
-.cc-modal-img img{ width:100%; height:100%; object-fit:contain; max-height:480px; border-radius:6px; }
-.cc-modal-info{ padding:36px 36px 40px; }
-.cc-modal-brand{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-bright); }
-.cc-modal-info h3{ font-family:var(--font-display); font-size:28px; color:var(--paper); margin:8px 0 4px; }
-.cc-modal-style{ font-size:14px; color:#b3c0b8; margin-bottom:26px; }
-.cc-modal-info .note-row{ margin-bottom:18px; }
-.cc-modal-info .note-row-head{ display:flex; justify-content:space-between; margin-bottom:7px; font-family:var(--font-mono); font-size:11.5px; }
-.cc-modal-info .note-row-head .label{ color:var(--mist-dim); text-transform:uppercase; letter-spacing:0.08em; }
-.cc-modal-info .note-row-head .value{ color:var(--gold-bright); }
-.cc-modal-info .bar-track{ width:100%; height:5px; background:rgba(244,239,224,0.1); border-radius:4px; overflow:hidden; }
-.cc-modal-info .bar-fill{ height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright)); border-radius:4px; }
-.cc-modal-info .note-desc{ font-size:12.5px; color:#a6b0a8; margin-top:5px; }
-.cc-modal-box, .cc-modal-why{ margin-top:22px; padding-top:20px; border-top:1px solid var(--line-dark); }
-.cc-modal-box h4, .cc-modal-why h4{ font-size:14.5px; font-weight:600; color:var(--paper); margin-bottom:8px; }
-.cc-modal-box p, .cc-modal-why p{ font-size:14px; color:#b3c0b8; line-height:1.6; }
-.cc-modal-badges{ display:flex; gap:10px; margin-top:24px; flex-wrap:wrap; }
+.cc-modal-img{ background:var(--ink-soft); display:flex; align-items:center; justify-content:center; padding:16px; }
+.cc-modal-img img{ width:100%; height:auto; max-height:300px; object-fit:contain; border-radius:6px; }
+.cc-modal-info{ padding:24px; }
+@media (max-width:480px){ .cc-modal-info{ padding:18px; } }
+.cc-modal-brand{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-bright); }
+.cc-modal-info h3{ font-family:var(--font-display); font-size:22px; color:var(--paper); margin:6px 0 2px; }
+.cc-modal-style{ font-size:13px; color:#b3c0b8; margin-bottom:20px; }
+.cc-modal-box, .cc-modal-why{ margin-top:16px; padding-top:16px; border-top:1px solid var(--line-dark); }
+.cc-modal-box h4, .cc-modal-why h4{ font-size:13.5px; font-weight:600; color:var(--paper); margin-bottom:6px; }
+.cc-modal-box p, .cc-modal-why p{ font-size:13px; color:#b3c0b8; line-height:1.5; }
+.cc-modal-badges{ display:flex; gap:8px; margin-top:20px; flex-wrap:wrap; }
 .cc-modal-badges span{
-  font-family:var(--font-mono); font-size:11px; color:var(--gold-bright);
-  border:1px solid rgba(232,206,154,0.35); padding:6px 12px; border-radius:20px;
+  font-family:var(--font-mono); font-size:10.5px; color:var(--gold-bright);
+  border:1px solid rgba(232,206,154,0.35); padding:5px 10px; border-radius:20px;
 }
 
 /* ============ TESTIMONIALS ============ */
-.testimonials{ padding:120px 0; }
-.test-head{ max-width:600px; margin-bottom:56px; }
-.test-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
-.test-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.testimonials{ padding:80px 0; }
+.test-head{ max-width:600px; margin-bottom:40px; }
+.test-head h2{ font-size:clamp(1.7rem, 4vw, 2.6rem); color:var(--ink); margin-top:10px; }
+.test-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
 @media (max-width:900px){ .test-grid{ grid-template-columns:1fr; } }
-.test-card{
-  border:1px solid var(--line); border-radius:8px; padding:28px;
-  display:flex; flex-direction:column; gap:18px;
-}
+.test-card{ border:1px solid var(--line); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:14px; }
 .stars{ display:flex; gap:3px; }
-.stars svg{ width:14px; height:14px; fill:var(--gold); stroke:none; }
-.test-card p{ font-size:15px; color:var(--graphite); line-height:1.6; flex:1; }
-.test-who{ display:flex; align-items:center; gap:12px; }
+.stars svg{ width:14px; height:14px; fill:var(--gold); }
+.test-card p{ font-size:14px; color:var(--graphite); line-height:1.55; flex:1; }
+.test-who{ display:flex; align-items:center; gap:10px; }
 .avatar{
-  width:38px; height:38px; border-radius:50%; background:var(--ink); color:var(--paper);
-  display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:13px;
+  width:36px; height:36px; border-radius:50%; background:var(--ink); color:var(--paper);
+  display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:12px;
   flex-shrink:0;
 }
-.test-who b{ display:block; font-size:14px; }
-.test-who span{ font-family:var(--font-mono); font-size:11.5px; color:var(--graphite-soft); }
+.test-who b{ display:block; font-size:13.5px; }
+.test-who span{ font-family:var(--font-mono); font-size:11px; color:var(--graphite-soft); }
 
 /* ============ GUARANTEE ============ */
-.guarantee{ background:var(--ink); color:var(--paper); padding:100px 0; }
-.guarantee-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center; }
-@media (max-width:900px){ .guarantee-grid{ grid-template-columns:1fr; gap:40px; } }
-.guarantee h2{ color:var(--paper); font-size:clamp(1.8rem,2.8vw,2.4rem); }
+.guarantee{ background:var(--ink); color:var(--paper); padding:80px 0; }
+.guarantee-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:40px; align-items:center; }
+@media (max-width:900px){ .guarantee-grid{ grid-template-columns:1fr; gap:28px; } }
+.guarantee h2{ color:var(--paper); font-size:clamp(1.6rem, 3.5vw, 2.4rem); }
 .guarantee-badge{
-  display:inline-flex; align-items:center; gap:10px; margin-bottom:20px;
-  font-family:var(--font-mono); font-size:12px; color:var(--gold-bright); border:1px solid rgba(201,167,90,0.4);
-  padding:8px 14px; border-radius:30px;
+  display:inline-flex; align-items:center; gap:8px; margin-bottom:16px;
+  font-family:var(--font-mono); font-size:11px; color:var(--gold-bright); border:1px solid rgba(201,167,90,0.4);
+  padding:6px 12px; border-radius:30px;
 }
-.g-list{ display:grid; grid-template-columns:1fr 1fr; gap:20px 28px; }
+.g-list{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
 @media (max-width:560px){ .g-list{ grid-template-columns:1fr; } }
-.g-item{ display:flex; gap:12px; }
+.g-item{ display:flex; gap:10px; }
 .g-item svg{ width:18px; height:18px; stroke:var(--gold-bright); flex-shrink:0; margin-top:2px; }
-.g-item h4{ font-size:15px; margin-bottom:4px; font-family:var(--font-body); font-weight:600; }
-.g-item p{ font-size:13.5px; color:#b6afa4; line-height:1.5; }
+.g-item h4{ font-size:14.5px; margin-bottom:2px; font-family:var(--font-body); font-weight:600; }
+.g-item p{ font-size:13px; color:#b6afa4; line-height:1.45; }
 
 /* ============ FAQ ============ */
-.faq{ padding:120px 0; }
-.faq-head{ max-width:600px; margin-bottom:48px; }
-.faq-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
+.faq{ padding:80px 0; }
+.faq-head{ max-width:600px; margin-bottom:32px; }
+.faq-head h2{ font-size:clamp(1.7rem, 4vw, 2.6rem); color:var(--ink); margin-top:10px; }
 .faq-list{ max-width:760px; }
 .faq-item{ border-bottom:1px solid var(--line); }
 .faq-q{
-  display:flex; justify-content:space-between; align-items:center; gap:20px;
-  padding:24px 0; width:100%; text-align:left; font-size:16.5px; font-weight:500; color:var(--ink);
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  padding:18px 0; width:100%; text-align:left; font-size:15.5px; font-weight:500; color:var(--ink);
 }
-.faq-q .plus{ font-family:var(--font-mono); font-size:20px; color:var(--gold); transition:transform .3s var(--ease); flex-shrink:0; }
+.faq-q .plus{ font-family:var(--font-mono); font-size:18px; color:var(--gold); transition:transform .3s var(--ease); flex-shrink:0; }
 .faq-item.open .faq-q .plus{ transform:rotate(45deg); }
 .faq-a{ max-height:0; overflow:hidden; transition:max-height .4s var(--ease); }
-.faq-a p{ padding-bottom:24px; color:var(--graphite-soft); font-size:15px; max-width:640px; line-height:1.65; }
+.faq-a p{ padding-bottom:18px; color:var(--graphite-soft); font-size:14.5px; line-height:1.6; }
 
 /* ============ FINAL CTA ============ */
-.final-cta{
-  padding:130px 0;
-  text-align:center;
-  position:relative;
+.final-cta{ padding:80px 0; text-align:center; }
+.final-cta h2{ font-size:clamp(1.8rem, 5vw, 3.2rem); color:var(--ink); max-width:780px; margin:14px auto 20px; line-height:1.15; }
+.final-cta .lede{ color:var(--graphite-soft); font-size:15.5px; max-width:480px; margin:0 auto 28px; }
+.final-cta-ctas{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+@media (max-width:480px){
+  .final-cta-ctas{ flex-direction:column; }
+  .final-cta-ctas .btn{ width:100%; }
 }
-.final-cta h2{ font-size:clamp(2.1rem,4.4vw,3.4rem); color:var(--ink); max-width:780px; margin:18px auto 30px; line-height:1.1; }
-.final-cta .lede{ color:var(--graphite-soft); font-size:17px; max-width:480px; margin:0 auto 36px; }
-.final-cta-ctas{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
 
 /* ============ FOOTER ============ */
-footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
-.footer-grid{ display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:40px; margin-bottom:60px; }
+footer{ background:var(--ink); color:#b6afa4; padding:50px 0 24px; }
+.footer-grid{ display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:32px; margin-bottom:40px; }
 @media (max-width:800px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
-@media (max-width:520px){ .footer-grid{ grid-template-columns:1fr; } }
-.footer-logo{ font-family:var(--font-display); font-size:22px; color:var(--paper); margin-bottom:14px; }
-.footer-col h5{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#7d766c; margin-bottom:16px; }
-.footer-col a{ display:block; font-size:14px; margin-bottom:10px; color:#c9c3b8; transition:color .2s; }
-.footer-col a:hover{ color:var(--gold-bright); }
+@media (max-width:480px){ .footer-grid{ grid-template-columns:1fr; } }
+.footer-logo{ font-family:var(--font-display); font-size:20px; color:var(--paper); margin-bottom:12px; }
+.footer-col h5{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#7d766c; margin-bottom:12px; }
+.footer-col a{ display:block; font-size:13.5px; margin-bottom:8px; color:#c9c3b8; }
 .footer-bottom{
-  border-top:1px solid var(--line-dark); padding-top:26px;
-  display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
-  font-family:var(--font-mono); font-size:11.5px; color:#7d766c;
+  border-top:1px solid var(--line-dark); padding-top:20px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  font-family:var(--font-mono); font-size:11px; color:#7d766c;
 }
 
-/* reveal on scroll */
-.reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+/* Animations */
+.reveal{ opacity:0; transform:translateY(20px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
 .reveal.visible{ opacity:1; transform:translateY(0); }
-
-@keyframes softPulse{
-  0%,100%{ transform:scale(1); opacity:1; }
-  50%{ transform:scale(1.35); opacity:.65; }
-}
-.eyebrow::before{ animation:softPulse 2.2s ease-in-out infinite; }
-
-@keyframes shimmerSweep{
-  0%{ background-position:-160% 0; }
-  100%{ background-position:160% 0; }
-}
-.btn-primary{
-  background-image:linear-gradient(100deg, var(--ink) 40%, var(--gold) 50%, var(--ink) 60%);
-  background-size:260% 100%;
-  background-position:0 0;
-}
-.btn-primary:hover{ animation:shimmerSweep 1.4s linear infinite; }
-
-@keyframes gentleTilt{
-  0%,100%{ transform:rotate(0deg); }
-  50%{ transform:rotate(-1.2deg); }
-}
-.cc-card:hover .cc-image img{ animation:gentleTilt 2.6s ease-in-out infinite; }
 </style>
 </head>
 <body>
@@ -645,18 +603,20 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
   <div class="nav-bar">
     <nav>
       <a href="#" class="logo">FIORENZO<span class="dot">.</span></a>
-      <div class="nav-links">
-        <a href="#anatomia">Cómo elegimos</a>
-        <a href="#catalogo">Catálogo</a>
-        <a href="#coleccion">Decants</a>
-        <a href="#opiniones">Opiniones</a>
-        <a href="#preguntas">Preguntas</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#anatomia" onclick="closeMobileNav()">Cómo elegimos</a>
+        <a href="#catalogo" onclick="closeMobileNav()">Catálogo</a>
+        <a href="#coleccion" onclick="closeMobileNav()">Decants</a>
+        <a href="#opiniones" onclick="closeMobileNav()">Opiniones</a>
+        <a href="#preguntas" onclick="closeMobileNav()">Preguntas</a>
       </div>
       <div class="nav-cta">
         <a href="#coleccion" class="btn btn-ghost">Ver decants</a>
         <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
       </div>
-      <button class="nav-mobile-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+      <button class="nav-mobile-toggle" id="navToggle" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </div>
 </header>
@@ -670,7 +630,7 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
       <p class="lede">Fragancias árabes de lujo y perfumería de diseñador, con una ficha técnica por frasco y un sistema de decants desde $6.000 hasta $9.300 para que pruebes antes de comprometerte con el original.</p>
       <div class="hero-ctas">
         <a href="#catalogo" class="btn btn-primary">Ver catálogo completo <span class="btn-arrow">→</span></a>
-        <a href="#coleccion" class="btn btn-ghost">Precios de Decants (5ml)</a>
+        <a href="#coleccion" class="btn btn-ghost">Precios Decants (5ml)</a>
       </div>
       <div class="trust-row">
         <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Envíos a todo el país</span>
@@ -690,7 +650,7 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
           <text x="60" y="142" text-anchor="middle" fill="#7C9186" font-family="IBM Plex Mono" font-size="6">EDP · 100ml</text>
         </svg>
         <div class="float-card card-a">Nota de fondo<b>Oud & Especias</b></div>
-        <div class="float-card card-b">Persistencia en piel<b>8–10 hs</b></div>
+        <div class="float-card card-b">Persistencia<b>8–10 hs</b></div>
         <div class="float-card card-c">Lote verificado<b>#AR-2026-114</b></div>
       </div>
     </div>
@@ -730,7 +690,7 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
   </div>
 </section>
 
-<!-- ============ ANATOMY / SIGNATURE SECTION ============ -->
+<!-- ============ ANATOMY SECTION ============ -->
 <section class="anatomy" id="anatomia">
   <div class="container">
     <span class="section-label">Cómo elegimos</span>
@@ -802,7 +762,7 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Ficha técnica incluida en cada decant</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Envase atomizador protegido</li>
         </ul>
-        <button class="btn btn-ghost" onclick="openDecantsModal()">Ver precios individuales de 5ml</button>
+        <button class="btn btn-ghost" onclick="openDecantsModal()">Ver precios de 5ml</button>
       </div>
 
       <div class="plan featured">
@@ -818,10 +778,9 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
       </div>
     </div>
 
-    <!-- Interactive Decants Price Button & Box Section -->
     <div class="decants-interactive-box reveal">
       <h3>Consulta interactiva de Decants (5ml)</h3>
-      <p>Hacé click en el botón de abajo para desplegar instantáneamente el listado completo de precios de los decants de 5ml de cada uno de los 5 perfumes del catálogo oficial.</p>
+      <p>Hacé click en el botón de abajo para desplegar instantáneamente el listado completo de precios de los decants de 5ml.</p>
       <button class="btn btn-primary" onclick="openDecantsModal()">Ver precios de decants de 5ml</button>
     </div>
   </div>
@@ -836,13 +795,11 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
       <p class="sub">Los 5 perfumes exclusivos solicitados, con sus precios actualizados, fotos de altísima calidad de los frascos originales y toda la información técnica.</p>
     </div>
 
-    <div class="catalog-grid" id="catalogGrid">
-      <!-- Catalog items will be injected or structured here -->
-    </div>
+    <div class="catalog-grid" id="catalogGrid"></div>
   </div>
 </section>
 
-<!-- Catalog modal -->
+<!-- Modals -->
 <div class="cc-modal" id="ccModal">
   <div class="cc-modal-overlay" data-close></div>
   <div class="cc-modal-panel">
@@ -873,22 +830,19 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
   </div>
 </div>
 
-<!-- Decants Prices Modal -->
 <div class="cc-modal" id="decantsModal">
   <div class="cc-modal-overlay" onclick="closeDecantsModal()"></div>
   <div class="cc-modal-panel" style="max-width:540px;">
     <button class="cc-modal-close" onclick="closeDecantsModal()" aria-label="Cerrar">&times;</button>
-    <div style="padding:40px;">
+    <div style="padding:28px 20px;">
       <span class="cc-modal-brand">Fiorenzo Decants</span>
-      <h3 style="font-family:var(--font-display); font-size:24px; color:var(--paper); margin:8px 0 6px;">Precios de Decants (5ml)</h3>
-      <p style="font-size:14px; color:#b3c0b8; margin-bottom:24px;">Listado oficial por fragancia. Recordá que comprando 3 decants tenés un <strong>20% de descuento</strong>.</p>
+      <h3 style="font-family:var(--font-display); font-size:22px; color:var(--paper); margin:6px 0;">Precios de Decants (5ml)</h3>
+      <p style="font-size:13.5px; color:#b3c0b8; margin-bottom:20px;">Listado oficial por fragancia. Recordá que comprando 3 decants tenés un <strong>20% de descuento</strong>.</p>
       
-      <div style="display:flex; flex-direction:column; gap:12px;" id="decantsPriceListContainer">
-        <!-- Injected via JS -->
-      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;" id="decantsPriceListContainer"></div>
       
-      <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--line-dark); text-align:center;">
-        <button class="btn btn-primary" onclick="closeDecantsModal()" style="width:100%; justify-content:center;">Entendido</button>
+      <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line-dark); text-align:center;">
+        <button class="btn btn-primary" onclick="closeDecantsModal()" style="width:100%;">Entendido</button>
       </div>
     </div>
   </div>
@@ -995,7 +949,7 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
     <div class="footer-grid">
       <div>
         <div class="footer-logo">FIORENZO<span style="color:var(--gold)">.</span></div>
-        <p style="font-size:14px; color:#9c968b; max-width:260px;">Perfumería de precisión. Fragancias árabes y de diseñador, 100% originales, con ficha técnica y decants de 5ml.</p>
+        <p style="font-size:13.5px; color:#9c968b; max-width:260px;">Perfumería de precisión. Fragancias árabes y de diseñador, 100% originales, con ficha técnica y decants de 5ml.</p>
       </div>
       <div class="footer-col">
         <h5>Catálogo</h5>
@@ -1025,17 +979,15 @@ footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-// Catalog data with updated perfumes and high-quality original bottle images
+// Catalog data
 const perfumes = [
   {
     brand:'Lattafa', name:'Khamrah Duhqan', style:'Gourmand ahumado oriental · Unisex',
     img:'https://www.lattafa-usa.com/cdn/shop/files/Khamrah-Dukhan-2_95db2a2a-cf00-4719-8a90-68095d059420.png?v=1747416848&width=1500',
     price:'$55.000', decantPrice:'$6.000', gender:'Unisex',
-    top:{label:'Especias orientales, pimienta de Jamaica, mandarina', width:'35%'},
-    heart:{label:'Incienso ahumado, azahar, maderas nobles', width:'65%'},
+    top:{label:'Especias orientales, pimienta, mandarina', width:'35%'},
+    heart:{label:'Incienso ahumado, azahar, maderas', width:'65%'},
     base:{label:'Tabaco, praliné, ámbar, haba tonka', width:'92%'},
     box:'Frasco oscuro de lujo con tapón dorado mate; caja negra texturizada con detalles metalizados en relieve.',
     why:'La evolución más profunda y ahumada de la familia Khamrah. Una obra maestra nocturna con estela imponente.',
@@ -1067,15 +1019,15 @@ const perfumes = [
     brand:'Rasasi', name:'Rasasi Hawas Ice', style:'Aromático acuático ultra fresco · Masculino',
     img:'https://www.intenseoud.com/cdn/shop/files/519I7LSdx7L_98057d54-d30f-4951-8cd9-29f644b64e71_large.jpg?v=1774817351',
     price:'$85.000', decantPrice:'$9.200', gender:'Masculino',
-    top:{label:'Manzana congelada, bergamota, limón, anís', width:'42%'},
-    heart:{label:'Flor de azahar, cardamomo, notas glaciales', width:'62%'},
-    base:{label:'Almizcle, ámbar gris, musgo de roble, maderas', width:'90%'},
+    top:{label:'Manzana congelada, bergamota, limón', width:'42%'},
+    heart:{label:'Flor de azahar, cardamomo, notas frías', width:'62%'},
+    base:{label:'Almizcle, ámbar gris, maderas', width:'90%'},
     box:'Frasco translúcido con efecto hielo y serpiente metálica plateada característica; caja de coleccionista.',
     why:'La versión definitiva y potenciada de Hawas. Incorpora acordes glaciales y cítricos nítidos con una fijación monstruosa.',
     dur:'10+ horas', estela:'Estela muy alta'
   },
   {
-    brand:'Afnan', name:'9pm Clásico', style:'Oriental gourmand dulce y seductor · Masculino',
+    brand:'Afnan', name:'9pm Clásico', style:'Oriental gourmand dulce · Masculino',
     img:'https://us.afnan.com/cdn/shop/files/9PM-Product-01_ac1d61da-68bc-4cf8-8086-8cdc3accfbdf.jpg?v=1775552887&width=1080',
     price:'$60.000', decantPrice:'$6.000', gender:'Masculino',
     top:{label:'Manzana, canela, lavanda, bergamota', width:'38%'},
@@ -1087,21 +1039,21 @@ const perfumes = [
   }
 ];
 
-// Render catalog dynamically
+// Render catalog
 function renderCatalog() {
   const grid = document.getElementById('catalogGrid');
   grid.innerHTML = perfumes.map((p, idx) => `
     <div class="cc-card reveal">
       <div class="cc-image">
         <span class="cc-gender">${p.gender}</span>
-        <img src="${p.img}" alt="${p.name} — ${p.brand}, frasco original" loading="lazy" onerror="this.src='https://placehold.co/400x400/0C201A/E8CE9A?text=Fiorenzo'">
+        <img src="${p.img}" alt="${p.name} — ${p.brand}" loading="lazy" onerror="this.src='https://placehold.co/400x400/0C201A/E8CE9A?text=Fiorenzo'">
       </div>
       <div class="cc-body">
         <span class="cc-brand">${p.brand}</span>
         <h3 class="cc-name">${p.name}</h3>
         <p class="cc-style">${p.style}</p>
         <div class="cc-price">${p.price}<span>/ 100ml</span></div>
-        <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--gold); margin-bottom:14px;">Decant 5ml: <strong>${p.decantPrice}</strong></div>
+        <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--gold); margin-bottom:12px;">Decant 5ml: <strong>${p.decantPrice}</strong></div>
         <div class="cc-meta"><span>${p.dur}</span><span>${p.estela}</span></div>
         <button class="btn btn-ghost cc-view" onclick="openCatalogModal(${idx})">Ver ficha completa</button>
       </div>
@@ -1114,25 +1066,25 @@ renderCatalog();
 function renderDecantsModalList() {
   const container = document.getElementById('decantsPriceListContainer');
   container.innerHTML = perfumes.map(p => `
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--ink-soft); border-radius:6px; border:1px solid var(--line-dark);">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:var(--ink-soft); border-radius:6px; border:1px solid var(--line-dark);">
       <div>
         <span style="font-family:var(--font-mono); font-size:10px; color:var(--gold-bright); display:block; text-transform:uppercase;">${p.brand}</span>
-        <b style="font-size:15px; color:var(--paper);">${p.name}</b>
+        <b style="font-size:14px; color:var(--paper);">${p.name}</b>
       </div>
       <div style="text-align:right;">
-        <span style="font-family:var(--font-display); font-size:18px; color:var(--gold-bright);">${p.decantPrice}</span>
-        <span style="font-size:11px; color:#b3c0b8; display:block;">Decant 5ml</span>
+        <span style="font-family:var(--font-display); font-size:16px; color:var(--gold-bright);">${p.decantPrice}</span>
+        <span style="font-size:10px; color:#b3c0b8; display:block;">5ml</span>
       </div>
     </div>
   `).join('') + `
-    <div style="margin-top:8px; padding:12px; background:rgba(184,134,61,0.12); border:1px dashed var(--gold); border-radius:6px; text-align:center;">
-      <p style="font-size:13.5px; color:var(--gold-bright); font-weight:500;">💡 Comprando 3 decants tenés un <strong>20% de descuento</strong> automático.</p>
+    <div style="margin-top:6px; padding:10px; background:rgba(184,134,61,0.12); border:1px dashed var(--gold); border-radius:6px; text-align:center;">
+      <p style="font-size:12.5px; color:var(--gold-bright); font-weight:500;">💡 Comprando 3 decants tenés un <strong>20% de descuento</strong>.</p>
     </div>
   `;
 }
 renderDecantsModalList();
 
-// Modal Handlers
+// Modals Logic
 const ccModal = document.getElementById('ccModal');
 const decantsModal = document.getElementById('decantsModal');
 
@@ -1145,7 +1097,7 @@ function buildNoteRow(label, data){
 function openCatalogModal(idx){
   const p = perfumes[idx];
   document.getElementById('ccImg').src = p.img;
-  document.getElementById('ccImg').alt = p.name+' — '+p.brand+', frasco y caja original';
+  document.getElementById('ccImg').alt = p.name;
   document.getElementById('ccBrand').textContent = p.brand;
   document.getElementById('ccName').textContent = p.name;
   document.getElementById('ccStyle').textContent = p.style;
@@ -1159,9 +1111,6 @@ function openCatalogModal(idx){
   document.getElementById('ccDecantPriceTag').textContent = 'Decant 5ml: ' + p.decantPrice;
   ccModal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  requestAnimationFrame(()=>{
-    document.querySelectorAll('#ccPyramid .bar-fill').forEach(b=>{ b.style.width = b.style.width; });
-  });
 }
 
 function closeCatalogModal(){
@@ -1184,16 +1133,16 @@ ccModal.querySelectorAll('[data-close]').forEach(el=>{
 });
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') { closeCatalogModal(); closeDecantsModal(); } });
 
-// Reveal on scroll
+// Scroll Animations (Native)
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
   });
-},{threshold:0.15});
+},{threshold:0.1});
 revealEls.forEach(el=>io.observe(el));
 
-// FAQ accordion
+// FAQ Accordion
 document.querySelectorAll('.faq-item').forEach(item=>{
   const q = item.querySelector('.faq-q');
   const a = item.querySelector('.faq-a');
@@ -1212,13 +1161,17 @@ document.querySelectorAll('.faq-item').forEach(item=>{
   });
 });
 
-// Mobile nav toggle
-const mobileToggle = document.querySelector('.nav-mobile-toggle');
-const navLinks = document.querySelector('.nav-links');
-mobileToggle.addEventListener('click', ()=>{
-  const isShown = navLinks.style.display === 'flex';
-  navLinks.style.cssText = isShown ? '' : 'display:flex; position:absolute; top:100%; left:0; right:0; background:var(--paper); flex-direction:column; padding:24px 32px; border-bottom:1px solid var(--line); gap:20px;';
+// Mobile Nav Logic
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+navToggle.addEventListener('click', ()=>{
+  navLinks.classList.toggle('mobile-open');
 });
+
+function closeMobileNav(){
+  navLinks.classList.remove('mobile-open');
+}
 </script>
 
 </body>
