@@ -139,6 +139,7 @@ section{padding:50px 0;position:relative;z-index:1;}
 .admin-section { background: var(--ink); color: var(--paper); border-radius: 8px; padding: 24px; margin-bottom: 40px; }
 .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
 .admin-form input, .admin-form select { padding: 10px; border-radius: 4px; border: 1px solid var(--line-dark); background: var(--ink-soft); color: #fff; }
+.file-upload-box { grid-column: 1 / -1; background: var(--ink-soft); padding: 12px; border-radius: 4px; border: 1px dashed var(--gold); }
 .login-box { max-width: 380px; margin: 16px 0; display: flex; flex-direction: column; gap: 10px; }
 
 /* MODAL DETALLES */
@@ -289,11 +290,21 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
           <span style="font-size:13px;color:var(--gold-bright);">✓ Sesión iniciada</span>
           <button onclick="logout()" style="color:#ff6b6b;font-size:12px;text-decoration:underline;">Cerrar sesión</button>
         </div>
-        <form class="admin-form" id="addProductForm">
+        
+        <form class="admin-form" id="addProductForm" onsubmit="saveProduct(event)">
           <input type="text" id="pBrand" placeholder="Marca" required>
           <input type="text" id="pName" placeholder="Nombre" required>
           <input type="text" id="pStyle" placeholder="Estilo" required>
-          <input type="url" id="pImg" placeholder="URL Imagen" required>
+          
+          <div class="file-upload-box">
+            <label style="font-size:12px;color:var(--gold-bright);display:block;margin-bottom:6px;">
+              📁 Seleccionar imagen desde la PC / Celular:
+            </label>
+            <input type="file" id="pFile" accept="image/*" style="width:100%;margin-bottom:8px;">
+            <p style="font-size:11px;color:#ccc;">O ingresa la URL de la imagen manualmente:</p>
+            <input type="url" id="pImg" placeholder="https://ejemplo.com/imagen.jpg" style="width:100%;margin-top:4px;">
+          </div>
+
           <input type="text" id="pPrice" placeholder="Precio Frasco ($55.000)" required>
           <input type="text" id="pDecant" placeholder="Precio Decant ($6.000)" required>
           <select id="pGender">
@@ -302,9 +313,9 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
             <option value="Unisex">Unisex</option>
           </select>
           <input type="text" id="pDur" placeholder="Duración" required>
-          <button type="submit" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto</button>
+          <button type="submit" id="saveBtn" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto</button>
         </form>
-        <div id="adminStatus" style="margin-top:12px;font-size:12px;color:var(--gold-bright);"></div>
+        <div id="adminStatus" style="margin-top:12px;font-size:13px;color:var(--gold-bright);"></div>
       </div>
     </div>
   </div>
@@ -422,7 +433,70 @@ function renderCatalog() {
   `).join('');
 }
 
-/* LÓGICA DEL CARRITO SILENCIOSO */
+/* LÓGICA DE GUARDAR PRODUCTO E IMAGEN BASE64 */
+async function saveProduct(event) {
+  event.preventDefault();
+  const statusDiv = document.getElementById('adminStatus');
+  const saveBtn = document.getElementById('saveBtn');
+  
+  const fileInput = document.getElementById('pFile');
+  const file = fileInput.files[0];
+  const urlInput = document.getElementById('pImg').value.trim();
+
+  if (!file && !urlInput) {
+    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Sube un archivo o ingresa una URL.</span>';
+    return;
+  }
+
+  saveBtn.disabled = true;
+  statusDiv.innerText = 'Cargando producto e imagen... Aguarde por favor.';
+
+  let payload = {
+    brand: document.getElementById('pBrand').value,
+    name: document.getElementById('pName').value,
+    style: document.getElementById('pStyle').value,
+    price: document.getElementById('pPrice').value,
+    decant: document.getElementById('pDecant').value,
+    gender: document.getElementById('pGender').value,
+    dur: document.getElementById('pDur').value,
+    img: urlInput || ''
+  };
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      payload.fileData = e.target.result;
+      payload.fileName = file.name;
+      payload.mimeType = file.type;
+      await sendPayload(payload);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    await sendPayload(payload);
+  }
+}
+
+async function sendPayload(payload) {
+  const statusDiv = document.getElementById('adminStatus');
+  const saveBtn = document.getElementById('saveBtn');
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    
+    statusDiv.innerHTML = '<span style="color:#25D366;">✓ Producto cargado exitosamente.</span>';
+    document.getElementById('addProductForm').reset();
+    await loadProducts();
+  } catch (err) {
+    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error al guardar producto.</span>';
+  } finally {
+    saveBtn.disabled = false;
+  }
+}
+
+/* CARRITO */
 function addToCart(index, type, price) {
   const p = perfumes[index];
   const cartItemId = `${p.brand}-${p.name}-${type}`;
@@ -443,7 +517,6 @@ function addToCart(index, type, price) {
   
   updateCartUI();
   
-  // EFECTO VISUAL EN EL BOTÓN DEL CARRITO SIN ABRIR EL DRAWER
   const cartBtn = document.getElementById('cartBtn');
   cartBtn.classList.add('bump');
   setTimeout(() => cartBtn.classList.remove('bump'), 200);
@@ -494,7 +567,6 @@ function updateCartUI() {
   `).join('');
 }
 
-/* APERTURA Y CIERRE DEL CARRITO LATERAL (DRAWER) */
 function openCartDrawer() {
   document.getElementById('cartOverlay').classList.add('open');
   document.getElementById('cartDrawer').classList.add('open');
@@ -519,23 +591,9 @@ function sendCartToWhatsApp() {
   window.open(waUrl, '_blank');
 }
 
-/* DETALLES & ADMIN */
+/* MODAL & DETALLES */
 function openInfoModal(i) {
   const p = perfumes[i];
-  let adminEditBlock = '';
-  if (isAuthenticated) {
-    adminEditBlock = `
-      <div style="background:var(--ink-soft);padding:14px;border-radius:6px;margin-top:16px;">
-        <h4 style="color:var(--gold-bright);margin-bottom:10px;font-size:13px;">Actualizar Precio (Admin)</h4>
-        <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <input type="text" id="editPrice" value="${p.price}" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
-          <input type="text" id="editDecant" value="${p.decant}" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
-        </div>
-        <button onclick="updatePrice('${p.brand}', '${p.name}')" class="btn btn-primary" style="width:100%;font-size:12px;">Guardar Cambios</button>
-      </div>
-    `;
-  }
-
   document.getElementById('modalContent').innerHTML = `
     <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);">${p.brand}</span>
     <h2 style="color:#fff;margin-bottom:6px;">${p.name}</h2>
@@ -550,7 +608,6 @@ function openInfoModal(i) {
       <button class="btn btn-primary" onclick="addToCart(${i}, 'Frasco 100ml', '${p.price}'); closeModal('infoModal');">+ Frasco</button>
       <button class="btn btn-ghost" style="color:#fff;border-color:#fff;" onclick="addToCart(${i}, 'Decant 5ml', '${p.decant}'); closeModal('infoModal');">+ Decant</button>
     </div>
-    ${adminEditBlock}
   `;
   document.getElementById('infoModal').classList.add('open');
 }
