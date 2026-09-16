@@ -13,6 +13,7 @@
   --graphite:#22302A; --graphite-soft:#5b6b60; --gold:#B8863D; --gold-bright:#E8CE9A;
   --line:rgba(34,48,42,0.14); --line-dark:rgba(244,239,224,0.14);
   --font-display:'Fraunces',serif; --font-body:'Inter',sans-serif; --font-mono:'IBM Plex Mono',monospace;
+  --whatsapp:#25D366; --whatsapp-dark:#1EBE5D;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -56,6 +57,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:500;}
 .btn-primary:hover{background:var(--gold);color:var(--ink);}
 .btn-ghost{border:1px solid var(--ink);color:var(--ink);background:rgba(244,239,224,0.4);}
 .btn-ghost:hover{background:var(--ink);color:var(--paper);}
+.btn-whatsapp{background:var(--whatsapp);color:#fff;font-weight:600;border-radius:4px;transition:.2s;}
+.btn-whatsapp:hover{background:var(--whatsapp-dark);}
 
 .top-banner{
   background:var(--ink);
@@ -323,6 +326,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
 <script>
 // PEGA AQUÍ LA URL DE TU DESPLIEGUE EN GOOGLE APPS SCRIPT
 const API_URL = 'https://script.google.com/macros/s/AKfycbw9Zn--Ob6VJZEAUqaWV6D4d_Na1-7rno5E-t1LYdzma3InnmSyg_f3iDNk3gzITykQkQ/exec';
+const PHONE_NUMBER = '5493644363749';
 
 let perfumes = [];
 let isAuthenticated = false;
@@ -346,8 +350,8 @@ window.addEventListener('DOMContentLoaded', () => {
     
     setTimeout(() => {
       welcomeModal.classList.remove('open');
-    }, 5000); // Se cierra a los 5 segundos
-  }, 1500); // Aparece a los 1.5 segundos
+    }, 5000);
+  }, 1500);
 });
 
 // AUTENTICACIÓN INSENSIBLE A MAYÚSCULAS/MINÚSCULAS
@@ -396,6 +400,9 @@ function renderCatalog() {
   
   catalogGrid.innerHTML = perfumes.map((p, i) => {
     const fallbackImg = p.img && p.img.endsWith('.webp') ? p.img.replace('.webp', '.jpg') : p.img;
+    const fullProductName = `${p.brand} ${p.name}`;
+    const waMessage = encodeURIComponent(`Hola! Quería consultarles acerca de: ${fullProductName}`);
+    const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${waMessage}`;
 
     return `
       <div class="catalog-card">
@@ -413,7 +420,10 @@ function renderCatalog() {
             <div class="catalog-price">${p.price} <span style="font-size:11px;color:var(--graphite-soft);">/ 100ml</span></div>
             <p style="font-size:12px;color:var(--gold);margin-bottom:10px;">Decant 5ml: <strong>${p.decant}</strong></p>
           </div>
-          <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:11px;padding:8px 12px;min-height:auto;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <a href="${waUrl}" target="_blank" class="btn btn-whatsapp" style="font-size:11px;padding:8px 12px;min-height:auto;">Consultar WhatsApp</a>
+            <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:11px;padding:8px 12px;min-height:auto;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
+          </div>
         </div>
       </div>
     `;
@@ -457,6 +467,9 @@ document.getElementById('addProductForm').addEventListener('submit', async (e) =
 // ABRIR MODAL CON DETALLES Y EDICIÓN DE PRECIOS
 function openInfoModal(i) {
   const p = perfumes[i];
+  const fullProductName = `${p.brand} ${p.name}`;
+  const waMessage = encodeURIComponent(`Hola! Quería consultarles acerca de: ${fullProductName}`);
+  const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${waMessage}`;
 
   let adminEditBlock = '';
   if (isAuthenticated) {
@@ -476,35 +489,41 @@ function openInfoModal(i) {
     <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);">${p.brand}</span>
     <h2 style="color:#fff;margin-bottom:6px;font-size:1.5rem;">${p.name}</h2>
     <p style="color:#b3c0b8;margin-bottom:14px;font-size:13px;">${p.style}</p>
-    <p style="margin-bottom:10px;font-size:14px;"><strong>Duración:</strong> ${p.dur}</p>
+    <div style="background:var(--ink-soft);padding:12px;border-radius:6px;font-size:13px;color:#e0e0e0;margin-bottom:16px;">
+      <p><strong>Género:</strong> ${p.gender}</p>
+      <p><strong>Duración Estimada:</strong> ${p.dur}</p>
+      <p style="color:var(--gold-bright);margin-top:4px;"><strong>Precio Frasco:</strong> ${p.price}</p>
+      <p style="color:var(--gold-bright);"><strong>Precio Decant (5ml):</strong> ${p.decant}</p>
+    </div>
+    <a href="${waUrl}" target="_blank" class="btn btn-whatsapp" style="width:100%;margin-bottom:10px;">Consultar WhatsApp</a>
     ${adminEditBlock}
   `;
   document.getElementById('infoModal').classList.add('open');
 }
 
-// ACTUALIZAR PRECIO
 async function updatePrice(brand, name) {
-  if(!isAuthenticated) return;
-
   const newPrice = document.getElementById('editPrice').value;
   const newDecant = document.getElementById('editDecant').value;
   
-  await fetch(API_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'updatePrice', brand, name, price: newPrice, decant: newDecant })
-  });
-  
-  alert('Actualización enviada a Google Sheets.');
-  closeModal('infoModal');
-  setTimeout(loadProducts, 2000);
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'updatePrice', brand, name, price: newPrice, decant: newDecant })
+    });
+    alert('Precio actualizado correctamente en Google Sheets.');
+    closeModal('infoModal');
+    setTimeout(loadProducts, 2000);
+  } catch (err) {
+    alert('Error al actualizar el precio.');
+  }
 }
 
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 
-loadProducts();
+window.onload = loadProducts;
 </script>
 </body>
 </html>
