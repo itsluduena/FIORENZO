@@ -30,7 +30,6 @@ body {
   min-height: 100vh;
 }
 
-/* FONDO GENERAL DE LA PÁGINA */
 body::before {
   content: "";
   position: fixed;
@@ -61,7 +60,6 @@ h1,h2,h3{font-family:var(--font-display);font-weight:500;}
 .btn-whatsapp{background:var(--whatsapp);color:#fff;font-weight:600;margin-top:16px;width:100%;}
 .btn-whatsapp:hover{background:var(--whatsapp-dark);color:#fff;}
 
-/* UNIFICACIÓN DE HEADER Y BANNER (Evita Duplicados) */
 .top-banner{
   background:var(--ink);
   border-bottom:1px solid rgba(232,206,154,.2);
@@ -75,7 +73,7 @@ header{position:sticky;top:0;left:0;right:0;z-index:100;background:rgba(244,239,
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1120px;margin:0 auto;}
 .logo{font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--ink);}
 .logo span{color:var(--gold);}
-.nav-links{display:flex;gap:24px;font-size:14px;font-weight:500;}
+.nav-links{display:flex;gap:24px;font-size:14px;font-weight:500;align-items:center;}
 .nav-links a:hover{color:var(--gold);}
 .nav-toggle{display:none;font-size:22px;color:var(--ink);}
 
@@ -98,7 +96,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
   .nav-cta{display:none;}
 }
 
-/* HERO RESPONSIVO */
 .hero{padding:40px 0;position:relative;z-index:1;}
 .hero-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:30px;align-items:center;}
 @media (max-width:850px){
@@ -113,12 +110,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .trust-row{display:flex;gap:16px;margin-top:24px;font-family:var(--font-mono);font-size:12px;color:var(--graphite-soft);flex-wrap:wrap;}
 @media (max-width:850px){.trust-row{justify-content:center;}}
 
-/* ESTRUCTURA Y GRIDS ADAPTABLES */
 section{padding:50px 0;position:relative;z-index:1;}
 .grid-2{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:24px;align-items:center;}
 .grid-3{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:20px;}
 
-/* ANATOMÍA DE FRAGANCIA */
 .anatomy{background:var(--ink);color:var(--paper);padding:60px 0;}
 .anatomy .section-label{color:var(--gold-bright);}
 .anatomy h2{color:var(--paper);font-size:2rem;margin:12px 0 20px;}
@@ -128,7 +123,6 @@ section{padding:50px 0;position:relative;z-index:1;}
 .bar-track{width:100%;height:6px;background:rgba(255,255,255,.1);border-radius:3px;}
 .bar-fill{height:100%;background:var(--gold);border-radius:3px;}
 
-/* TARJETAS DEL CATÁLOGO RESPONSIVAS */
 .catalog-card{background:rgba(244,239,224,0.95);backdrop-filter:blur(4px);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:100%;}
 .catalog-img{aspect-ratio:1;background:rgba(234,225,199,0.5);position:relative;display:flex;align-items:center;justify-content:center;padding:16px;}
 .catalog-img img{max-height:100%;object-fit:contain;}
@@ -137,18 +131,38 @@ section{padding:50px 0;position:relative;z-index:1;}
 .catalog-brand{font-family:var(--font-mono);font-size:11px;color:var(--gold);text-transform:uppercase;}
 .catalog-price{font-family:var(--font-display);font-size:20px;margin:6px 0;}
 
-/* SECCIÓN DECANTS Y LISTAS ADAPTABLES */
 .plan-card{background:rgba(244,239,224,0.95);backdrop-filter:blur(4px);border:1px solid var(--line);padding:24px;border-radius:8px;height:100%;display:flex;flex-direction:column;justify-content:space-between;}
 .plan-card.featured{border:2px solid var(--gold);position:relative;}
 .plan-card.featured::before{content:'20% OFF COMPRANDO 3';position:absolute;top:-12px;left:20px;background:var(--gold);color:var(--ink);font-family:var(--font-mono);font-size:10px;padding:3px 8px;font-weight:600;border-radius:2px;}
 
-/* MODALES RESPONSIVOS */
+/* ESTILOS DEL PANEL DE ADMINISTRACIÓN */
+.admin-section {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 40px;
+}
+.admin-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.admin-form input, .admin-form select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--line-dark);
+  background: var(--ink-soft);
+  color: #fff;
+  font-family: var(--font-body);
+}
+
 .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(12,32,26,.85);backdrop-filter:blur(4px);}
 .modal.open{display:flex;}
 .modal-panel{background:var(--ink);color:var(--paper);border:1px solid var(--line-dark);border-radius:8px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative;}
 .modal-close{position:absolute;top:16px;right:16px;color:var(--paper);font-size:24px;cursor:pointer;}
 
-/* LISTAS DENTRO DEL MODAL */
 .decant-item{
   display:flex;
   justify-content:space-between;
@@ -159,18 +173,6 @@ section{padding:50px 0;position:relative;z-index:1;}
   gap:12px;
   border: 1px solid var(--line-dark);
 }
-
-/* POPUP BIENVENIDA */
-.welcome-overlay {
-  position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px;
-  background: rgba(12, 32, 26, 0.7); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity 0.4s, visibility 0.4s;
-}
-.welcome-overlay.show { opacity: 1; visibility: visible; }
-.welcome-card {
-  background: var(--ink); color: var(--paper); border: 1px solid var(--gold); border-radius: 8px; padding: 28px; max-width: 400px; width: 100%; text-align: center; position: relative;
-}
-.welcome-card h3 { font-size: 1.6rem; margin: 10px 0; }
-.welcome-card h3 em { color: var(--gold-bright); font-style: italic; }
 
 footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;position:relative;z-index:1;}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:30px;}
@@ -187,7 +189,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
       <a href="#anatomia" onclick="toggleNav()">Cómo elegimos</a>
       <a href="#coleccion" onclick="toggleNav()">Decants</a>
       <a href="#catalogo" onclick="toggleNav()">Catálogo</a>
-      <a href="#preguntas" onclick="toggleNav()">Preguntas</a>
+      <a href="#admin" onclick="toggleNav()" style="color:var(--gold);">Admin</a>
     </div>
     <div class="nav-cta">
       <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
@@ -211,61 +213,34 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
         <span>✓ Hasta 6 cuotas</span>
       </div>
     </div>
-    
     <div class="hero-img-container" style="display: flex; justify-content: center; align-items: center;">
-      <img 
-        src="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" 
-        alt="Decant Fiorenzo" 
-        style="max-height: 360px; width: auto; object-fit: contain; filter: drop-shadow(0px 15px 20px rgba(12,32,26,0.25));"
-      >
+      <img src="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" alt="Decant Fiorenzo" style="max-height: 360px; width: auto; object-fit: contain; filter: drop-shadow(0px 15px 20px rgba(12,32,26,0.25));">
     </div>
   </div>
 </section>
 
-<section class="anatomy" id="anatomia">
-  <div class="container grid-2">
-    <div>
-      <span class="section-label">Transparencia</span>
-      <h2>Anatomía de una fragancia real</h2>
-      <p style="color:#b3c0b8;font-size:15px;margin-bottom:16px;">Cada producto incluye pirámide olfativa, concentración real y número de lote para contrastar con la casa de origen.</p>
-    </div>
-    <div class="spec-card">
-      <h3 style="color:#fff;margin-bottom:16px;font-size:1.2rem;">Khamrah Duhqan — Lattafa</h3>
-      <div class="note-row">
-        <div class="note-head"><span>SALIDA (0-15m)</span><span>Especias / Mandarina</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:35%;"></div></div>
-      </div>
-      <div class="note-row">
-        <div class="note-head"><span>CORAZÓN (15m-3h)</span><span>Incienso / Azahar</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:65%;"></div></div>
-      </div>
-      <div class="note-row">
-        <div class="note-head"><span>FONDO (3-10h)</span><span>Tabaco / Oud / Praliné</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:90%;"></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="coleccion">
+<!-- PANEL DE ADMINISTRACIÓN -->
+<section id="admin">
   <div class="container">
-    <span class="section-label">Decants de 5ml</span>
-    <h2 style="font-size:2rem;margin-bottom:24px;color:var(--ink);">Probá antes de comprar la botella</h2>
-    <div class="grid-2">
-      <div class="plan-card">
-        <div>
-          <h3 style="font-size:1.3rem;color:var(--ink);">Decants Individuales</h3>
-          <p style="margin:12px 0;color:var(--graphite-soft);">Desde $6.000 hasta $9.300 según la fragancia elegida.</p>
-        </div>
-        <button class="btn btn-ghost" onclick="openDecantsModal()" style="width:100%;margin-top:16px;">Ver lista de precios decants</button>
-      </div>
-      <div class="plan-card featured">
-        <div>
-          <h3 style="font-size:1.3rem;color:var(--ink);margin-top:6px;">Set 3 Decants (20% OFF)</h3>
-          <p style="margin:12px 0;color:var(--graphite-soft);">Llevá 3 decants combinados como quieras con descuento automático.</p>
-        </div>
-        <a href="#catalogo" class="btn btn-primary" style="width:100%;margin-top:16px;">Elegir fragancias</a>
-      </div>
+    <div class="admin-section">
+      <span class="section-label" style="color:var(--gold-bright);">Panel de Administración</span>
+      <h2 style="color:#fff;font-size:1.8rem;margin:8px 0 16px;">Cargar Nuevo Producto</h2>
+      <form class="admin-form" id="addProductForm">
+        <input type="text" id="pBrand" placeholder="Marca (ej. Lattafa)" required>
+        <input type="text" id="pName" placeholder="Nombre (ej. Khamrah)" required>
+        <input type="text" id="pStyle" placeholder="Estilo (ej. Oriental ahumado)" required>
+        <input type="url" id="pImg" placeholder="URL Imagen (Link directo)" required>
+        <input type="text" id="pPrice" placeholder="Precio Frasco (ej. $55.000)" required>
+        <input type="text" id="pDecant" placeholder="Precio Decant (ej. $6.000)" required>
+        <select id="pGender">
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Unisex">Unisex</option>
+        </select>
+        <input type="text" id="pDur" placeholder="Duración (ej. 8–10 horas)" required>
+        <button type="submit" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto en Google Sheets</button>
+      </form>
+      <div id="adminStatus" style="margin-top:12px;font-family:var(--font-mono);font-size:12px;color:var(--gold-bright);"></div>
     </div>
   </div>
 </section>
@@ -274,24 +249,17 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
   <div class="container">
     <span class="section-label">Catálogo Oficial</span>
     <h2 style="font-size:2rem;margin-bottom:24px;color:var(--ink);">Fragancias Seleccionadas</h2>
-    <div class="grid-3" id="catalogGrid"></div>
+    <div class="grid-3" id="catalogGrid">Cargando catálogo desde la base de datos...</div>
   </div>
 </section>
 
-<section id="preguntas">
-  <div class="container" style="max-width:800px;">
-    <span class="section-label">Dudas</span>
-    <h2 style="font-size:2rem;margin-bottom:20px;color:var(--ink);">Preguntas frecuentes</h2>
-    <details style="margin-bottom:12px;background:rgba(244,239,224,0.95);padding:16px;border:1px solid var(--line);border-radius:6px;">
-      <summary style="font-weight:600;cursor:pointer;color:var(--ink);">¿Cómo sé si son originales?</summary>
-      <p style="margin-top:10px;color:var(--graphite-soft);">Cada frasco incluye su código de lote de fábrica para verificar directo con la marca.</p>
-    </details>
-    <details style="margin-bottom:12px;background:rgba(244,239,224,0.95);padding:16px;border:1px solid var(--line);border-radius:6px;">
-      <summary style="font-weight:600;cursor:pointer;color:var(--ink);">¿Cuánto rinde un decant de 5ml?</summary>
-      <p style="margin-top:10px;color:var(--graphite-soft);">Aproximadamente entre 65 y 75 atomizaciones (10 a 15 días de uso diario).</p>
-    </details>
+<!-- MODAL FICHA TÉCNICA Y ACTUALIZACIÓN -->
+<div class="modal" id="infoModal">
+  <div class="modal-panel">
+    <span class="modal-close" onclick="closeModal('infoModal')">&times;</span>
+    <div id="modalContent"></div>
   </div>
-</section>
+</div>
 
 <footer>
   <div class="container footer-grid">
@@ -302,7 +270,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
     <div>
       <h4 style="color:#fff;margin-bottom:12px;">Enlaces</h4>
       <a href="#catalogo" style="display:block;margin-bottom:6px;">Catálogo</a>
-      <a href="#coleccion" style="display:block;">Decants</a>
+      <a href="#admin" style="display:block;">Panel Admin</a>
     </div>
     <div>
       <h4 style="color:#fff;margin-bottom:12px;">Ubicación</h4>
@@ -311,44 +279,30 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
   </div>
 </footer>
 
-<!-- MODAL FICHA TÉCNICA -->
-<div class="modal" id="infoModal">
-  <div class="modal-panel">
-    <span class="modal-close" onclick="closeModal('infoModal')">&times;</span>
-    <div id="modalContent"></div>
-  </div>
-</div>
-
-<!-- MODAL LISTA DECANTS -->
-<div class="modal" id="decantsModal">
-  <div class="modal-panel">
-    <span class="modal-close" onclick="closeModal('decantsModal')">&times;</span>
-    <h3 style="color:#fff;margin-bottom:16px;font-size:1.3rem;">Precios Decants (5ml)</h3>
-    <div id="decantsList" style="display:flex;flex-direction:column;gap:10px;"></div>
-  </div>
-</div>
-
-<!-- POP-UP BIENVENIDA -->
-<div class="welcome-overlay" id="welcomePopup">
-  <div class="welcome-card">
-    <span class="modal-close" onclick="closeWelcomePopup()">&times;</span>
-    <span class="eyebrow" style="margin-bottom:8px;">Bienvenido a Fiorenzo</span>
-    <h3>Encontrá tu <em>esencia ideal</em></h3>
-    <p style="color:#b3c0b8;font-size:14px;line-height:1.6;">Descubrí nuestra colección exclusiva de perfumería árabe y decants de prueba 100% originales.</p>
-  </div>
-</div>
-
 <script>
-const perfumes = [
-  {brand:'Lattafa', name:'Khamrah Duhqan', style:'Gourmand ahumado · Unisex', img:'https://www.lattafa-usa.com/cdn/shop/files/Khamrah-Dukhan-2_95db2a2a-cf00-4719-8a90-68095d059420.png?v=1747416848&width=1500', price:'$55.000', decant:'$6.000', gender:'Unisex', dur:'10+ horas', why:'Evolución ahumada y profunda de Khamrah con notas de tabaco y praliné.'},
-  {brand:'Lattafa', name:'His Confession', style:'Oriental amaderado · Masculino', img:'https://oasisperfumesusa.com/cdn/shop/files/pae34lbvnkz00ly2jkhoi02r.png?v=1755206647&width=1200', price:'$65.000', decant:'$7.000', gender:'Masculino', dur:'8–10 horas', why:'Sofisticada mezcla de iris, especias, vainilla e incienso.'},
-  {brand:'Armaf', name:'Mandarin Sky', style:'Aromático frutal · Masculino', img:'https://armaf.com/cdn/shop/files/CDN12.png?v=1781552801&width=1080', price:'$60.000', decant:'$6.000', gender:'Masculino', dur:'8–9 horas', why:'Aroma Cítrico dulzón de mandarina y caramelo muy versátil.'},
-  {brand:'Rasasi', name:'Rasasi Hawas Ice', style:'Acuático ultra fresco · Masculino', img:'https://www.intenseoud.com/cdn/shop/files/519I7LSdx7L_98057d54-d30f-4951-8cd9-29f644b64e71_large.jpg?v=1774817351', price:'$85.000', decant:'$9.200', gender:'Masculino', dur:'10+ horas', why:'Manzana helada, cítricos y fondo ambarado potente.'},
-  {brand:'Afnan', name:'9pm Clásico', style:'Gourmand dulce · Masculino', img:'https://us.afnan.com/cdn/shop/files/9PM-Product-01_ac1d61da-68bc-4cf8-8086-8cdc3accfbdf.jpg?v=1775552887&width=1080', price:'$60.000', decant:'$6.000', gender:'Masculino', dur:'8–10 horas', why:'El preferido nocturno de canela, manzana y vainilla.'}
-];
+// PEGA AQUÍ LA URL DE TU DESPLIEGUE DE GOOGLE APPS SCRIPT
+const API_URL = 'https://script.google.com/macros/s/AKfycbw9Zn--Ob6VJZEAUqaWV6D4d_Na1-7rno5E-t1LYdzma3InnmSyg_f3iDNk3gzITykQkQ/exec';
+
+let perfumes = [];
+
+async function loadProducts() {
+  const catalogGrid = document.getElementById('catalogGrid');
+  try {
+    const res = await fetch(API_URL);
+    perfumes = await res.json();
+    renderCatalog();
+  } catch (err) {
+    catalogGrid.innerHTML = '<p style="color:red;">Error al cargar los productos de Google Sheets.</p>';
+  }
+}
 
 function renderCatalog() {
-  document.getElementById('catalogGrid').innerHTML = perfumes.map((p, i) => `
+  const catalogGrid = document.getElementById('catalogGrid');
+  if(!perfumes.length) {
+    catalogGrid.innerHTML = '<p>No hay productos registrados en la base de datos.</p>';
+    return;
+  }
+  catalogGrid.innerHTML = perfumes.map((p, i) => `
     <div class="catalog-card">
       <div class="catalog-img">
         <span class="badge-gender">${p.gender}</span>
@@ -361,69 +315,86 @@ function renderCatalog() {
           <div class="catalog-price">${p.price} <span style="font-size:12px;color:var(--graphite-soft);">/ 100ml</span></div>
           <p style="font-size:13px;color:var(--gold);margin-bottom:14px;">Decant 5ml: <strong>${p.decant}</strong></p>
         </div>
-        <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:12px;">Ver detalles</button>
+        <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:12px;">Ver detalles / Editar precio</button>
       </div>
     </div>
   `).join('');
 }
 
+// AGREGAR PRODUCTO A GOOGLE SHEETS
+document.getElementById('addProductForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const status = document.getElementById('adminStatus');
+  status.innerText = 'Enviando producto a Google Sheets...';
+
+  const newProduct = {
+    brand: document.getElementById('pBrand').value,
+    name: document.getElementById('pName').value,
+    style: document.getElementById('pStyle').value,
+    img: document.getElementById('pImg').value,
+    price: document.getElementById('pPrice').value,
+    decant: document.getElementById('pDecant').value,
+    gender: document.getElementById('pGender').value,
+    dur: document.getElementById('pDur').value
+  };
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newProduct)
+    });
+    status.innerText = '¡Producto agregado con éxito! Recargando...';
+    document.getElementById('addProductForm').reset();
+    setTimeout(loadProducts, 2000);
+  } catch (err) {
+    status.innerText = 'Error al guardar el producto.';
+  }
+});
+
+// MODAL FICHA Y ACTUALIZACIÓN DE PRECIOS
 function openInfoModal(i) {
   const p = perfumes[i];
-  const fullProductName = `${p.brand} - ${p.name}`;
-  const whatsappMsg = encodeURIComponent(`Hola! Quería consultarte acerca de: ${fullProductName}`);
-  const whatsappUrl = `https://wa.me/5493644363749?text=${whatsappMsg}`;
 
   document.getElementById('modalContent').innerHTML = `
     <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);">${p.brand}</span>
     <h2 style="color:#fff;margin-bottom:6px;font-size:1.5rem;">${p.name}</h2>
     <p style="color:#b3c0b8;margin-bottom:14px;font-size:13px;">${p.style}</p>
-    <p style="margin-bottom:10px;font-size:14px;"><strong>Duración aproximada:</strong> ${p.dur}</p>
-    <p style="margin-bottom:16px;color:#b3c0b8;font-size:13px;">${p.why}</p>
-    <div style="background:var(--ink-soft);padding:12px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:13px;flex-wrap:wrap;gap:8px;">
-      <span>Frasco 100ml: <strong>${p.price}</strong></span>
-      <span>Decant 5ml: <strong style="color:var(--gold-bright);">${p.decant}</strong></span>
+    <p style="margin-bottom:10px;font-size:14px;"><strong>Duración:</strong> ${p.dur}</p>
+    
+    <div style="background:var(--ink-soft);padding:14px;border-radius:6px;margin-top:16px;">
+      <h4 style="color:var(--gold-bright);margin-bottom:10px;font-size:13px;">Actualizar Precio (Admin)</h4>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <input type="text" id="editPrice" value="${p.price}" placeholder="Precio 100ml" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
+        <input type="text" id="editDecant" value="${p.decant}" placeholder="Precio Decant" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
+      </div>
+      <button onclick="updatePrice('${p.brand}', '${p.name}')" class="btn btn-primary" style="width:100%;font-size:12px;min-height:36px;">Guardar Cambios</button>
     </div>
-    <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
-      Consultar por WhatsApp
-    </a>
   `;
   document.getElementById('infoModal').classList.add('open');
 }
 
-function openDecantsModal() {
-  document.getElementById('decantsList').innerHTML = perfumes.map(p => `
-    <div class="decant-item">
-      <div>
-        <div style="font-size:10px;color:var(--gold-bright);font-family:var(--font-mono);">${p.brand}</div>
-        <div style="font-weight:600;color:#fff;font-size:13px;">${p.name}</div>
-      </div>
-      <div style="color:var(--gold-bright);font-weight:600;font-size:14px;white-space:nowrap;">${p.decant}</div>
-    </div>
-  `).join('');
-  document.getElementById('decantsModal').classList.add('open');
+async function updatePrice(brand, name) {
+  const newPrice = document.getElementById('editPrice').value;
+  const newDecant = document.getElementById('editDecant').value;
+  
+  await fetch(API_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'updatePrice', brand, name, price: newPrice, decant: newDecant })
+  });
+  
+  alert('Actualización enviada. Se reflejará en instantes.');
+  closeModal('infoModal');
+  setTimeout(loadProducts, 2000);
 }
 
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 
-let autoCloseTimer;
-function closeWelcomePopup() {
-  const popup = document.getElementById('welcomePopup');
-  if (popup.classList.contains('show')) {
-    popup.classList.remove('show');
-    clearTimeout(autoCloseTimer);
-  }
-}
-
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const popup = document.getElementById('welcomePopup');
-    popup.classList.add('show');
-    autoCloseTimer = setTimeout(() => { closeWelcomePopup(); }, 5000);
-  }, 2500);
-});
-
-renderCatalog();
+loadProducts();
 </script>
 </body>
 </html>
