@@ -26,7 +26,6 @@ body {
   font-size: 15px;
   line-height: 1.5;
   overflow-x: hidden;
-  position: relative;
   min-height: 100vh;
 }
 
@@ -57,10 +56,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:500;}
 .btn-primary:hover{background:var(--gold);color:var(--ink);}
 .btn-ghost{border:1px solid var(--ink);color:var(--ink);background:rgba(244,239,224,0.4);}
 .btn-ghost:hover{background:var(--ink);color:var(--paper);}
-.btn-whatsapp{background:var(--whatsapp);color:#fff;font-weight:600;border-radius:4px;transition:.2s;}
+.btn-whatsapp{background:var(--whatsapp);color:#fff;font-weight:600;}
 .btn-whatsapp:hover{background:var(--whatsapp-dark);}
-.btn-add{background:var(--gold);color:var(--ink);font-weight:600;}
-.btn-add:hover{background:var(--gold-bright);}
 
 .top-banner{
   background:var(--ink);
@@ -75,34 +72,13 @@ header{position:sticky;top:0;left:0;right:0;z-index:100;background:rgba(244,239,
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1120px;margin:0 auto;}
 .logo{font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--ink);}
 .logo span{color:var(--gold);}
+.nav-right{display:flex;align-items:center;gap:16px;}
 .nav-links{display:flex;gap:24px;font-size:14px;font-weight:500;align-items:center;}
 .nav-links a:hover{color:var(--gold);}
 .nav-toggle{display:none;font-size:22px;color:var(--ink);}
 
-.cart-icon-btn{
-  position:relative;
-  background:var(--ink);
-  color:var(--paper);
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-.cart-badge{
-  background:var(--gold);
-  color:var(--ink);
-  border-radius:50%;
-  width:18px;
-  height:18px;
-  font-size:11px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-}
+.cart-icon-btn{position:relative;background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;}
+.cart-badge{background:var(--gold);color:var(--ink);border-radius:50%;padding:2px 7px;font-size:11px;font-weight:bold;}
 
 @media (max-width:768px){
   .nav-links{
@@ -131,15 +107,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.15;color:var(--ink);margin:16px 0;}
 .hero h1 em{font-style:italic;color:var(--gold);}
 .hero p{font-size:15px;color:var(--graphite);margin:0 auto 24px;max-width:540px;}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
-@media (max-width:850px){.hero-ctas{justify-content:center;flex-direction:column;}}
-.trust-row{display:flex;gap:16px;margin-top:24px;font-family:var(--font-mono);font-size:12px;color:var(--graphite-soft);flex-wrap:wrap;}
-@media (max-width:850px){.trust-row{justify-content:center;}}
 
 section{padding:50px 0;position:relative;z-index:1;}
 
 .catalog-window {
-  max-height: 650px;
+  max-height: 600px;
   overflow-y: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -148,7 +120,7 @@ section{padding:50px 0;position:relative;z-index:1;}
 }
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 16px;
 }
 
@@ -158,12 +130,14 @@ section{padding:50px 0;position:relative;z-index:1;}
 .badge-gender{position:absolute;top:8px;right:8px;background:var(--ink);color:var(--gold-bright);font-family:var(--font-mono);font-size:9px;padding:3px 6px;border-radius:10px;}
 .catalog-body{padding:12px;display:flex;flex-direction:column;flex:1;justify-content:space-between;}
 .catalog-brand{font-family:var(--font-mono);font-size:10px;color:var(--gold);text-transform:uppercase;}
-.catalog-price{font-family:var(--font-display);font-size:16px;margin:2px 0;}
 
+.add-buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;}
+
+/* ADMIN PANEL */
 #admin { display: none; }
 .admin-section { background: var(--ink); color: var(--paper); border-radius: 8px; padding: 24px; margin-bottom: 40px; }
 .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
-.admin-form input, .admin-form select { padding: 10px; border-radius: 4px; border: 1px solid var(--line-dark); background: var(--ink-soft); color: #fff; font-family: var(--font-body); }
+.admin-form input, .admin-form select { padding: 10px; border-radius: 4px; border: 1px solid var(--line-dark); background: var(--ink-soft); color: #fff; }
 .login-box { max-width: 380px; margin: 16px 0; display: flex; flex-direction: column; gap: 10px; }
 
 /* MODALES */
@@ -172,19 +146,21 @@ section{padding:50px 0;position:relative;z-index:1;}
 .modal-panel{background:var(--ink);color:var(--paper);border:1px solid var(--line-dark);border-radius:8px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative;}
 .modal-close{position:absolute;top:16px;right:16px;color:var(--paper);font-size:24px;cursor:pointer;}
 
-.welcome-panel { text-align: center; border: 1px solid var(--gold); }
-.welcome-panel h3 { font-size: 1.8rem; color: var(--gold-bright); margin-bottom: 8px; }
+/* ESTILOS DEL CARRITO */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+.cart-item-info h4 { font-size: 14px; color: #fff; }
+.cart-item-info p { font-size: 12px; color: var(--gold-bright); }
+.cart-controls { display: flex; align-items: center; gap: 8px; }
+.cart-controls button { background: var(--ink-soft); color: #fff; width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+.remove-btn { color: #ff6b6b; font-size: 16px; margin-left: 8px; cursor: pointer; }
 
-/* ESTILOS DE CARRITO DE COMPRAS */
-.cart-panel { max-width: 550px; }
-.cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line-dark); padding: 12px 0; }
-.cart-item-title { font-weight: 600; font-size: 14px; color: #fff; }
-.cart-item-sub { font-size: 12px; color: var(--gold-bright); }
-.cart-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-.cart-btn-qty { background: var(--ink-soft); border: 1px solid var(--line-dark); color: #fff; width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; }
-.cart-total-box { margin-top: 20px; border-top: 2px solid var(--gold); padding-top: 14px; display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; color: var(--gold-bright); }
-
-footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;position:relative;z-index:1;}
+footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:30px;}
 </style>
 </head>
@@ -195,13 +171,14 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
 <header>
   <nav>
     <a href="#" class="logo">FIORENZO<span>.</span></a>
-    <div class="nav-links" id="navLinks">
-      <a href="#catalogo" onclick="toggleNav()">Catálogo</a>
-      <a href="javascript:void(0)" onclick="toggleAdminPanel(); toggleNav();" style="color:var(--gold);">Admin</a>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <button class="cart-icon-btn" onclick="openCartModal()">
-        🛒 Carrito <span class="cart-badge" id="cartBadge">0</span>
+    <div class="nav-right">
+      <div class="nav-links" id="navLinks">
+        <a href="#catalogo" onclick="toggleNav()">Catálogo</a>
+        <a href="javascript:void(0)" onclick="toggleAdminPanel(); toggleNav();" style="color:var(--gold);">Admin</a>
+      </div>
+      <button class="cart-icon-btn" onclick="openCart()">
+        🛒 <span>Carrito</span>
+        <span class="cart-badge" id="cartCount">0</span>
       </button>
       <button class="nav-toggle" onclick="toggleNav()" aria-label="Menú">☰</button>
     </div>
@@ -214,24 +191,17 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
       <span class="eyebrow">100% original · Lote verificado</span>
       <h1>El perfume correcto no se elige al azar. <em>Se calcula.</em></h1>
       <p>Fragancias árabes de lujo y perfumería de diseñador con ficha técnica por frasco y decants de 5ml para probar antes de comprar.</p>
-      <div class="hero-ctas">
-        <a href="#catalogo" class="btn btn-primary">Ver catálogo completo →</a>
-      </div>
-      <div class="trust-row">
-        <span>✓ Envíos a todo el país</span>
-        <span>✓ Hasta 6 cuotas</span>
-      </div>
     </div>
     <div class="hero-img-container" style="display: flex; justify-content: center; align-items: center;">
       <picture>
         <source srcset="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" type="image/webp">
-        <img src="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" alt="Decant Fiorenzo" style="max-height: 360px; width: auto; object-fit: contain; filter: drop-shadow(0px 15px 20px rgba(12,32,26,0.25));">
+        <img src="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" alt="Decant Fiorenzo" style="max-height: 320px; object-fit: contain;">
       </picture>
     </div>
   </div>
 </section>
 
-<!-- SECCIÓN CATÁLOGO EN VENTANA FIJA -->
+<!-- CATÁLOGO -->
 <section id="catalogo" style="background:rgba(234,225,199,0.7);backdrop-filter:blur(4px);">
   <div class="container">
     <span class="section-label">Catálogo Oficial</span>
@@ -243,7 +213,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
   </div>
 </section>
 
-<!-- PANEL DE ADMINISTRACIÓN -->
+<!-- PANEL ADMIN -->
 <section id="admin">
   <div class="container">
     <div class="admin-section">
@@ -251,71 +221,57 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
       <h2 style="color:#fff;font-size:1.8rem;margin:8px 0 16px;">Gestión de Productos</h2>
       
       <div id="loginForm" class="login-box">
-        <p style="font-size:13px;color:#ccc;">Ingresa tus credenciales para acceder:</p>
         <input type="text" id="authUser" placeholder="Usuario">
         <input type="password" id="authPass" placeholder="Contraseña">
         <button type="button" onclick="login()" class="btn btn-primary" style="background:var(--gold);color:var(--ink);">Ingresar al Panel</button>
-        <div id="loginStatus" style="font-family:var(--font-mono);font-size:12px;color:#ff6b6b;margin-top:6px;"></div>
+        <div id="loginStatus" style="font-size:12px;color:#ff6b6b;"></div>
       </div>
 
       <div id="adminContent" style="display:none;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <span style="font-size:13px;color:var(--gold-bright);">✓ Sesión iniciada como Administrador</span>
+          <span style="font-size:13px;color:var(--gold-bright);">✓ Sesión iniciada</span>
           <button onclick="logout()" style="color:#ff6b6b;font-size:12px;text-decoration:underline;">Cerrar sesión</button>
         </div>
-        
         <form class="admin-form" id="addProductForm">
-          <input type="text" id="pBrand" placeholder="Marca (ej. Lattafa)" required>
-          <input type="text" id="pName" placeholder="Nombre (ej. Khamrah)" required>
-          <input type="text" id="pStyle" placeholder="Estilo (ej. Oriental ahumado)" required>
-          <input type="url" id="pImg" placeholder="URL Imagen (.webp, .jpg, .png)" required>
-          <input type="text" id="pPrice" placeholder="Precio Frasco (ej. $55.000)" required>
-          <input type="text" id="pDecant" placeholder="Precio Decant (ej. $6.000)" required>
+          <input type="text" id="pBrand" placeholder="Marca" required>
+          <input type="text" id="pName" placeholder="Nombre" required>
+          <input type="text" id="pStyle" placeholder="Estilo" required>
+          <input type="url" id="pImg" placeholder="URL Imagen" required>
+          <input type="text" id="pPrice" placeholder="Precio Frasco ($55.000)" required>
+          <input type="text" id="pDecant" placeholder="Precio Decant ($6.000)" required>
           <select id="pGender">
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
             <option value="Unisex">Unisex</option>
           </select>
-          <input type="text" id="pDur" placeholder="Duración (ej. 8–10 horas)" required>
-          <button type="submit" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto en Google Sheets</button>
+          <input type="text" id="pDur" placeholder="Duración" required>
+          <button type="submit" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto</button>
         </form>
-        <div id="adminStatus" style="margin-top:12px;font-family:var(--font-mono);font-size:12px;color:var(--gold-bright);"></div>
+        <div id="adminStatus" style="margin-top:12px;font-size:12px;color:var(--gold-bright);"></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- POP-UP BIENVENIDA -->
-<div class="modal" id="welcomeModal">
-  <div class="modal-panel welcome-panel">
-    <span class="modal-close" onclick="closeModal('welcomeModal')">&times;</span>
-    <h3>¡Bienvenido a Fiorenzo!</h3>
-    <p style="color:#e0e0e0;margin-top:10px;font-size:14px;">Descubre nuestra exclusiva colección de perfumería árabe y de diseñador 100% original.</p>
+<!-- MODAL CARRITO -->
+<div class="modal" id="cartModal">
+  <div class="modal-panel">
+    <span class="modal-close" onclick="closeModal('cartModal')">&times;</span>
+    <h3 style="color:var(--gold-bright);margin-bottom:16px;">Tu Carrito de Compras</h3>
+    <div id="cartItemsContainer">
+      <p style="color:#ccc;font-size:13px;">El carrito está vacío.</p>
+    </div>
+    <div style="margin-top:20px;border-top:1px solid var(--line-dark);padding-top:14px;" id="cartFooter">
+      <button onclick="sendCartToWhatsApp()" class="btn btn-whatsapp" style="width:100%;">Enviar pedido por WhatsApp 📲</button>
+    </div>
   </div>
 </div>
 
-<!-- MODAL FICHA TÉCNICA -->
+<!-- MODAL DETALLES -->
 <div class="modal" id="infoModal">
   <div class="modal-panel">
     <span class="modal-close" onclick="closeModal('infoModal')">&times;</span>
     <div id="modalContent"></div>
-  </div>
-</div>
-
-<!-- MODAL CARRITO DE COMPRAS -->
-<div class="modal" id="cartModal">
-  <div class="modal-panel cart-panel">
-    <span class="modal-close" onclick="closeModal('cartModal')">&times;</span>
-    <h3 style="color:var(--gold-bright);margin-bottom:16px;">Tu Carrito de Selecciones</h3>
-    <div id="cartList">El carrito está vacío.</div>
-    <div class="cart-total-box" id="cartTotalBox" style="display:none;">
-      <span>TOTAL ESTIMADO:</span>
-      <span id="cartTotalVal">$0</span>
-    </div>
-    <button id="cartWaBtn" class="btn btn-whatsapp" style="width:100%;margin-top:16px;display:none;" onclick="sendCartToWhatsapp()">
-      Enviar Pedido por WhatsApp
-    </button>
   </div>
 </div>
 
@@ -324,11 +280,6 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
     <div>
       <div class="logo" style="color:#fff;">FIORENZO<span>.</span></div>
       <p style="margin-top:10px;">Perfumería de precisión. Fragancias árabes y de diseñador 100% originales.</p>
-    </div>
-    <div>
-      <h4 style="color:#fff;margin-bottom:12px;">Enlaces</h4>
-      <a href="#catalogo" style="display:block;margin-bottom:6px;">Catálogo</a>
-      <a href="javascript:void(0)" onclick="toggleAdminPanel()" style="display:block;">Panel Admin</a>
     </div>
     <div>
       <h4 style="color:#fff;margin-bottom:12px;">Ubicación</h4>
@@ -345,264 +296,179 @@ let perfumes = [];
 let cart = [];
 let isAuthenticated = false;
 
-// PARSER UTILITARIO PARA PRECIOS (Ej: "$55.000" -> 55000)
-function parsePrice(str) {
-  if (!str) return 0;
-  const cleaned = str.replace(/[^\d]/g, '');
-  return parseInt(cleaned, 10) || 0;
-}
-
-function formatPrice(num) {
-  return '$' + num.toLocaleString('es-AR');
-}
-
-// LOGICA DE CARRITO
-function addToCart(index, type) {
-  const item = perfumes[index];
-  const isDecant = type === 'decant';
-  const title = `${item.brand} ${item.name}`;
-  const variant = isDecant ? 'Decant 5ml' : 'Frasco 100ml';
-  const priceStr = isDecant ? item.decant : item.price;
-  const unitPrice = parsePrice(priceStr);
-  const cartId = `${title}-${variant}`;
-
-  const existingIndex = cart.findIndex(i => i.cartId === cartId);
-  if (existingIndex > -1) {
-    cart[existingIndex].qty += 1;
-  } else {
-    cart.push({
-      cartId,
-      title,
-      variant,
-      unitPrice,
-      qty: 1
-    });
-  }
-
-  updateCartUI();
-  openCartModal();
-}
-
-function updateCartQty(cartId, delta) {
-  const index = cart.findIndex(i => i.cartId === cartId);
-  if (index > -1) {
-    cart[index].qty += delta;
-    if (cart[index].qty <= 0) {
-      cart.splice(index, 1);
-    }
-  }
-  updateCartUI();
-}
-
-function updateCartUI() {
-  const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-  document.getElementById('cartBadge').innerText = totalCount;
-
-  const cartList = document.getElementById('cartList');
-  const cartTotalBox = document.getElementById('cartTotalBox');
-  const cartWaBtn = document.getElementById('cartWaBtn');
-
-  if (cart.length === 0) {
-    cartList.innerHTML = '<p style="color:#aaa;font-size:13px;">Tu carrito está vacío. Añade productos desde el catálogo.</p>';
-    cartTotalBox.style.display = 'none';
-    cartWaBtn.style.display = 'none';
-    return;
-  }
-
-  let totalAcc = 0;
-  cartList.innerHTML = cart.map(item => {
-    const itemTotal = item.unitPrice * item.qty;
-    totalAcc += itemTotal;
-    return `
-      <div class="cart-item">
-        <div>
-          <div class="cart-item-title">${item.title}</div>
-          <div class="cart-item-sub">${item.variant} — ${formatPrice(item.unitPrice)} c/u</div>
-          <div class="cart-controls">
-            <button class="cart-btn-qty" onclick="updateCartQty('${item.cartId}', -1)">-</button>
-            <span style="font-size:13px;color:#fff;">${item.qty}</span>
-            <button class="cart-btn-qty" onclick="updateCartQty('${item.cartId}', 1)">+</button>
-          </div>
-        </div>
-        <div style="text-align:right;">
-          <div style="color:var(--gold-bright);font-weight:600;">${formatPrice(itemTotal)}</div>
-          <button onclick="updateCartQty('${item.cartId}', -${item.qty})" style="color:#ff6b6b;font-size:11px;margin-top:4px;">Eliminar</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  document.getElementById('cartTotalVal').innerText = formatPrice(totalAcc);
-  cartTotalBox.style.display = 'flex';
-  cartWaBtn.style.display = 'block';
-}
-
-function sendCartToWhatsapp() {
-  if (cart.length === 0) return;
-
-  let msg = "Hola! Quería consultarles acerca del siguiente pedido:\n\n";
-  let totalAcc = 0;
-
-  cart.forEach(item => {
-    const subtotal = item.unitPrice * item.qty;
-    totalAcc += subtotal;
-    msg += `• ${item.title} (${item.variant}) x${item.qty} = ${formatPrice(subtotal)}\n`;
-  });
-
-  msg += `\n*TOTAL ESTIMADO: ${formatPrice(totalAcc)}*`;
-
-  const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`;
-  window.open(waUrl, '_blank');
-}
-
-function openCartModal() {
-  document.getElementById('cartModal').classList.add('open');
-}
-
 function toggleAdminPanel() {
   const adminSection = document.getElementById('admin');
-  if (adminSection.style.display === 'block') {
-    adminSection.style.display = 'none';
-  } else {
-    adminSection.style.display = 'block';
-    adminSection.scrollIntoView({ behavior: 'smooth' });
-  }
+  adminSection.style.display = adminSection.style.display === 'block' ? 'none' : 'block';
+  if (adminSection.style.display === 'block') adminSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    const welcomeModal = document.getElementById('welcomeModal');
-    welcomeModal.classList.add('open');
-    setTimeout(() => { welcomeModal.classList.remove('open'); }, 5000);
-  }, 1500);
-});
-
 function login() {
-  const userInput = document.getElementById('authUser').value.trim().toLowerCase();
-  const passInput = document.getElementById('authPass').value.trim().toLowerCase();
-  const status = document.getElementById('loginStatus');
-
-  if (userInput === 'ramiro' && passInput === 'adminramiro') {
+  const user = document.getElementById('authUser').value.trim().toLowerCase();
+  const pass = document.getElementById('authPass').value.trim().toLowerCase();
+  if (user === 'ramiro' && pass === 'adminramiro') {
     isAuthenticated = true;
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('adminContent').style.display = 'block';
-    status.innerText = '';
     renderCatalog();
   } else {
-    status.innerText = 'Usuario o contraseña incorrectos.';
+    document.getElementById('loginStatus').innerText = 'Datos incorrectos.';
   }
 }
 
 function logout() {
   isAuthenticated = false;
-  document.getElementById('authUser').value = '';
-  document.getElementById('authPass').value = '';
   document.getElementById('loginForm').style.display = 'flex';
   document.getElementById('adminContent').style.display = 'none';
   renderCatalog();
 }
 
 async function loadProducts() {
-  const catalogGrid = document.getElementById('catalogGrid');
   try {
     const res = await fetch(API_URL, { redirect: 'follow' });
     perfumes = await res.json();
     renderCatalog();
   } catch (err) {
-    catalogGrid.innerHTML = '<p style="color:red;">Error al cargar los productos de Google Sheets.</p>';
+    document.getElementById('catalogGrid').innerHTML = '<p style="color:red;">Error al cargar catálogo.</p>';
   }
 }
 
 function renderCatalog() {
   const catalogGrid = document.getElementById('catalogGrid');
-  if(!perfumes || !perfumes.length) {
-    catalogGrid.innerHTML = '<p>No hay productos registrados en la base de datos.</p>';
+  if(!perfumes.length) {
+    catalogGrid.innerHTML = '<p>No hay productos disponibles.</p>';
     return;
   }
   
-  catalogGrid.innerHTML = perfumes.map((p, i) => {
-    const fallbackImg = p.img && p.img.endsWith('.webp') ? p.img.replace('.webp', '.jpg') : p.img;
-
-    return `
-      <div class="catalog-card">
-        <div class="catalog-img">
-          <span class="badge-gender">${p.gender}</span>
-          <picture>
-            <source srcset="${p.img}" type="image/webp">
-            <img src="${fallbackImg}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${p.img}';">
-          </picture>
+  catalogGrid.innerHTML = perfumes.map((p, i) => `
+    <div class="catalog-card">
+      <div class="catalog-img">
+        <span class="badge-gender">${p.gender}</span>
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150';">
+      </div>
+      <div class="catalog-body">
+        <div>
+          <span class="catalog-brand">${p.brand}</span>
+          <h3 style="font-size:15px;color:var(--ink);">${p.name}</h3>
+          <p style="font-size:13px;font-weight:600;margin-top:4px;">Frasco 100ml: ${p.price}</p>
+          <p style="font-size:12px;color:var(--gold);">Decant 5ml: ${p.decant}</p>
         </div>
-        <div class="catalog-body">
-          <div>
-            <span class="catalog-brand">${p.brand}</span>
-            <h3 style="font-size:15px;color:var(--ink);">${p.name}</h3>
-            <div class="catalog-price">${p.price} <span style="font-size:11px;color:var(--graphite-soft);">/ 100ml</span></div>
-            <p style="font-size:12px;color:var(--gold);margin-bottom:10px;">Decant 5ml: <strong>${p.decant}</strong></p>
+        <div>
+          <div class="add-buttons">
+            <button class="btn btn-primary" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Frasco 100ml', '${p.price}')">+ Frasco</button>
+            <button class="btn btn-ghost" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Decant 5ml', '${p.decant}')">+ Decant</button>
           </div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <button class="btn btn-add" onclick="addToCart(${i}, 'full')">+ Frasco (${p.price})</button>
-            <button class="btn btn-ghost" onclick="addToCart(${i}, 'decant')" style="font-size:11px;padding:6px;">+ Decant (${p.decant})</button>
-            <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="font-size:11px;padding:6px;border-style:dashed;">Ficha / Detalle ${isAuthenticated ? '/ Editar' : ''}</button>
-          </div>
+          <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:11px;padding:6px;margin-top:6px;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
         </div>
       </div>
-    `;
-  }).join('');
+    </div>
+  `).join('');
 }
 
-document.getElementById('addProductForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  if(!isAuthenticated) return;
-
-  const status = document.getElementById('adminStatus');
-  status.innerText = 'Enviando producto a Google Sheets...';
-
-  const newProduct = {
-    brand: document.getElementById('pBrand').value,
-    name: document.getElementById('pName').value,
-    style: document.getElementById('pStyle').value,
-    img: document.getElementById('pImg').value,
-    price: document.getElementById('pPrice').value,
-    decant: document.getElementById('pDecant').value,
-    gender: document.getElementById('pGender').value,
-    dur: document.getElementById('pDur').value
-  };
-
-  try {
-    await fetch(API_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newProduct)
+/* LÓGICA DEL CARRITO */
+function addToCart(index, type, price) {
+  const p = perfumes[index];
+  const cartItemId = `${p.brand}-${p.name}-${type}`;
+  
+  const existingItem = cart.find(item => item.id === cartItemId);
+  if (existingItem) {
+    existingItem.qty++;
+  } else {
+    cart.push({
+      id: cartItemId,
+      brand: p.brand,
+      name: p.name,
+      type: type,
+      price: price,
+      qty: 1
     });
-    status.innerText = '¡Producto agregado con éxito! Recargando...';
-    document.getElementById('addProductForm').reset();
-    setTimeout(loadProducts, 2000);
-  } catch (err) {
-    status.innerText = 'Error al guardar el producto.';
   }
-});
+  updateCartUI();
+  openCart();
+}
 
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    cart = cart.filter(i => i.id !== id);
+  }
+  updateCartUI();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const cartCount = document.getElementById('cartCount');
+  const cartContainer = document.getElementById('cartItemsContainer');
+  const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+  
+  cartCount.innerText = totalItems;
+
+  if (cart.length === 0) {
+    cartContainer.innerHTML = '<p style="color:#ccc;font-size:13px;">El carrito está vacío.</p>';
+    document.getElementById('cartFooter').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('cartFooter').style.display = 'block';
+  cartContainer.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-info">
+        <h4>${item.brand} ${item.name}</h4>
+        <p>${item.type} — ${item.price}</p>
+      </div>
+      <div class="cart-controls">
+        <button onclick="changeQty('${item.id}', -1)">-</button>
+        <span style="font-size:13px;color:#fff;">${item.qty}</span>
+        <button onclick="changeQty('${item.id}', 1)">+</button>
+        <span class="remove-btn" onclick="removeFromCart('${item.id}')">&times;</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openCart() {
+  document.getElementById('cartModal').classList.add('open');
+}
+
+function sendCartToWhatsApp() {
+  if (cart.length === 0) return;
+
+  let message = "Hola! Quería consultarles para realizar el siguiente pedido:\n\n";
+  cart.forEach(item => {
+    message += `• *${item.brand} ${item.name}* (${item.type}) x${item.qty} — ${item.price}\n`;
+  });
+  
+  message += "\n¿Tienen stock disponible?";
+  
+  const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank');
+}
+
+/* DETALLES & ADMIN */
 function openInfoModal(i) {
   const p = perfumes[i];
-
   let adminEditBlock = '';
   if (isAuthenticated) {
     adminEditBlock = `
       <div style="background:var(--ink-soft);padding:14px;border-radius:6px;margin-top:16px;">
         <h4 style="color:var(--gold-bright);margin-bottom:10px;font-size:13px;">Actualizar Precio (Admin)</h4>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <input type="text" id="editPrice" value="${p.price}" placeholder="Precio 100ml" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
-          <input type="text" id="editDecant" value="${p.decant}" placeholder="Precio Decant" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
+          <input type="text" id="editPrice" value="${p.price}" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
+          <input type="text" id="editDecant" value="${p.decant}" style="width:50%;padding:6px;border-radius:4px;border:1px solid #444;background:#111;color:#fff;">
         </div>
-        <button onclick="updatePrice('${p.brand}', '${p.name}')" class="btn btn-primary" style="width:100%;font-size:12px;min-height:36px;">Guardar Cambios</button>
+        <button onclick="updatePrice('${p.brand}', '${p.name}')" class="btn btn-primary" style="width:100%;font-size:12px;">Guardar Cambios</button>
       </div>
     `;
   }
 
   document.getElementById('modalContent').innerHTML = `
     <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);">${p.brand}</span>
-    <h2 style="color:#fff;margin-bottom:6px;font-size:1.5rem;">${p.name}</h2>
+    <h2 style="color:#fff;margin-bottom:6px;">${p.name}</h2>
     <p style="color:#b3c0b8;margin-bottom:14px;font-size:13px;">${p.style}</p>
     <div style="background:var(--ink-soft);padding:12px;border-radius:6px;font-size:13px;color:#e0e0e0;margin-bottom:16px;">
       <p><strong>Género:</strong> ${p.gender}</p>
@@ -610,32 +476,13 @@ function openInfoModal(i) {
       <p style="color:var(--gold-bright);margin-top:4px;"><strong>Precio Frasco:</strong> ${p.price}</p>
       <p style="color:var(--gold-bright);"><strong>Precio Decant (5ml):</strong> ${p.decant}</p>
     </div>
-    <div style="display:flex;gap:8px;">
-      <button class="btn btn-add" style="flex:1;" onclick="addToCart(${i}, 'full'); closeModal('infoModal');">+ Frasco</button>
-      <button class="btn btn-ghost" style="flex:1;color:#fff;border-color:var(--line-dark);" onclick="addToCart(${i}, 'decant'); closeModal('infoModal');">+ Decant</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <button class="btn btn-primary" onclick="addToCart(${i}, 'Frasco 100ml', '${p.price}'); closeModal('infoModal');">+ Frasco al Carrito</button>
+      <button class="btn btn-ghost" style="color:#fff;border-color:#fff;" onclick="addToCart(${i}, 'Decant 5ml', '${p.decant}'); closeModal('infoModal');">+ Decant al Carrito</button>
     </div>
     ${adminEditBlock}
   `;
   document.getElementById('infoModal').classList.add('open');
-}
-
-async function updatePrice(brand, name) {
-  const newPrice = document.getElementById('editPrice').value;
-  const newDecant = document.getElementById('editDecant').value;
-  
-  try {
-    await fetch(API_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'updatePrice', brand, name, price: newPrice, decant: newDecant })
-    });
-    alert('Precio actualizado correctamente en Google Sheets.');
-    closeModal('infoModal');
-    setTimeout(loadProducts, 2000);
-  } catch (err) {
-    alert('Error al actualizar el precio.');
-  }
 }
 
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
