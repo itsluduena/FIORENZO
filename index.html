@@ -138,17 +138,52 @@ section{padding:50px 0;position:relative;z-index:1;}
 #admin { display: none; }
 .admin-section { background: var(--ink); color: var(--paper); border-radius: 8px; padding: 24px; margin-bottom: 40px; }
 .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
-.admin-form input, .admin-form select { padding: 10px; border-radius: 4px; border: 1px solid var(--line-dark); background: var(--ink-soft); color: #fff; }
+.admin-form input, .admin-form select, .admin-form textarea { padding: 10px; border-radius: 4px; border: 1px solid var(--line-dark); background: var(--ink-soft); color: #fff; font-family:inherit;}
 .file-upload-box { grid-column: 1 / -1; background: var(--ink-soft); padding: 12px; border-radius: 4px; border: 1px dashed var(--gold); }
 .login-box { max-width: 380px; margin: 16px 0; display: flex; flex-direction: column; gap: 10px; }
 
-/* MODAL DETALLES */
+/* MODAL DETALLES FICHA TÉCNICA */
 .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(12,32,26,.85);backdrop-filter:blur(4px);}
 .modal.open{display:flex;}
-.modal-panel{background:var(--ink);color:var(--paper);border:1px solid var(--line-dark);border-radius:8px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative;}
-.modal-close{position:absolute;top:16px;right:16px;color:var(--paper);font-size:24px;cursor:pointer;}
+.modal-panel-tech {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--line-dark);
+  border-radius: 12px;
+  max-width: 850px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+}
+@media (max-width: 768px) {
+  .modal-panel-tech { grid-template-columns: 1fr; }
+}
 
-/* CARRITO LATERAL (DRAWER A LA DERECHA) */
+.modal-left {
+  background: #112822;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal-left img { max-height: 380px; object-fit: contain; }
+
+.modal-right { padding: 32px 24px; position: relative; }
+.modal-close{position:absolute;top:16px;right:16px;color:var(--paper);font-size:24px;cursor:pointer;z-index:10;}
+
+/* BARRAS VISUALES DE NOTAS */
+.note-bar-container { margin-bottom: 12px; }
+.note-header { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--gold-bright); text-transform: uppercase; margin-bottom: 4px; }
+.note-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+.note-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; }
+.note-desc { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; }
+
+.tech-badge { display: inline-block; font-family: var(--font-mono); font-size: 11px; padding: 4px 10px; border: 1px solid var(--gold); border-radius: 20px; color: var(--gold-bright); margin-right: 6px; margin-top: 8px; }
+
+/* CARRITO LATERAL */
 .cart-drawer-overlay {
   position: fixed;
   inset: 0;
@@ -159,10 +194,7 @@ section{padding:50px 0;position:relative;z-index:1;}
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-.cart-drawer-overlay.open {
-  opacity: 1;
-  visibility: visible;
-}
+.cart-drawer-overlay.open { opacity: 1; visibility: visible; }
 
 .cart-drawer {
   position: fixed;
@@ -180,38 +212,15 @@ section{padding:50px 0;position:relative;z-index:1;}
   display: flex;
   flex-direction: column;
 }
-.cart-drawer.open {
-  transform: translateX(0);
-}
+.cart-drawer.open { transform: translateX(0); }
 
-.cart-drawer-header {
-  padding: 20px;
-  border-bottom: 1px solid var(--line-dark);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.cart-drawer-header { padding: 20px; border-bottom: 1px solid var(--line-dark); display: flex; justify-content: space-between; align-items: center; }
 .cart-drawer-header h3 { color: var(--gold-bright); font-size: 1.2rem; }
 
-.cart-drawer-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-}
+.cart-drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
+.cart-drawer-footer { padding: 20px; border-top: 1px solid var(--line-dark); background: var(--ink-soft); }
 
-.cart-drawer-footer {
-  padding: 20px;
-  border-top: 1px solid var(--line-dark);
-  background: var(--ink-soft);
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line-dark);
-}
+.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line-dark); }
 .cart-item-info h4 { font-size: 14px; color: #fff; }
 .cart-item-info p { font-size: 12px; color: var(--gold-bright); }
 .cart-controls { display: flex; align-items: center; gap: 8px; }
@@ -292,9 +301,38 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
         </div>
         
         <form class="admin-form" id="addProductForm" onsubmit="saveProduct(event)">
-          <input type="text" id="pBrand" placeholder="Marca" required>
-          <input type="text" id="pName" placeholder="Nombre" required>
-          <input type="text" id="pStyle" placeholder="Estilo" required>
+          <input type="text" id="pBrand" placeholder="Marca (ej: Lattafa)" required>
+          <input type="text" id="pName" placeholder="Nombre (ej: Khamrah Duhqan)" required>
+          <input type="text" id="pStyle" placeholder="Estilo (ej: Gourmand ahumado oriental)" required>
+          <input type="text" id="pPrice" placeholder="Precio Frasco ($55.000)" required>
+          <input type="text" id="pDecant" placeholder="Precio Decant ($6.000)" required>
+          <select id="pGender">
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Unisex">Unisex</option>
+          </select>
+
+          <!-- DATOS FICHA TÉCNICA -->
+          <div style="grid-column: 1 / -1; background: var(--ink-soft); padding: 12px; border-radius: 4px; display: grid; gap: 8px;">
+            <p style="font-size:12px;color:var(--gold-bright);font-weight:bold;">Ficha Técnica / Notas Olfativas:</p>
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px;">
+              <input type="text" id="pSalida" placeholder="Notas de Salida (ej: Especias, mandarina)">
+              <input type="number" id="pSalidaPct" placeholder="% Salida (ej: 60)" min="0" max="100">
+            </div>
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px;">
+              <input type="text" id="pCorazon" placeholder="Notas de Corazón (ej: Incienso, azahar)">
+              <input type="number" id="pCorazonPct" placeholder="% Corazón (ej: 80)" min="0" max="100">
+            </div>
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px;">
+              <input type="text" id="pFondo" placeholder="Notas de Fondo (ej: Tabaco, ámbar)">
+              <input type="number" id="pFondoPct" placeholder="% Fondo (ej: 95)" min="0" max="100">
+            </div>
+            <input type="text" id="pBottleInfo" placeholder="Descripción Frasco/Caja (ej: Frasco oscuro de lujo)">
+            <input type="text" id="pHighlights" placeholder="Por qué destaca (ej: Evolución profunda y ahumada)">
+          </div>
+
+          <input type="text" id="pDur" placeholder="Duración (ej: 10+ horas)" required>
+          <input type="text" id="pEstela" placeholder="Estela (ej: Estela muy alta)">
           
           <div class="file-upload-box">
             <label style="font-size:12px;color:var(--gold-bright);display:block;margin-bottom:6px;">
@@ -305,14 +343,6 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
             <input type="url" id="pImg" placeholder="https://ejemplo.com/imagen.jpg" style="width:100%;margin-top:4px;">
           </div>
 
-          <input type="text" id="pPrice" placeholder="Precio Frasco ($55.000)" required>
-          <input type="text" id="pDecant" placeholder="Precio Decant ($6.000)" required>
-          <select id="pGender">
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Unisex">Unisex</option>
-          </select>
-          <input type="text" id="pDur" placeholder="Duración" required>
           <button type="submit" id="saveBtn" class="btn btn-primary" style="background:var(--gold);color:var(--ink);grid-column:1/-1;">Guardar Producto</button>
         </form>
         <div id="adminStatus" style="margin-top:12px;font-size:13px;color:var(--gold-bright);"></div>
@@ -321,7 +351,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
   </div>
 </section>
 
-<!-- CARRITO DRAWER LATERAL A LA DERECHA -->
+<!-- CARRITO DRAWER LATERAL -->
 <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-drawer-header">
@@ -336,11 +366,12 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
   </div>
 </div>
 
-<!-- MODAL DETALLES -->
+<!-- MODAL FICHA TÉCNICA -->
 <div class="modal" id="infoModal">
-  <div class="modal-panel">
+  <div class="modal-panel-tech">
     <span class="modal-close" onclick="closeModal('infoModal')">&times;</span>
-    <div id="modalContent"></div>
+    <div class="modal-left" id="modalImgBox"></div>
+    <div class="modal-right" id="modalContent"></div>
   </div>
 </div>
 
@@ -401,39 +432,55 @@ async function loadProducts() {
   }
 }
 
+/* MAPEADOR DE VARIABLES PARA PREVENIR ERRORES DE DATOS VACÍOS */
+function getProp(p, keys, fallback = '') {
+  for (let key of keys) {
+    if (p[key] !== undefined && p[key] !== null && p[key] !== '') return p[key];
+  }
+  return fallback;
+}
+
 function renderCatalog() {
   const catalogGrid = document.getElementById('catalogGrid');
-  if(!perfumes.length) {
+  if(!perfumes || !perfumes.length) {
     catalogGrid.innerHTML = '<p>No hay productos disponibles.</p>';
     return;
   }
   
-  catalogGrid.innerHTML = perfumes.map((p, i) => `
-    <div class="catalog-card">
-      <div class="catalog-img">
-        <span class="badge-gender">${p.gender}</span>
-        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150';">
-      </div>
-      <div class="catalog-body">
-        <div>
-          <span class="catalog-brand">${p.brand}</span>
-          <h3 style="font-size:15px;color:var(--ink);">${p.name}</h3>
-          <p style="font-size:13px;font-weight:600;margin-top:4px;">Frasco 100ml: ${p.price}</p>
-          <p style="font-size:12px;color:var(--gold);">Decant 5ml: ${p.decant}</p>
+  catalogGrid.innerHTML = perfumes.map((p, i) => {
+    const brand = getProp(p, ['brand', 'Marca', 'marca'], 'FIORENZO');
+    const name = getProp(p, ['name', 'Nombre', 'nombre'], 'Perfume');
+    const gender = getProp(p, ['gender', 'Genero', 'genero'], 'Unisex');
+    const price = getProp(p, ['price', 'Precio', 'precio', 'precioFrasco'], 'Consultar');
+    const decant = getProp(p, ['decant', 'Decant', 'decantPrice', 'precioDecant'], 'Consultar');
+    const img = getProp(p, ['img', 'Imagen', 'imagen', 'fileData'], 'https://via.placeholder.com/300');
+
+    return `
+      <div class="catalog-card">
+        <div class="catalog-img">
+          <span class="badge-gender">${gender}</span>
+          <img src="${img}" alt="${name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300';">
         </div>
-        <div>
-          <div class="add-buttons">
-            <button class="btn btn-primary" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Frasco 100ml', '${p.price}')">+ Frasco</button>
-            <button class="btn btn-ghost" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Decant 5ml', '${p.decant}')">+ Decant</button>
+        <div class="catalog-body">
+          <div>
+            <span class="catalog-brand">${brand}</span>
+            <h3 style="font-size:15px;color:var(--ink);">${name}</h3>
+            <p style="font-size:13px;font-weight:600;margin-top:4px;">Frasco: ${price}</p>
+            <p style="font-size:12px;color:var(--gold);">Decant 5ml: ${decant}</p>
           </div>
-          <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:11px;padding:6px;margin-top:6px;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
+          <div>
+            <div class="add-buttons">
+              <button class="btn btn-primary" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Frasco 100ml', '${price}')">+ Frasco</button>
+              <button class="btn btn-ghost" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Decant 5ml', '${decant}')">+ Decant</button>
+            </div>
+            <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:11px;padding:6px;margin-top:6px;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-/* LÓGICA DE GUARDAR PRODUCTO E IMAGEN BASE64 */
 async function saveProduct(event) {
   event.preventDefault();
   const statusDiv = document.getElementById('adminStatus');
@@ -458,7 +505,16 @@ async function saveProduct(event) {
     price: document.getElementById('pPrice').value,
     decant: document.getElementById('pDecant').value,
     gender: document.getElementById('pGender').value,
+    salida: document.getElementById('pSalida').value,
+    salidaPct: document.getElementById('pSalidaPct').value || '60',
+    corazon: document.getElementById('pCorazon').value,
+    corazonPct: document.getElementById('pCorazonPct').value || '75',
+    fondo: document.getElementById('pFondo').value,
+    fondoPct: document.getElementById('pFondoPct').value || '90',
+    bottleInfo: document.getElementById('pBottleInfo').value,
+    highlights: document.getElementById('pHighlights').value,
     dur: document.getElementById('pDur').value,
+    estela: document.getElementById('pEstela').value,
     img: urlInput || ''
   };
 
@@ -499,7 +555,10 @@ async function sendPayload(payload) {
 /* CARRITO */
 function addToCart(index, type, price) {
   const p = perfumes[index];
-  const cartItemId = `${p.brand}-${p.name}-${type}`;
+  const brand = getProp(p, ['brand', 'Marca', 'marca'], 'FIORENZO');
+  const name = getProp(p, ['name', 'Nombre', 'nombre'], 'Perfume');
+
+  const cartItemId = `${brand}-${name}-${type}`;
   
   const existingItem = cart.find(item => item.id === cartItemId);
   if (existingItem) {
@@ -507,8 +566,8 @@ function addToCart(index, type, price) {
   } else {
     cart.push({
       id: cartItemId,
-      brand: p.brand,
-      name: p.name,
+      brand: brand,
+      name: name,
       type: type,
       price: price,
       qty: 1
@@ -591,24 +650,90 @@ function sendCartToWhatsApp() {
   window.open(waUrl, '_blank');
 }
 
-/* MODAL & DETALLES */
+/* MODAL & DETALLES (FICHA TÉCNICA VISUAL) */
 function openInfoModal(i) {
   const p = perfumes[i];
+  
+  const brand = getProp(p, ['brand', 'Marca', 'marca'], 'FIORENZO');
+  const name = getProp(p, ['name', 'Nombre', 'nombre'], 'Perfume');
+  const style = getProp(p, ['style', 'Estilo', 'estilo'], '');
+  const gender = getProp(p, ['gender', 'Genero', 'genero'], 'Unisex');
+  const price = getProp(p, ['price', 'Precio', 'precio'], '');
+  const decant = getProp(p, ['decant', 'Decant', 'precioDecant'], '');
+  const img = getProp(p, ['img', 'Imagen', 'imagen'], 'https://via.placeholder.com/300');
+  const dur = getProp(p, ['dur', 'Duracion', 'duracion'], 'Alta duración');
+  const estela = getProp(p, ['estela', 'Estela'], '');
+  
+  const salida = getProp(p, ['salida', 'Salida'], 'Notas cítricas, especias ligeras');
+  const salidaPct = getProp(p, ['salidaPct'], '60');
+  
+  const corazon = getProp(p, ['corazon', 'Corazon'], 'Notas florales, maderas suaves');
+  const corazonPct = getProp(p, ['corazonPct'], '80');
+  
+  const fondo = getProp(p, ['fondo', 'Fondo'], 'Ámbar, almizcle, notas dulces');
+  const fondoPct = getProp(p, ['fondoPct'], '95');
+
+  const bottleInfo = getProp(p, ['bottleInfo', 'FrascoCaja'], '');
+  const highlights = getProp(p, ['highlights', 'PorQueDestaca'], '');
+
+  document.getElementById('modalImgBox').innerHTML = `
+    <img src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/300';">
+  `;
+
   document.getElementById('modalContent').innerHTML = `
-    <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);">${p.brand}</span>
-    <h2 style="color:#fff;margin-bottom:6px;">${p.name}</h2>
-    <p style="color:#b3c0b8;margin-bottom:14px;font-size:13px;">${p.style}</p>
-    <div style="background:var(--ink-soft);padding:12px;border-radius:6px;font-size:13px;color:#e0e0e0;margin-bottom:16px;">
-      <p><strong>Género:</strong> ${p.gender}</p>
-      <p><strong>Duración Estimada:</strong> ${p.dur}</p>
-      <p style="color:var(--gold-bright);margin-top:4px;"><strong>Precio Frasco:</strong> ${p.price}</p>
-      <p style="color:var(--gold-bright);"><strong>Precio Decant (5ml):</strong> ${p.decant}</p>
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);text-transform:uppercase;">${brand}</span>
+    <h2 style="color:#fff;font-size:1.8rem;margin-bottom:2px;">${name}</h2>
+    <p style="color:#94a3b8;font-size:13px;margin-bottom:16px;">${style} ${style && gender ? '·' : ''} ${gender}</p>
+    
+    <div style="font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:20px;">
+      ${price} <span style="font-size:12px;color:#94a3b8;font-weight:normal;">/ Frasco completo</span>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <button class="btn btn-primary" onclick="addToCart(${i}, 'Frasco 100ml', '${p.price}'); closeModal('infoModal');">+ Frasco</button>
-      <button class="btn btn-ghost" style="color:#fff;border-color:#fff;" onclick="addToCart(${i}, 'Decant 5ml', '${p.decant}'); closeModal('infoModal');">+ Decant</button>
+
+    <!-- BARRAS DE NOTAS OLFATIVAS -->
+    <div class="note-bar-container">
+      <div class="note-header"><span>SALIDA</span></div>
+      <div class="note-bar-bg"><div class="note-bar-fill" style="width:${salidaPct}%;"></div></div>
+      <div class="note-desc">${salida}</div>
+    </div>
+
+    <div class="note-bar-container">
+      <div class="note-header"><span>CORAZÓN</span></div>
+      <div class="note-bar-bg"><div class="note-bar-fill" style="width:${corazonPct}%;"></div></div>
+      <div class="note-desc">${corazon}</div>
+    </div>
+
+    <div class="note-bar-container">
+      <div class="note-header"><span>FONDO</span></div>
+      <div class="note-bar-bg"><div class="note-bar-fill" style="width:${fondoPct}%;"></div></div>
+      <div class="note-desc">${fondo}</div>
+    </div>
+
+    ${bottleInfo ? `
+      <div style="margin-top:16px;">
+        <h4 style="font-size:13px;color:#fff;margin-bottom:4px;">El frasco y la caja</h4>
+        <p style="font-size:12px;color:#94a3b8;">${bottleInfo}</p>
+      </div>
+    ` : ''}
+
+    ${highlights ? `
+      <div style="margin-top:16px;">
+        <h4 style="font-size:13px;color:#fff;margin-bottom:4px;">Por qué destaca</h4>
+        <p style="font-size:12px;color:#94a3b8;">${highlights}</p>
+      </div>
+    ` : ''}
+
+    <div style="margin-top:20px;">
+      ${dur ? `<span class="tech-badge">${dur}</span>` : ''}
+      ${estela ? `<span class="tech-badge">${estela}</span>` : ''}
+      ${decant ? `<span class="tech-badge" style="background:var(--gold);color:var(--ink);font-weight:bold;">Decant 5ml: ${decant}</span>` : ''}
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:24px;">
+      <button class="btn btn-primary" onclick="addToCart(${i}, 'Frasco 100ml', '${price}'); closeModal('infoModal');">+ Frasco</button>
+      <button class="btn btn-ghost" style="color:#fff;border-color:#fff;" onclick="addToCart(${i}, 'Decant 5ml', '${decant}'); closeModal('infoModal');">+ Decant</button>
     </div>
   `;
+  
   document.getElementById('infoModal').classList.add('open');
 }
 
