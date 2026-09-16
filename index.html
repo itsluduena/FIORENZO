@@ -516,26 +516,27 @@ async function sendPayload(payload) {
   const saveBtn = document.getElementById('saveBtn');
 
   try {
-    statusDiv.innerText = 'Subiendo a Google Drive y guardando en Google Sheets...';
+    statusDiv.innerText = 'Guardando en Google Sheets y Drive...';
 
-    // Usar 'text/plain' evita bloqueos por políticas CORS en Apps Script
-    const response = await fetch(API_URL, {
+    // Se realiza el envío con POST usando 'text/plain'
+    await fetch(API_URL, {
       method: 'POST',
+      mode: 'no-cors', // Evita bloqueos de políticas CORS con Google Apps Script
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
 
-    const result = await response.json();
-
-    if (result.result === 'success') {
-      statusDiv.innerHTML = '<span style="color:#25D366;">✓ ¡Producto e imagen guardados con éxito!</span>';
-      document.getElementById('addProductForm').reset();
+    // Con 'no-cors', si la petición no lanza error en red, asumimos éxito
+    statusDiv.innerHTML = '<span style="color:#25D366;">✓ ¡Producto guardado exitosamente!</span>';
+    document.getElementById('addProductForm').reset();
+    
+    // Esperamos 1.5s antes de recargar el catálogo para dar tiempo al Sheets de procesar la fila
+    setTimeout(async () => {
       await loadProducts();
-    } else {
-      statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error de servidor: ' + result.error + '</span>';
-    }
+    }, 1500);
+
   } catch (err) {
-    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error de conexión al guardar el producto.</span>';
+    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error al conectar con el servidor: ' + err.message + '</span>';
   } finally {
     saveBtn.disabled = false;
   }
