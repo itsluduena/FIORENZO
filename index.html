@@ -13,38 +13,7 @@
   --graphite:#22302A; --graphite-soft:#5b6b60; --gold:#B8863D; --gold-bright:#E8CE9A;
   --line:rgba(34,48,42,0.14); --line-dark:rgba(244,239,224,0.14);
   --font-display:'Fraunces',serif; --font-body:'Inter',sans-serif; --font-mono:'IBM Plex Mono',monospace;
-}
-
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--paper);color:var(--graphite);font-family:var(--font-body);font-size:15px;line-height:1.5;overflow-x:hidden;}
-img{display:block;max-width:100%;height:auto;}
-a{color:inherit;text-decoration:none;}
-button{font-family:inherit;cursor:pointer;border:none;background:none;}
-.container{max-width:1120px;margin:0 auto;padding:0 20px;}
-
-.eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;display:inline-flex;align-items:center;gap:8px;}
-.eyebrow::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;}
-.section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite-soft);}
-
-h1,h2,h3{font-family:var(--font-display);font-weight:500;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:3px;font-weight:600;font-size:14px;min-height:46px;transition:.2s;}
-.btn-primary{background:var(--ink);color:var(--paper);}
-.<!DOCTYPE html>
-<html lang="es-AR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Fiorenzo — Perfumería Árabe &amp; de Diseñador</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --ink:#0C201A; --ink-soft:#163A2F; --paper:#F4EFE0; --paper-dim:#EAE1C7;
-  --graphite:#22302A; --graphite-soft:#5b6b60; --gold:#B8863D; --gold-bright:#E8CE9A;
-  --line:rgba(34,48,42,0.14); --line-dark:rgba(244,239,224,0.14);
-  --font-display:'Fraunces',serif; --font-body:'Inter',sans-serif; --font-mono:'IBM Plex Mono',monospace;
+  --whatsapp:#25D366; --whatsapp-dark:#1EBE5D;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -65,6 +34,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:500;}
 .btn-primary:hover{background:var(--gold);color:var(--ink);}
 .btn-ghost{border:1px solid var(--line);color:var(--graphite);}
 .btn-ghost:hover{border-color:var(--graphite);}
+.btn-whatsapp{background:var(--whatsapp);color:#fff;font-weight:600;margin-top:16px;width:100%;}
+.btn-whatsapp:hover{background:var(--whatsapp-dark);color:#fff;}
 
 /* BANNER & NAV */
 .top-banner{background:var(--ink);border-bottom:1px solid rgba(232,206,154,.2);padding:8px 0;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);}
@@ -387,6 +358,10 @@ function renderCatalog() {
 
 function openInfoModal(i) {
   const p = perfumes[i];
+  const fullProductName = `${p.brand} - ${p.name}`;
+  const whatsappMsg = encodeURIComponent(`Hola! Quería consultarte acerca de: ${fullProductName}`);
+  const whatsappUrl = `https://wa.me/5493644363749?text=${whatsappMsg}`;
+
   document.getElementById('modalContent').innerHTML = `
     <span style="font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);">${p.brand}</span>
     <h2 style="color:#fff;margin-bottom:6px;">${p.name}</h2>
@@ -397,6 +372,9 @@ function openInfoModal(i) {
       <span>Frasco 100ml: <strong>${p.price}</strong></span>
       <span>Decant 5ml: <strong style="color:var(--gold-bright);">${p.decant}</strong></span>
     </div>
+    <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+      Consultar por WhatsApp
+    </a>
   `;
   document.getElementById('infoModal').classList.add('open');
 }
@@ -430,16 +408,14 @@ function closeWelcomePopup() {
 }
 
 window.addEventListener('load', () => {
-  // Aparece a los 3 segundos (3000ms)
   setTimeout(() => {
     const popup = document.getElementById('welcomePopup');
     popup.classList.add('show');
     
-    // Se cierra automáticamente después de 5 segundos de mostrarse (5000ms)
     autoCloseTimer = setTimeout(() => {
       closeWelcomePopup();
     }, 5000);
-  }, 1500);
+  }, 3000);
 });
 
 renderCatalog();
