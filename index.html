@@ -723,4 +723,52 @@ function toggleNav() { document.getElementById('navLinks').classList.toggle('ope
 window.onload = loadProducts;
 </script>
 </body>
+  
+  <!-- MODAL FICHA TÉCNICA -->
+<div id="productModal" class="modal-overlay">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img-container">
+      <img id="mImg" src="" alt="Producto">
+    </div>
+    <div class="modal-info">
+      <div id="mBrand" class="modal-brand">MARCA</div>
+      <h2 id="mName" class="modal-title">Nombre del Perfume</h2>
+      <div id="mSubtitle" class="modal-subtitle">Estilo - Género</div>
+      <div id="mPrice" class="modal-price">$0</div>
+
+      <!-- Barras de notas olfativas -->
+      <div class="note-group">
+        <div class="note-header"><span>SALIDA</span></div>
+        <div class="progress-bar-bg"><div id="mSalidaBar" class="progress-bar-fill"></div></div>
+        <div id="mSalidaTxt" class="note-description"></div>
+      </div>
+
+      <div class="note-group">
+        <div class="note-header"><span>CORAZÓN</span></div>
+        <div class="progress-bar-bg"><div id="mCorazonBar" class="progress-bar-fill"></div></div>
+        <div id="mCorazonTxt" class="note-description"></div>
+      </div>
+
+      <div class="note-group">
+        <div class="note-header"><span>FONDO</span></div>
+        <div class="progress-bar-bg"><div id="mFondoBar" class="progress-bar-fill"></div></div>
+        <div id="mFondoTxt" class="note-description"></div>
+      </div>
+
+      <!-- Secciones informativas -->
+      <div class="modal-section-title">El frasco y la caja</div>
+      <div id="mPkg" class="modal-section-desc"></div>
+
+      <div class="modal-section-title">Por qué destaca</div>
+      <div id="mHigh" class="modal-section-desc"></div>
+
+      <div class="modal-tags">
+        <span id="mDur" class="modal-tag"></span>
+        <span id="mDecant" class="modal-tag highlight"></span>
+      </div>
+    </div>
+  </div>
+</div>
+  
 </html>
