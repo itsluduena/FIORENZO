@@ -57,8 +57,6 @@ h1,h2,h3{font-family:var(--font-display);font-weight:500;}
 .btn-primary:hover{background:var(--gold);color:var(--ink);}
 .btn-ghost{border:1px solid var(--ink);color:var(--ink);background:rgba(244,239,224,0.4);}
 .btn-ghost:hover{background:var(--ink);color:var(--paper);}
-.btn-whatsapp{background:var(--whatsapp);color:#fff;font-weight:600;margin-top:16px;width:100%;}
-.btn-whatsapp:hover{background:var(--whatsapp-dark);color:#fff;}
 
 .top-banner{
   background:var(--ink);
@@ -111,17 +109,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 @media (max-width:850px){.trust-row{justify-content:center;}}
 
 section{padding:50px 0;position:relative;z-index:1;}
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:24px;align-items:center;}
 .grid-3{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:20px;}
-
-.anatomy{background:var(--ink);color:var(--paper);padding:60px 0;}
-.anatomy .section-label{color:var(--gold-bright);}
-.anatomy h2{color:var(--paper);font-size:2rem;margin:12px 0 20px;}
-.spec-card{background:var(--ink-soft);border:1px solid var(--line-dark);padding:20px;border-radius:8px;}
-.note-row{margin-bottom:14px;}
-.note-head{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--gold-bright);margin-bottom:6px;}
-.bar-track{width:100%;height:6px;background:rgba(255,255,255,.1);border-radius:3px;}
-.bar-fill{height:100%;background:var(--gold);border-radius:3px;}
 
 .catalog-card{background:rgba(244,239,224,0.95);backdrop-filter:blur(4px);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:100%;}
 .catalog-img{aspect-ratio:1;background:rgba(234,225,199,0.5);position:relative;display:flex;align-items:center;justify-content:center;padding:16px;}
@@ -131,11 +119,7 @@ section{padding:50px 0;position:relative;z-index:1;}
 .catalog-brand{font-family:var(--font-mono);font-size:11px;color:var(--gold);text-transform:uppercase;}
 .catalog-price{font-family:var(--font-display);font-size:20px;margin:6px 0;}
 
-.plan-card{background:rgba(244,239,224,0.95);backdrop-filter:blur(4px);border:1px solid var(--line);padding:24px;border-radius:8px;height:100%;display:flex;flex-direction:column;justify-content:space-between;}
-.plan-card.featured{border:2px solid var(--gold);position:relative;}
-.plan-card.featured::before{content:'20% OFF COMPRANDO 3';position:absolute;top:-12px;left:20px;background:var(--gold);color:var(--ink);font-family:var(--font-mono);font-size:10px;padding:3px 8px;font-weight:600;border-radius:2px;}
-
-/* ESTILOS DEL PANEL DE ADMINISTRACIÓN */
+/* ESTILOS PANEL DE ADMINISTRACIÓN */
 .admin-section {
   background: var(--ink);
   color: var(--paper);
@@ -163,17 +147,6 @@ section{padding:50px 0;position:relative;z-index:1;}
 .modal-panel{background:var(--ink);color:var(--paper);border:1px solid var(--line-dark);border-radius:8px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative;}
 .modal-close{position:absolute;top:16px;right:16px;color:var(--paper);font-size:24px;cursor:pointer;}
 
-.decant-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:var(--ink-soft);
-  padding:12px;
-  border-radius:6px;
-  gap:12px;
-  border: 1px solid var(--line-dark);
-}
-
 footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;position:relative;z-index:1;}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:30px;}
 </style>
@@ -186,8 +159,6 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
   <nav>
     <a href="#" class="logo">FIORENZO<span>.</span></a>
     <div class="nav-links" id="navLinks">
-      <a href="#anatomia" onclick="toggleNav()">Cómo elegimos</a>
-      <a href="#coleccion" onclick="toggleNav()">Decants</a>
       <a href="#catalogo" onclick="toggleNav()">Catálogo</a>
       <a href="#admin" onclick="toggleNav()" style="color:var(--gold);">Admin</a>
     </div>
@@ -206,7 +177,6 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
       <p>Fragancias árabes de lujo y perfumería de diseñador con ficha técnica por frasco y decants de 5ml para probar antes de comprar.</p>
       <div class="hero-ctas">
         <a href="#catalogo" class="btn btn-primary">Ver catálogo completo →</a>
-        <a href="#coleccion" class="btn btn-ghost">Precios Decants (5ml)</a>
       </div>
       <div class="trust-row">
         <span>✓ Envíos a todo el país</span>
@@ -214,7 +184,10 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
       </div>
     </div>
     <div class="hero-img-container" style="display: flex; justify-content: center; align-items: center;">
-      <img src="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" alt="Decant Fiorenzo" style="max-height: 360px; width: auto; object-fit: contain; filter: drop-shadow(0px 15px 20px rgba(12,32,26,0.25));">
+      <picture>
+        <source srcset="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" type="image/webp">
+        <img src="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" alt="Decant Fiorenzo" style="max-height: 360px; width: auto; object-fit: contain; filter: drop-shadow(0px 15px 20px rgba(12,32,26,0.25));">
+      </picture>
     </div>
   </div>
 </section>
@@ -229,7 +202,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
         <input type="text" id="pBrand" placeholder="Marca (ej. Lattafa)" required>
         <input type="text" id="pName" placeholder="Nombre (ej. Khamrah)" required>
         <input type="text" id="pStyle" placeholder="Estilo (ej. Oriental ahumado)" required>
-        <input type="url" id="pImg" placeholder="URL Imagen (Link directo)" required>
+        <input type="url" id="pImg" placeholder="URL Imagen (.webp, .jpg, .png)" required>
         <input type="text" id="pPrice" placeholder="Precio Frasco (ej. $55.000)" required>
         <input type="text" id="pDecant" placeholder="Precio Decant (ej. $6.000)" required>
         <select id="pGender">
@@ -253,7 +226,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
   </div>
 </section>
 
-<!-- MODAL FICHA TÉCNICA Y ACTUALIZACIÓN -->
+<!-- MODAL FICHA TÉCNICA Y EDITAR PRECIO -->
 <div class="modal" id="infoModal">
   <div class="modal-panel">
     <span class="modal-close" onclick="closeModal('infoModal')">&times;</span>
@@ -280,8 +253,8 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;po
 </footer>
 
 <script>
-// PEGA AQUÍ LA URL DE TU DESPLIEGUE DE GOOGLE APPS SCRIPT
-const API_URL = 'https://script.google.com/macros/s/AKfycbw9Zn--Ob6VJZEAUqaWV6D4d_Na1-7rno5E-t1LYdzma3InnmSyg_f3iDNk3gzITykQkQ/exec';
+// PEGA AQUÍ LA URL DE TU DESPLIEGUE EN GOOGLE APPS SCRIPT
+const API_URL = 'https://script.google.com/macros/s/TU_SCRIPT_ID/exec';
 
 let perfumes = [];
 
@@ -298,30 +271,39 @@ async function loadProducts() {
 
 function renderCatalog() {
   const catalogGrid = document.getElementById('catalogGrid');
-  if(!perfumes.length) {
+  if(!perfumes || !perfumes.length) {
     catalogGrid.innerHTML = '<p>No hay productos registrados en la base de datos.</p>';
     return;
   }
-  catalogGrid.innerHTML = perfumes.map((p, i) => `
-    <div class="catalog-card">
-      <div class="catalog-img">
-        <span class="badge-gender">${p.gender}</span>
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
-      </div>
-      <div class="catalog-body">
-        <div>
-          <span class="catalog-brand">${p.brand}</span>
-          <h3 style="font-size:16px;color:var(--ink);">${p.name}</h3>
-          <div class="catalog-price">${p.price} <span style="font-size:12px;color:var(--graphite-soft);">/ 100ml</span></div>
-          <p style="font-size:13px;color:var(--gold);margin-bottom:14px;">Decant 5ml: <strong>${p.decant}</strong></p>
+  
+  catalogGrid.innerHTML = perfumes.map((p, i) => {
+    // Si la imagen es .webp genera el fallback secundario en .jpg automáticamente
+    const fallbackImg = p.img && p.img.endsWith('.webp') ? p.img.replace('.webp', '.jpg') : p.img;
+
+    return `
+      <div class="catalog-card">
+        <div class="catalog-img">
+          <span class="badge-gender">${p.gender}</span>
+          <picture>
+            <source srcset="${p.img}" type="image/webp">
+            <img src="${fallbackImg}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${p.img}';">
+          </picture>
         </div>
-        <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:12px;">Ver detalles / Editar precio</button>
+        <div class="catalog-body">
+          <div>
+            <span class="catalog-brand">${p.brand}</span>
+            <h3 style="font-size:16px;color:var(--ink);">${p.name}</h3>
+            <div class="catalog-price">${p.price} <span style="font-size:12px;color:var(--graphite-soft);">/ 100ml</span></div>
+            <p style="font-size:13px;color:var(--gold);margin-bottom:14px;">Decant 5ml: <strong>${p.decant}</strong></p>
+          </div>
+          <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:12px;">Ver detalles / Editar precio</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-// AGREGAR PRODUCTO A GOOGLE SHEETS
+// ENVIAR PRODUCTO A GOOGLE SHEETS
 document.getElementById('addProductForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const status = document.getElementById('adminStatus');
@@ -353,7 +335,7 @@ document.getElementById('addProductForm').addEventListener('submit', async (e) =
   }
 });
 
-// MODAL FICHA Y ACTUALIZACIÓN DE PRECIOS
+// ABRIR MODAL CON DETALLES Y EDICIÓN DE PRECIOS
 function openInfoModal(i) {
   const p = perfumes[i];
 
@@ -375,6 +357,7 @@ function openInfoModal(i) {
   document.getElementById('infoModal').classList.add('open');
 }
 
+// ACTUALIZAR PRECIO
 async function updatePrice(brand, name) {
   const newPrice = document.getElementById('editPrice').value;
   const newDecant = document.getElementById('editDecant').value;
@@ -386,7 +369,7 @@ async function updatePrice(brand, name) {
     body: JSON.stringify({ action: 'updatePrice', brand, name, price: newPrice, decant: newDecant })
   });
   
-  alert('Actualización enviada. Se reflejará en instantes.');
+  alert('Actualización enviada a Google Sheets.');
   closeModal('infoModal');
   setTimeout(loadProducts, 2000);
 }
