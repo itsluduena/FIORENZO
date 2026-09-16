@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiorenzo — Perfumería Árabe &amp; de Diseñador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#0C201A;
+  --ink-soft:#163A2F;
+  --paper:#F4EFE0;
+  --paper-dim:#EAE1C7;
+  --graphite:#22302A;
+  --graphite-soft:#5b6b60;
+  --gold:#B8863D;
+  --gold-bright:#E8CE9A;
+  --mist:#7C9186;
+  --mist-dim:#b3c0b8;
+  --signal:#7A3B2A;
+  --line: rgba(34,48,42,0.14);
+  --line-dark: rgba(244,239,224,0.14);
+  --radius: 3px;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--graphite);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block; max-width:100%;}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer; border:none; background:none;}
+.container{max-width:1180px; margin:0 auto; padding:0 32px;}
+@media (max-width:640px){ .container{padding:0 20px;} }
+
+::selection{ background:var(--gold); color:var(--ink); }
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.eyebrow::before{
+  content:'';
+  width:6px; height:6px;
+  background:var(--gold);
+  border-radius:50%;
+  display:inline-block;
+}
+.section-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--graphite-soft);
+}
+
+h1,h2,h3{ font-family:var(--font-display); font-weight:500; letter-spacing:-0.01em; }
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 26px;
+  border-radius:var(--radius);
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:14.5px;
+  letter-spacing:0.01em;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  white-space:nowrap;
+}
+.btn-primary{
+  background:var(--ink);
+  color:var(--paper);
+}
+.btn-primary:hover{
+  background:var(--gold);
+  color:var(--ink);
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(173,138,61,0.35);
+}
+.btn-ghost{
+  background:transparent;
+  color:var(--graphite);
+  border:1px solid var(--line);
+}
+.btn-ghost:hover{
+  border-color:var(--graphite);
+  transform:translateY(-2px);
+}
+.btn-arrow{ transition:transform .25s var(--ease); }
+.btn:hover .btn-arrow{ transform:translateX(3px); }
+
+/* ============ TOP BANNER (masthead) ============ */
+.top-banner{
+  background:linear-gradient(90deg, #0C201A 0%, #163A2F 55%, #0C201A 100%);
+  border-bottom:1px solid rgba(232,206,154,0.25);
+  padding:12px 0;
+}
+.top-banner-inner{
+  max-width:1180px; margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  flex-wrap:wrap;
+}
+.top-banner-mark{ width:26px; height:26px; flex-shrink:0; }
+.top-banner-name{
+  font-family:var(--font-display);
+  font-size:19px;
+  letter-spacing:0.14em;
+  color:var(--gold-bright);
+  font-weight:600;
+}
+.top-banner-sep{
+  width:1px; height:14px; background:rgba(232,206,154,0.35);
+}
+.top-banner-tag{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#b9c2ba;
+}
+@media (max-width:560px){
+  .top-banner-tag{ display:none; }
+  .top-banner-sep{ display:none; }
+}
+
+/* ============ NAV ============ */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+}
+.nav-bar{
+  background:rgba(244,239,224,0.86);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 32px;
+  max-width:1180px; margin:0 auto;
+}
+.logo{
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  display:flex; align-items:center; gap:2px;
+}
+.logo .dot{ color:var(--gold); }
+.nav-links{
+  display:flex; align-items:center; gap:36px;
+  font-size:14px; font-weight:500;
+}
+.nav-links a{ color:var(--graphite-soft); transition:color .2s; position:relative; }
+.nav-links a:hover{ color:var(--ink); }
+.nav-cta{ display:flex; align-items:center; gap:16px; }
+.nav-mobile-toggle{ display:none; flex-direction:column; gap:5px; padding:6px; }
+.nav-mobile-toggle span{ width:22px; height:2px; background:var(--ink); }
+
+@media (max-width:900px){
+  .nav-links{ display:none; }
+  .nav-mobile-toggle{ display:flex; }
+  .nav-cta .btn-ghost{ display:none; }
+}
+
+/* ============ HERO ============ */
+.hero{
+  padding:222px 0 100px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr 0.95fr;
+  gap:64px;
+  align-items:center;
+}
+@media (max-width:960px){
+  .hero-grid{ grid-template-columns:1fr; gap:56px; }
+  .hero{ padding:196px 0 72px; }
+}
+.hero h1{
+  font-size:clamp(2.4rem, 4.6vw, 4.1rem);
+  line-height:1.06;
+  color:var(--ink);
+  margin:22px 0 24px;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--gold);
+}
+.hero p.lede{
+  font-size:18px;
+  color:var(--graphite-soft);
+  max-width:520px;
+  line-height:1.6;
+  margin-bottom:34px;
+}
+.hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:36px; }
+.trust-row{
+  display:flex; gap:28px; flex-wrap:wrap;
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--graphite-soft);
+}
+.trust-row span{ display:flex; align-items:center; gap:8px; }
+.trust-row svg{ width:14px; height:14px; stroke:var(--gold); flex-shrink:0; }
+
+/* hero visual */
+.hero-visual{
+  position:relative;
+  height:520px;
+  display:flex; align-items:center; justify-content:center;
+}
+@media (max-width:960px){ .hero-visual{ height:400px; } }
+.bottle-stage{
+  position:relative; width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+}
+.bottle-glow{
+  position:absolute;
+  width:320px; height:320px;
+  background:radial-gradient(circle, rgba(173,138,61,0.28) 0%, rgba(173,138,61,0) 70%);
+  filter:blur(10px);
+}
+.bottle-svg{ position:relative; z-index:2; width:190px; animation:float 6s ease-in-out infinite; }
+@keyframes float{
+  0%,100%{ transform:translateY(0px); }
+  50%{ transform:translateY(-14px); }
+}
+.float-card{
+  position:absolute;
+  background:var(--ink);
+  color:var(--paper);
+  padding:12px 16px;
+  border-radius:var(--radius);
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  line-height:1.4;
+  box-shadow:0 16px 40px rgba(19,17,16,0.28);
+  z-index:3;
+  animation:floatCard 7s ease-in-out infinite;
+}
+.float-card b{ color:var(--gold-bright); display:block; font-size:15px; font-family:var(--font-mono); }
+.card-a{ top:6%; left:-6%; animation-delay:0s; }
+.card-b{ bottom:12%; left:-2%; animation-delay:1.2s; }
+.card-c{ top:38%; right:-8%; animation-delay:2.4s; }
+@media (max-width:960px){
+  .card-a{ left:0; } .card-b{ left:2%; } .card-c{ right:0; }
+}
+@media (max-width:520px){
+  .float-card{ font-size:10px; padding:9px 12px; }
+  .card-a{ top:0; } .card-c{ top:34%; }
+}
+@keyframes floatCard{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-8px); }
+}
+
+/* ============ LOGO STRIP ============ */
+.logo-strip{
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:34px 0;
+}
+.logo-strip-inner{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:26px;
+}
+.logo-strip p{
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--graphite-soft); flex-shrink:0;
+}
+.brand-marks{ display:flex; gap:40px; flex-wrap:wrap; align-items:center; }
+.brand-marks span{
+  font-family:var(--font-display); font-size:17px; color:var(--graphite-soft);
+  opacity:0.55; transition:opacity .2s;
+}
+.brand-marks span:hover{ opacity:1; color:var(--ink); }
+
+/* ============ STORY SECTION ============ */
+.story{ padding:120px 0; }
+.story-grid{
+  display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px;
+}
+@media (max-width:900px){ .story-grid{ grid-template-columns:1fr; gap:36px; } }
+.story h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); line-height:1.15; margin-top:14px; }
+.story-body p{ font-size:16.5px; color:var(--graphite-soft); margin-bottom:20px; max-width:560px; }
+.story-body p strong{ color:var(--ink); font-weight:600; }
+.stat-row{
+  display:flex; gap:48px; margin-top:36px; flex-wrap:wrap;
+}
+.stat{ }
+.stat b{ font-family:var(--font-display); font-size:2.4rem; color:var(--ink); display:block; line-height:1; }
+.stat span{ font-family:var(--font-mono); font-size:11.5px; color:var(--graphite-soft); text-transform:uppercase; letter-spacing:0.06em; }
+
+/* ============ ANATOMY / SIGNATURE SECTION ============ */
+.anatomy{
+  background:var(--ink);
+  color:var(--paper);
+  padding:120px 0;
+  position:relative;
+}
+.anatomy .section-label{ color:var(--mist-dim); }
+.anatomy h2{ color:var(--paper); font-size:clamp(1.9rem,3vw,2.6rem); margin:14px 0 16px; max-width:640px; }
+.anatomy p.sub{ color:#bdb6ac; max-width:560px; font-size:16.5px; margin-bottom:64px; }
+
+.spec-sheet{
+  display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:start;
+}
+@media (max-width:900px){ .spec-sheet{ grid-template-columns:1fr; gap:44px; } }
+
+.spec-card{
+  background:var(--ink-soft);
+  border:1px solid var(--line-dark);
+  border-radius:6px;
+  padding:32px;
+}
+.spec-card-top{
+  display:flex; justify-content:space-between; align-items:baseline;
+  border-bottom:1px solid var(--line-dark);
+  padding-bottom:18px; margin-bottom:22px;
+}
+.spec-card-top h3{ font-family:var(--font-display); font-size:22px; color:var(--paper); }
+.spec-card-top span{ font-family:var(--font-mono); font-size:11px; color:var(--mist-dim); }
+
+.note-row{ margin-bottom:22px; }
+.note-row:last-child{ margin-bottom:0; }
+.note-row-head{ display:flex; justify-content:space-between; margin-bottom:8px; font-family:var(--font-mono); font-size:12px; }
+.note-row-head .label{ color:var(--mist-dim); text-transform:uppercase; letter-spacing:0.08em; }
+.note-row-head .value{ color:var(--gold-bright); }
+.bar-track{ width:100%; height:6px; background:rgba(245,241,232,0.1); border-radius:4px; overflow:hidden; }
+.bar-fill{ height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright)); border-radius:4px; width:0%; transition:width 1.4s var(--ease); }
+.note-desc{ font-size:13px; color:#a6a096; margin-top:6px; }
+
+.anatomy-copy-list{ display:flex; flex-direction:column; gap:28px; }
+.anatomy-item{ display:flex; gap:18px; }
+.anatomy-item .idx{ font-family:var(--font-mono); font-size:13px; color:var(--gold-bright); flex-shrink:0; padding-top:3px; }
+.anatomy-item h4{ font-family:var(--font-body); font-weight:600; font-size:16.5px; color:var(--paper); margin-bottom:6px; }
+.anatomy-item p{ font-size:14.5px; color:#b6afa4; max-width:440px; }
+
+/* ============ HOW IT WORKS ============ */
+.how{ padding:120px 0; }
+.how-head{ max-width:640px; margin-bottom:64px; }
+.how-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
+.steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+@media (max-width:860px){ .steps{ grid-template-columns:1fr; } }
+.step{
+  border-top:1px solid var(--line);
+  padding-top:24px;
+  position:relative;
+}
+.step .num{ font-family:var(--font-mono); font-size:13px; color:var(--gold); }
+.step h3{ font-size:22px; margin:14px 0 12px; color:var(--ink); }
+.step p{ color:var(--graphite-soft); font-size:15px; line-height:1.6; }
+.step-tag{
+  display:inline-block; margin-top:16px;
+  font-family:var(--font-mono); font-size:11px; color:var(--graphite-soft);
+  border:1px solid var(--line); padding:5px 10px; border-radius:20px;
+}
+
+/* ============ COLLECTIONS / PRICING ============ */
+.collections{ background:var(--paper-dim); padding:120px 0; }
+.coll-head{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; margin-bottom:56px; }
+.coll-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; max-width:520px; }
+
+.plans{ display:grid; grid-template-columns:repeat(2,1fr); gap:24px; max-width:820px; margin:0 auto; }
+@media (max-width:760px){ .plans{ grid-template-columns:1fr; } }
+.plan{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:36px 30px;
+  display:flex; flex-direction:column;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
+}
+.plan:hover{ transform:translateY(-6px); box-shadow:0 20px 44px rgba(43,40,35,0.08); border-color:rgba(173,138,61,0.4); }
+.plan.featured{ border-color:var(--gold); position:relative; }
+.plan.featured::before{
+  content:'BENEFICIO EXCLUSIVO';
+  position:absolute; top:-12px; left:30px;
+  background:var(--gold); color:var(--ink);
+  font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em;
+  padding:5px 10px; border-radius:4px;
+}
+.plan-name{ font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--graphite-soft); margin-bottom:14px; }
+.plan-price{ font-family:var(--font-display); font-size:2.2rem; color:var(--ink); margin-bottom:4px; }
+.plan-price span{ font-family:var(--font-body); font-size:13px; color:var(--graphite-soft); font-weight:500; }
+.plan-desc{ font-size:14px; color:var(--graphite-soft); margin-bottom:24px; min-height:40px; }
+.plan-feats{ list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:28px; flex:1; }
+.plan-feats li{ display:flex; gap:10px; font-size:14.5px; color:var(--graphite); align-items:flex-start; }
+.plan-feats svg{ width:16px; height:16px; stroke:var(--gold); flex-shrink:0; margin-top:2px; }
+.plan .btn{ width:100%; justify-content:center; }
+
+/* Interactive Decants Prices Modal Trigger Container */
+.decants-interactive-box{
+  margin-top:40px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:30px;
+  text-align:center;
+}
+.decants-interactive-box h3{ font-family:var(--font-display); font-size:22px; color:var(--ink); margin-bottom:10px; }
+.decants-interactive-box p{ font-size:14.5px; color:var(--graphite-soft); margin-bottom:20px; max-width:600px; margin-left:auto; margin-right:auto; }
+
+/* ============ CATALOG ============ */
+.catalog{ padding:120px 0; }
+.catalog-head{ max-width:640px; margin-bottom:56px; }
+.catalog-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
+.catalog-head p.sub{ color:var(--graphite-soft); font-size:16.5px; margin-top:14px; max-width:560px; }
+
+.catalog-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+@media (max-width:980px){ .catalog-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px){ .catalog-grid{ grid-template-columns:1fr; } }
+
+.cc-card{
+  background:var(--paper); border:1px solid var(--line); border-radius:8px;
+  overflow:hidden; display:flex; flex-direction:column;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
+}
+.cc-card:hover{ transform:translateY(-6px); box-shadow:0 20px 44px rgba(22,58,47,0.12); border-color:rgba(184,134,61,0.4); }
+.cc-image{
+  aspect-ratio:1/1; background:var(--paper-dim);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; position:relative;
+}
+.cc-image img{ width:100%; height:100%; object-fit:cover; transform-origin:center center; will-change:transform; }
+.cc-gender{
+  position:absolute; top:12px; right:12px;
+  font-family:var(--font-mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase;
+  background:rgba(12,32,26,0.78); color:var(--gold-bright); padding:5px 9px; border-radius:20px;
+}
+.cc-body{ padding:20px 20px 22px; display:flex; flex-direction:column; flex:1; }
+.cc-brand{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:6px;
+}
+.cc-name{ font-family:var(--font-display); font-size:21px; color:var(--ink); margin-bottom:4px; line-height:1.15; }
+.cc-style{ font-size:13px; color:var(--graphite-soft); margin-bottom:14px; }
+.cc-meta{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+.cc-meta span{
+  font-family:var(--font-mono); font-size:10.5px; color:var(--graphite-soft);
+  border:1px solid var(--line); padding:4px 9px; border-radius:20px;
+}
+.cc-price{
+  font-family:var(--font-display); font-size:19px; color:var(--ink);
+  margin-bottom:14px; display:flex; align-items:baseline; gap:6px;
+}
+.cc-price span{ font-family:var(--font-mono); font-size:11px; color:var(--graphite-soft); font-weight:500; }
+.cc-view{ margin-top:auto; width:100%; justify-content:center; font-size:13px; padding:11px 20px; }
+
+/* modal */
+.cc-modal{
+  position:fixed; inset:0; z-index:200;
+  display:none; align-items:center; justify-content:center;
+  padding:24px;
+}
+.cc-modal.open{ display:flex; }
+.cc-modal-overlay{
+  position:absolute; inset:0; background:rgba(12,32,26,0.72); backdrop-filter:blur(4px);
+}
+.cc-modal-panel{
+  position:relative; background:var(--ink); color:var(--paper);
+  border:1px solid var(--line-dark); border-radius:10px;
+  max-width:880px; width:100%; max-height:88vh; overflow-y:auto;
+}
+.cc-modal-close{
+  position:absolute; top:16px; right:16px; z-index:2;
+  width:34px; height:34px; border-radius:50%; background:rgba(244,239,224,0.1);
+  color:var(--paper); font-size:20px; display:flex; align-items:center; justify-content:center;
+  transition:background .2s;
+}
+.cc-modal-close:hover{ background:rgba(244,239,224,0.2); }
+.cc-modal-grid{ display:grid; grid-template-columns:1fr 1.2fr; }
+@media (max-width:720px){ .cc-modal-grid{ grid-template-columns:1fr; } }
+.cc-modal-img{ background:var(--ink-soft); display:flex; align-items:center; justify-content:center; padding:20px; }
+.cc-modal-img img{ width:100%; height:100%; object-fit:contain; max-height:480px; border-radius:6px; }
+.cc-modal-info{ padding:36px 36px 40px; }
+.cc-modal-brand{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-bright); }
+.cc-modal-info h3{ font-family:var(--font-display); font-size:28px; color:var(--paper); margin:8px 0 4px; }
+.cc-modal-style{ font-size:14px; color:#b3c0b8; margin-bottom:26px; }
+.cc-modal-info .note-row{ margin-bottom:18px; }
+.cc-modal-info .note-row-head{ display:flex; justify-content:space-between; margin-bottom:7px; font-family:var(--font-mono); font-size:11.5px; }
+.cc-modal-info .note-row-head .label{ color:var(--mist-dim); text-transform:uppercase; letter-spacing:0.08em; }
+.cc-modal-info .note-row-head .value{ color:var(--gold-bright); }
+.cc-modal-info .bar-track{ width:100%; height:5px; background:rgba(244,239,224,0.1); border-radius:4px; overflow:hidden; }
+.cc-modal-info .bar-fill{ height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright)); border-radius:4px; }
+.cc-modal-info .note-desc{ font-size:12.5px; color:#a6b0a8; margin-top:5px; }
+.cc-modal-box, .cc-modal-why{ margin-top:22px; padding-top:20px; border-top:1px solid var(--line-dark); }
+.cc-modal-box h4, .cc-modal-why h4{ font-size:14.5px; font-weight:600; color:var(--paper); margin-bottom:8px; }
+.cc-modal-box p, .cc-modal-why p{ font-size:14px; color:#b3c0b8; line-height:1.6; }
+.cc-modal-badges{ display:flex; gap:10px; margin-top:24px; flex-wrap:wrap; }
+.cc-modal-badges span{
+  font-family:var(--font-mono); font-size:11px; color:var(--gold-bright);
+  border:1px solid rgba(232,206,154,0.35); padding:6px 12px; border-radius:20px;
+}
+
+/* ============ TESTIMONIALS ============ */
+.testimonials{ padding:120px 0; }
+.test-head{ max-width:600px; margin-bottom:56px; }
+.test-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
+.test-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+@media (max-width:900px){ .test-grid{ grid-template-columns:1fr; } }
+.test-card{
+  border:1px solid var(--line); border-radius:8px; padding:28px;
+  display:flex; flex-direction:column; gap:18px;
+}
+.stars{ display:flex; gap:3px; }
+.stars svg{ width:14px; height:14px; fill:var(--gold); stroke:none; }
+.test-card p{ font-size:15px; color:var(--graphite); line-height:1.6; flex:1; }
+.test-who{ display:flex; align-items:center; gap:12px; }
+.avatar{
+  width:38px; height:38px; border-radius:50%; background:var(--ink); color:var(--paper);
+  display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:13px;
+  flex-shrink:0;
+}
+.test-who b{ display:block; font-size:14px; }
+.test-who span{ font-family:var(--font-mono); font-size:11.5px; color:var(--graphite-soft); }
+
+/* ============ GUARANTEE ============ */
+.guarantee{ background:var(--ink); color:var(--paper); padding:100px 0; }
+.guarantee-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center; }
+@media (max-width:900px){ .guarantee-grid{ grid-template-columns:1fr; gap:40px; } }
+.guarantee h2{ color:var(--paper); font-size:clamp(1.8rem,2.8vw,2.4rem); }
+.guarantee-badge{
+  display:inline-flex; align-items:center; gap:10px; margin-bottom:20px;
+  font-family:var(--font-mono); font-size:12px; color:var(--gold-bright); border:1px solid rgba(201,167,90,0.4);
+  padding:8px 14px; border-radius:30px;
+}
+.g-list{ display:grid; grid-template-columns:1fr 1fr; gap:20px 28px; }
+@media (max-width:560px){ .g-list{ grid-template-columns:1fr; } }
+.g-item{ display:flex; gap:12px; }
+.g-item svg{ width:18px; height:18px; stroke:var(--gold-bright); flex-shrink:0; margin-top:2px; }
+.g-item h4{ font-size:15px; margin-bottom:4px; font-family:var(--font-body); font-weight:600; }
+.g-item p{ font-size:13.5px; color:#b6afa4; line-height:1.5; }
+
+/* ============ FAQ ============ */
+.faq{ padding:120px 0; }
+.faq-head{ max-width:600px; margin-bottom:48px; }
+.faq-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:var(--ink); margin-top:14px; }
+.faq-list{ max-width:760px; }
+.faq-item{ border-bottom:1px solid var(--line); }
+.faq-q{
+  display:flex; justify-content:space-between; align-items:center; gap:20px;
+  padding:24px 0; width:100%; text-align:left; font-size:16.5px; font-weight:500; color:var(--ink);
+}
+.faq-q .plus{ font-family:var(--font-mono); font-size:20px; color:var(--gold); transition:transform .3s var(--ease); flex-shrink:0; }
+.faq-item.open .faq-q .plus{ transform:rotate(45deg); }
+.faq-a{ max-height:0; overflow:hidden; transition:max-height .4s var(--ease); }
+.faq-a p{ padding-bottom:24px; color:var(--graphite-soft); font-size:15px; max-width:640px; line-height:1.65; }
+
+/* ============ FINAL CTA ============ */
+.final-cta{
+  padding:130px 0;
+  text-align:center;
+  position:relative;
+}
+.final-cta h2{ font-size:clamp(2.1rem,4.4vw,3.4rem); color:var(--ink); max-width:780px; margin:18px auto 30px; line-height:1.1; }
+.final-cta .lede{ color:var(--graphite-soft); font-size:17px; max-width:480px; margin:0 auto 36px; }
+.final-cta-ctas{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+/* ============ FOOTER ============ */
+footer{ background:var(--ink); color:#b6afa4; padding:70px 0 30px; }
+.footer-grid{ display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:40px; margin-bottom:60px; }
+@media (max-width:800px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:520px){ .footer-grid{ grid-template-columns:1fr; } }
+.footer-logo{ font-family:var(--font-display); font-size:22px; color:var(--paper); margin-bottom:14px; }
+.footer-col h5{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#7d766c; margin-bottom:16px; }
+.footer-col a{ display:block; font-size:14px; margin-bottom:10px; color:#c9c3b8; transition:color .2s; }
+.footer-col a:hover{ color:var(--gold-bright); }
+.footer-bottom{
+  border-top:1px solid var(--line-dark); padding-top:26px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  font-family:var(--font-mono); font-size:11.5px; color:#7d766c;
+}
+
+/* reveal on scroll */
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.visible{ opacity:1; transform:translateY(0); }
+
+@keyframes softPulse{
+  0%,100%{ transform:scale(1); opacity:1; }
+  50%{ transform:scale(1.35); opacity:.65; }
+}
+.eyebrow::before{ animation:softPulse 2.2s ease-in-out infinite; }
+
+@keyframes shimmerSweep{
+  0%{ background-position:-160% 0; }
+  100%{ background-position:160% 0; }
+}
+.btn-primary{
+  background-image:linear-gradient(100deg, var(--ink) 40%, var(--gold) 50%, var(--ink) 60%);
+  background-size:260% 100%;
+  background-position:0 0;
+}
+.btn-primary:hover{ animation:shimmerSweep 1.4s linear infinite; }
+
+@keyframes gentleTilt{
+  0%,100%{ transform:rotate(0deg); }
+  50%{ transform:rotate(-1.2deg); }
+}
+.cc-card:hover .cc-image img{ animation:gentleTilt 2.6s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top-banner">
+    <div class="top-banner-inner">
+      <svg class="top-banner-mark" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+        <path d="M400,205 C445,205 473,240 473,290 C473,345 445,388 400,428 C355,388 327,345 327,290 C327,240 355,205 400,205 Z" fill="none" stroke="#E8CE9A" stroke-width="26"/>
+        <text x="400" y="337" text-anchor="middle" font-family="Fraunces, serif" font-size="230" fill="#E8CE9A" letter-spacing="-14">FZ</text>
+      </svg>
+      <span class="top-banner-name">FIORENZO</span>
+      <span class="top-banner-sep"></span>
+      <span class="top-banner-tag">Perfumería árabe &amp; de diseñador</span>
+    </div>
+  </div>
+  <div class="nav-bar">
+    <nav>
+      <a href="#" class="logo">FIORENZO<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="#anatomia">Cómo elegimos</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#coleccion">Decants</a>
+        <a href="#opiniones">Opiniones</a>
+        <a href="#preguntas">Preguntas</a>
+      </div>
+      <div class="nav-cta">
+        <a href="#coleccion" class="btn btn-ghost">Ver decants</a>
+        <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">100% original · verificado por lote</span>
+      <h1>El perfume correcto<br>no se elige al azar.<br><em>Se calcula.</em></h1>
+      <p class="lede">Fragancias árabes de lujo y perfumería de diseñador, con una ficha técnica por frasco y un sistema de decants desde $6.000 hasta $9.300 para que pruebes antes de comprometerte con el original.</p>
+      <div class="hero-ctas">
+        <a href="#catalogo" class="btn btn-primary">Ver catálogo completo <span class="btn-arrow">→</span></a>
+        <a href="#coleccion" class="btn btn-ghost">Precios de Decants (5ml)</a>
+      </div>
+      <div class="trust-row">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Envíos a todo el país</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Hasta 6 cuotas sin interés</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Garantía de originalidad</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="bottle-stage">
+        <div class="bottle-glow"></div>
+        <svg class="bottle-svg" viewBox="0 0 120 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="42" y="8" width="36" height="20" rx="3" fill="#B8863D"/>
+          <rect x="50" y="0" width="20" height="10" rx="2" fill="#0C201A"/>
+          <path d="M30 40 Q30 28 45 28 H75 Q90 28 90 40 V190 Q90 210 70 210 H50 Q30 210 30 190 Z" fill="#163A2F" stroke="#B8863D" stroke-width="1.5"/>
+          <rect x="38" y="90" width="44" height="70" rx="2" fill="#F4EFE0" opacity="0.08"/>
+          <text x="60" y="128" text-anchor="middle" fill="#E8CE9A" font-family="IBM Plex Mono" font-size="7" letter-spacing="0.5">FIORENZO</text>
+          <text x="60" y="142" text-anchor="middle" fill="#7C9186" font-family="IBM Plex Mono" font-size="6">EDP · 100ml</text>
+        </svg>
+        <div class="float-card card-a">Nota de fondo<b>Oud & Especias</b></div>
+        <div class="float-card card-b">Persistencia en piel<b>8–10 hs</b></div>
+        <div class="float-card card-c">Lote verificado<b>#AR-2026-114</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOGO STRIP ============ -->
+<div class="logo-strip">
+  <div class="container logo-strip-inner">
+    <p>Trabajamos directo con las casas de origen</p>
+    <div class="brand-marks">
+      <span>Lattafa</span>
+      <span>Armaf</span>
+      <span>Afnan</span>
+      <span>Rasasi</span>
+      <span>Al Haramain</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STORY ============ -->
+<section class="story">
+  <div class="container story-grid">
+    <div class="reveal">
+      <span class="section-label">El problema real</span>
+      <h2>Comprar perfume acá se convirtió en una apuesta.</h2>
+    </div>
+    <div class="story-body reveal">
+      <p>Pagás por un frasco y en la caja no hay forma de saber si es el original o una réplica bien hecha. O peor: es original, pero elegiste mal el aroma y ahora vive en el fondo del placard.</p>
+      <p><strong>El mercado de perfumería en Argentina resolvió el problema equivocado.</strong> Compite por descuento, no por certeza. Nadie te dice qué estás comprando en realidad: de qué está hecho, cuánto dura, ni si el lote es verificable.</p>
+      <p>Nosotros armamos Fiorenzo al revés: primero la certeza, después la decisión de compra.</p>
+      <div class="stat-row">
+        <div class="stat"><b>+40%</b><span>del mercado árabe local es réplica no declarada*</span></div>
+        <div class="stat"><b>1 de 3</b><span>compras de perfume termina sin usarse*</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANATOMY / SIGNATURE SECTION ============ -->
+<section class="anatomy" id="anatomia">
+  <div class="container">
+    <span class="section-label">Cómo elegimos</span>
+    <h2>La anatomía de una fragancia, a la vista.</h2>
+    <p class="sub">Cada perfume del catálogo tiene una ficha técnica real: pirámide olfativa, concentración y persistencia medida. No adjetivos vacíos — datos que podés verificar en tu propia piel.</p>
+
+    <div class="spec-sheet">
+      <div class="spec-card reveal">
+        <div class="spec-card-top">
+          <h3>Khamrah Duhqan — Lattafa</h3>
+          <span>EDP · 100ml</span>
+        </div>
+        <div class="note-row">
+          <div class="note-row-head"><span class="label">Salida</span><span class="value">0–15 min</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="35%"></div></div>
+          <p class="note-desc">Especias orientales, notas ahumadas</p>
+        </div>
+        <div class="note-row">
+          <div class="note-row-head"><span class="label">Corazón</span><span class="value">15 min–3 hs</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="65%"></div></div>
+          <p class="note-desc">Praliné, maderas profundas</p>
+        </div>
+        <div class="note-row">
+          <div class="note-row-head"><span class="label">Fondo</span><span class="value">3–10 hs</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="95%"></div></div>
+          <p class="note-desc">Oud, ámbar, haba tonka</p>
+        </div>
+      </div>
+
+      <div class="anatomy-copy-list">
+        <div class="anatomy-item reveal">
+          <span class="idx">01</span>
+          <div><h4>Pirámide olfativa medida</h4><p>Salida, corazón y fondo con duración real en piel, no estimaciones de catálogo.</p></div>
+        </div>
+        <div class="anatomy-item reveal">
+          <span class="idx">02</span>
+          <div><h4>Concentración declarada</h4><p>EDT, EDP o Extrait — y qué significa eso en horas de persistencia, sin letra chica.</p></div>
+        </div>
+        <div class="anatomy-item reveal">
+          <span class="idx">03</span>
+          <div><h4>Lote verificable</h4><p>Cada envío incluye el número de lote para que lo cruces vos mismo con la casa de origen.</p></div>
+        </div>
+        <div class="anatomy-item reveal">
+          <span class="idx">04</span>
+          <div><h4>Equivalencia de estilo</h4><p>Si te gusta un diseñador europeo, te mostramos su versión árabe equivalente y en qué se diferencia.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DECANTS & PRICING ============ -->
+<section class="collections" id="coleccion">
+  <div class="container">
+    <div class="coll-head">
+      <div>
+        <span class="section-label">Set de Decants</span>
+        <h2>Probá antes de comprometerte, de $6.000 hasta $9.300.</h2>
+      </div>
+    </div>
+
+    <div class="plans">
+      <div class="plan">
+        <span class="plan-name">Decants Individuales (5ml)</span>
+        <div class="plan-price">Desde $6.000<span> hasta $9.300</span></div>
+        <p class="plan-desc">Elegí el decant de 5ml de tu perfume favorito del catálogo para probarlo en tu piel.</p>
+        <ul class="plan-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Precios desde $6.000 hasta $9.300 según fragancia</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Ficha técnica incluida en cada decant</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Envase atomizador protegido</li>
+        </ul>
+        <button class="btn btn-ghost" onclick="openDecantsModal()">Ver precios individuales de 5ml</button>
+      </div>
+
+      <div class="plan featured">
+        <span class="plan-name">Descuento por cantidad</span>
+        <div class="plan-price">20% OFF<span> en 3 decants</span></div>
+        <p class="plan-desc">Armá tu set ideal de decants combinando los perfumes que quieras con un beneficio directo.</p>
+        <ul class="plan-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Comprando 3 decants hay descuento del 20%</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Combiná libremente las 5 fragancias del catálogo</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Envío seguro a todo el país</li>
+        </ul>
+        <a href="#catalogo" class="btn btn-primary">Elegir mis decants <span>→</span></a>
+      </div>
+    </div>
+
+    <!-- Interactive Decants Price Button & Box Section -->
+    <div class="decants-interactive-box reveal">
+      <h3>Consulta interactiva de Decants (5ml)</h3>
+      <p>Hacé click en el botón de abajo para desplegar instantáneamente el listado completo de precios de los decants de 5ml de cada uno de los 5 perfumes del catálogo oficial.</p>
+      <button class="btn btn-primary" onclick="openDecantsModal()">Ver precios de decants de 5ml</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATALOG ============ -->
+<section class="catalog" id="catalogo">
+  <div class="container">
+    <div class="catalog-head reveal">
+      <span class="section-label">El catálogo oficial</span>
+      <h2>Fragancias seleccionadas con ficha técnica y alta calidad.</h2>
+      <p class="sub">Los 5 perfumes exclusivos solicitados, con sus precios actualizados, fotos de altísima calidad de los frascos originales y toda la información técnica.</p>
+    </div>
+
+    <div class="catalog-grid" id="catalogGrid">
+      <!-- Catalog items will be injected or structured here -->
+    </div>
+  </div>
+</section>
+
+<!-- Catalog modal -->
+<div class="cc-modal" id="ccModal">
+  <div class="cc-modal-overlay" data-close></div>
+  <div class="cc-modal-panel">
+    <button class="cc-modal-close" data-close aria-label="Cerrar">&times;</button>
+    <div class="cc-modal-grid">
+      <div class="cc-modal-img"><img id="ccImg" src="" alt=""></div>
+      <div class="cc-modal-info">
+        <span class="cc-modal-brand" id="ccBrand"></span>
+        <h3 id="ccName"></h3>
+        <p class="cc-modal-style" id="ccStyle"></p>
+        <div class="cc-modal-price" id="ccPrice"></div>
+        <div id="ccPyramid"></div>
+        <div class="cc-modal-box">
+          <h4>El frasco y la caja</h4>
+          <p id="ccBox"></p>
+        </div>
+        <div class="cc-modal-why">
+          <h4>Por qué destaca</h4>
+          <p id="ccWhy"></p>
+        </div>
+        <div class="cc-modal-badges">
+          <span id="ccDur"></span>
+          <span id="ccEstela"></span>
+          <span id="ccDecantPriceTag" style="background:var(--gold); color:var(--ink); font-weight:600;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Decants Prices Modal -->
+<div class="cc-modal" id="decantsModal">
+  <div class="cc-modal-overlay" onclick="closeDecantsModal()"></div>
+  <div class="cc-modal-panel" style="max-width:540px;">
+    <button class="cc-modal-close" onclick="closeDecantsModal()" aria-label="Cerrar">&times;</button>
+    <div style="padding:40px;">
+      <span class="cc-modal-brand">Fiorenzo Decants</span>
+      <h3 style="font-family:var(--font-display); font-size:24px; color:var(--paper); margin:8px 0 6px;">Precios de Decants (5ml)</h3>
+      <p style="font-size:14px; color:#b3c0b8; margin-bottom:24px;">Listado oficial por fragancia. Recordá que comprando 3 decants tenés un <strong>20% de descuento</strong>.</p>
+      
+      <div style="display:flex; flex-direction:column; gap:12px;" id="decantsPriceListContainer">
+        <!-- Injected via JS -->
+      </div>
+      
+      <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--line-dark); text-align:center;">
+        <button class="btn btn-primary" onclick="closeDecantsModal()" style="width:100%; justify-content:center;">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonials" id="opiniones">
+  <div class="container">
+    <div class="test-head">
+      <span class="section-label">Quienes ya probaron</span>
+      <h2>No vendemos frascos. Evitamos arrepentimientos.</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>Pedí el set de decants con el 20% de descuento y pude probar His Confession y Hawas Ice antes de decidirme por el frasco grande. Excelente atención y fichas técnicas precisas.</p>
+        <div class="test-who"><div class="avatar">MJ</div><div><b>Martina J.</b><span>Rosario</span></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>El precio de los decants de 5ml es súper accesible y te permite testear la duración real en piel. Khamrah Duhqan es una locura total en rendimiento.</p>
+        <div class="test-who"><div class="avatar">FG</div><div><b>Fede G.</b><span>Córdoba</span></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>Pedí 3 decants y se aplicó el descuento del 20% automáticamente. Los envases llegaron impecables, bien protegidos y con su etiqueta clara.</p>
+        <div class="test-who"><div class="avatar">SL</div><div><b>Sol L.</b><span>Buenos Aires</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE ============ -->
+<section class="guarantee">
+  <div class="container guarantee-grid">
+    <div class="reveal">
+      <span class="guarantee-badge">Garantía de originalidad</span>
+      <h2>Si no es original, no lo pagás vos. Lo pagamos nosotros.</h2>
+    </div>
+    <div class="g-list reveal">
+      <div class="g-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h4>Verificación de lote</h4><p>Cada frasco trae un código que podés cruzar directo con la casa de origen.</p></div>
+      </div>
+      <div class="g-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h4>Factura A o B</h4><p>Comprobante real de compra, sin depender de un "confía en mí".</p></div>
+      </div>
+      <div class="g-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h4>Devolución en 10 días</h4><p>Si el lote no verifica como original, te devolvemos el 100%.</p></div>
+      </div>
+      <div class="g-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><h4>Envío asegurado</h4><p>A todo el país, con seguimiento y embalaje anti-rotura.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="preguntas">
+  <div class="container">
+    <div class="faq-head">
+      <span class="section-label">Antes de pedir</span>
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q"><span>¿Cómo funciona el descuento comprando 3 decants?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Al comprar 3 decants de 5ml de cualquiera de nuestras fragancias disponibles, se aplica automáticamente un 20% de descuento sobre el total de los decants.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>¿Cómo sé que el perfume es realmente original?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Cada frasco incluye un número de lote impreso por la casa de origen que podés verificar de forma independiente. Si el lote no corresponde, te devolvemos el 100%.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>¿Cuánto dura un decant de 5ml?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Un decant de 5ml rinde aproximadamente entre 65 y 75 atomizaciones, suficiente para probar el perfume durante 10 a 15 días en distintas ocasiones.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>¿Cuánto tarda el envío y a dónde llega?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Enviamos a todo el país. CABA y GBA entre 24 y 48 horas hábiles; resto del país entre 3 y 6 días hábiles con seguimiento online.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final-cta">
+  <div class="container">
+    <span class="section-label reveal">Última parada</span>
+    <h2 class="reveal">Dejá de comprar perfume a ciegas.</h2>
+    <p class="lede reveal">Elegí tus decants con 20% off comprando 3 unidades o llevá tu frasco original con ficha técnica completa.</p>
+    <div class="final-cta-ctas reveal">
+      <a href="#catalogo" class="btn btn-primary">Ver catálogo y decants <span class="btn-arrow">→</span></a>
+      <a href="#coleccion" class="btn btn-ghost">Consultar precios de decants</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">FIORENZO<span style="color:var(--gold)">.</span></div>
+        <p style="font-size:14px; color:#9c968b; max-width:260px;">Perfumería de precisión. Fragancias árabes y de diseñador, 100% originales, con ficha técnica y decants de 5ml.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Catálogo</h5>
+        <a href="#catalogo">Khamrah Duhqan</a>
+        <a href="#catalogo">His Confession</a>
+        <a href="#catalogo">Mandarin Sky</a>
+        <a href="#catalogo">Rasasi Hawas Ice</a>
+        <a href="#catalogo">9pm Clásico</a>
+      </div>
+      <div class="footer-col">
+        <h5>Decants & Descuentos</h5>
+        <a href="#coleccion">Decants de $6.000 a $9.300</a>
+        <a href="#coleccion">20% OFF comprando 3</a>
+        <a href="#coleccion">Precios 5ml</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <a href="#">WhatsApp</a>
+        <a href="#">Instagram</a>
+        <a href="#">hola@fiorenzo.com.ar</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Fiorenzo — Todos los derechos reservados</span>
+      <span>Sáenz Peña, Chaco, Argentina</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+// Catalog data with updated perfumes and high-quality original bottle images
+const perfumes = [
+  {
+    brand:'Lattafa', name:'Khamrah Duhqan', style:'Gourmand ahumado oriental · Unisex',
+    img:'https://www.lattafa-usa.com/cdn/shop/files/Khamrah-Dukhan-2_95db2a2a-cf00-4719-8a90-68095d059420.png?v=1747416848&width=1500',
+    price:'$55.000', decantPrice:'$6.000', gender:'Unisex',
+    top:{label:'Especias orientales, pimienta de Jamaica, mandarina', width:'35%'},
+    heart:{label:'Incienso ahumado, azahar, maderas nobles', width:'65%'},
+    base:{label:'Tabaco, praliné, ámbar, haba tonka', width:'92%'},
+    box:'Frasco oscuro de lujo con tapón dorado mate; caja negra texturizada con detalles metalizados en relieve.',
+    why:'La evolución más profunda y ahumada de la familia Khamrah. Una obra maestra nocturna con estela imponente.',
+    dur:'10+ horas', estela:'Estela muy alta'
+  },
+  {
+    brand:'Lattafa', name:'His Confession', style:'Oriental amaderado especiado · Masculino',
+    img:'https://oasisperfumesusa.com/cdn/shop/files/pae34lbvnkz00ly2jkhoi02r.png?v=1755206647&width=1200',
+    price:'$65.000', decantPrice:'$7.000', gender:'Masculino',
+    top:{label:'Mandarina, canela, lavanda fresca', width:'38%'},
+    heart:{label:'Iris, ciprés, maderas finas', width:'60%'},
+    base:{label:'Vainilla, haba tonka, incienso, ámbar', width:'88%'},
+    box:'Frasco marrón profundo con tapón dorado pesado; estuche riguroso estilo alta perfumería.',
+    why:'Elegancia imponente y sofisticada. Mezcla notas especiadas con un fondo dulce ambarado que destaca en cualquier ocasión formal.',
+    dur:'8–10 horas', estela:'Estela alta'
+  },
+  {
+    brand:'Armaf', name:'Mandarin Sky', style:'Aromático frutal energizante · Masculino',
+    img:'https://armaf.com/cdn/shop/files/CDN12.png?v=1781552801&width=1080',
+    price:'$60.000', decantPrice:'$6.000', gender:'Masculino',
+    top:{label:'Mandarina brillante, bergamota, salvia', width:'40%'},
+    heart:{label:'Caramelo, haba tonka, flor de azahar', width:'60%'},
+    base:{label:'Vetiver, cedro, almizcle blanco', width:'85%'},
+    box:'Frasco de diseño moderno con detalles en tonos vibrantes; caja protectora de alta calidad.',
+    why:'Una explosión ultra refrescante de mandarina combinada con un corazón dulce de caramelo. Rendimiento excepcional.',
+    dur:'8–9 horas', estela:'Estela alta'
+  },
+  {
+    brand:'Rasasi', name:'Rasasi Hawas Ice', style:'Aromático acuático ultra fresco · Masculino',
+    img:'https://www.intenseoud.com/cdn/shop/files/519I7LSdx7L_98057d54-d30f-4951-8cd9-29f644b64e71_large.jpg?v=1774817351',
+    price:'$85.000', decantPrice:'$9.200', gender:'Masculino',
+    top:{label:'Manzana congelada, bergamota, limón, anís', width:'42%'},
+    heart:{label:'Flor de azahar, cardamomo, notas glaciales', width:'62%'},
+    base:{label:'Almizcle, ámbar gris, musgo de roble, maderas', width:'90%'},
+    box:'Frasco translúcido con efecto hielo y serpiente metálica plateada característica; caja de coleccionista.',
+    why:'La versión definitiva y potenciada de Hawas. Incorpora acordes glaciales y cítricos nítidos con una fijación monstruosa.',
+    dur:'10+ horas', estela:'Estela muy alta'
+  },
+  {
+    brand:'Afnan', name:'9pm Clásico', style:'Oriental gourmand dulce y seductor · Masculino',
+    img:'https://us.afnan.com/cdn/shop/files/9PM-Product-01_ac1d61da-68bc-4cf8-8086-8cdc3accfbdf.jpg?v=1775552887&width=1080',
+    price:'$60.000', decantPrice:'$6.000', gender:'Masculino',
+    top:{label:'Manzana, canela, lavanda, bergamota', width:'38%'},
+    heart:{label:'Flor de azahar, lirio de los valles', width:'58%'},
+    base:{label:'Vainilla, haba tonka, ámbar, pachulí', width:'90%'},
+    box:'Frasco negro con acabado elegante y tipografía plateada; caja minimalista de gran presencia.',
+    why:'El rey indiscutido de las salidas nocturnas y boliches. Una vainilla avainillada y especiada con cumplidos asegurados.',
+    dur:'8–10 horas', estela:'Estela alta'
+  }
+];
+
+// Render catalog dynamically
+function renderCatalog() {
+  const grid = document.getElementById('catalogGrid');
+  grid.innerHTML = perfumes.map((p, idx) => `
+    <div class="cc-card reveal">
+      <div class="cc-image">
+        <span class="cc-gender">${p.gender}</span>
+        <img src="${p.img}" alt="${p.name} — ${p.brand}, frasco original" loading="lazy" onerror="this.src='https://placehold.co/400x400/0C201A/E8CE9A?text=Fiorenzo'">
+      </div>
+      <div class="cc-body">
+        <span class="cc-brand">${p.brand}</span>
+        <h3 class="cc-name">${p.name}</h3>
+        <p class="cc-style">${p.style}</p>
+        <div class="cc-price">${p.price}<span>/ 100ml</span></div>
+        <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--gold); margin-bottom:14px;">Decant 5ml: <strong>${p.decantPrice}</strong></div>
+        <div class="cc-meta"><span>${p.dur}</span><span>${p.estela}</span></div>
+        <button class="btn btn-ghost cc-view" onclick="openCatalogModal(${idx})">Ver ficha completa</button>
+      </div>
+    </div>
+  `).join('');
+}
+renderCatalog();
+
+// Render decants price modal list
+function renderDecantsModalList() {
+  const container = document.getElementById('decantsPriceListContainer');
+  container.innerHTML = perfumes.map(p => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--ink-soft); border-radius:6px; border:1px solid var(--line-dark);">
+      <div>
+        <span style="font-family:var(--font-mono); font-size:10px; color:var(--gold-bright); display:block; text-transform:uppercase;">${p.brand}</span>
+        <b style="font-size:15px; color:var(--paper);">${p.name}</b>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-family:var(--font-display); font-size:18px; color:var(--gold-bright);">${p.decantPrice}</span>
+        <span style="font-size:11px; color:#b3c0b8; display:block;">Decant 5ml</span>
+      </div>
+    </div>
+  `).join('') + `
+    <div style="margin-top:8px; padding:12px; background:rgba(184,134,61,0.12); border:1px dashed var(--gold); border-radius:6px; text-align:center;">
+      <p style="font-size:13.5px; color:var(--gold-bright); font-weight:500;">💡 Comprando 3 decants tenés un <strong>20% de descuento</strong> automático.</p>
+    </div>
+  `;
+}
+renderDecantsModalList();
+
+// Modal Handlers
+const ccModal = document.getElementById('ccModal');
+const decantsModal = document.getElementById('decantsModal');
+
+function buildNoteRow(label, data){
+  return '<div class="note-row"><div class="note-row-head"><span class="label">'+label+'</span></div>'+
+    '<div class="bar-track"><div class="bar-fill" style="width:'+data.width+'"></div></div>'+
+    '<p class="note-desc">'+data.label+'</p></div>';
+}
+
+function openCatalogModal(idx){
+  const p = perfumes[idx];
+  document.getElementById('ccImg').src = p.img;
+  document.getElementById('ccImg').alt = p.name+' — '+p.brand+', frasco y caja original';
+  document.getElementById('ccBrand').textContent = p.brand;
+  document.getElementById('ccName').textContent = p.name;
+  document.getElementById('ccStyle').textContent = p.style;
+  document.getElementById('ccPrice').innerHTML = p.price+'<span> / 100ml</span>';
+  document.getElementById('ccPyramid').innerHTML =
+    buildNoteRow('Salida', p.top) + buildNoteRow('Corazón', p.heart) + buildNoteRow('Fondo', p.base);
+  document.getElementById('ccBox').textContent = p.box;
+  document.getElementById('ccWhy').textContent = p.why;
+  document.getElementById('ccDur').textContent = p.dur;
+  document.getElementById('ccEstela').textContent = p.estela;
+  document.getElementById('ccDecantPriceTag').textContent = 'Decant 5ml: ' + p.decantPrice;
+  ccModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#ccPyramid .bar-fill').forEach(b=>{ b.style.width = b.style.width; });
+  });
+}
+
+function closeCatalogModal(){
+  ccModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openDecantsModal(){
+  decantsModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDecantsModal(){
+  decantsModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+ccModal.querySelectorAll('[data-close]').forEach(el=>{
+  el.addEventListener('click', closeCatalogModal);
+});
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') { closeCatalogModal(); closeDecantsModal(); } });
+
+// Reveal on scroll
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+},{threshold:0.15});
+revealEls.forEach(el=>io.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q = item.querySelector('.faq-q');
+  const a = item.querySelector('.faq-a');
+  q.addEventListener('click', ()=>{
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(other=>{
+      if(other!==item){ other.classList.remove('open'); other.querySelector('.faq-a').style.maxHeight = null; }
+    });
+    if(isOpen){
+      item.classList.remove('open');
+      a.style.maxHeight = null;
+    } else {
+      item.classList.add('open');
+      a.style.maxHeight = a.scrollHeight + 'px';
+    }
+  });
+});
+
+// Mobile nav toggle
+const mobileToggle = document.querySelector('.nav-mobile-toggle');
+const navLinks = document.querySelector('.nav-links');
+mobileToggle.addEventListener('click', ()=>{
+  const isShown = navLinks.style.display === 'flex';
+  navLinks.style.cssText = isShown ? '' : 'display:flex; position:absolute; top:100%; left:0; right:0; background:var(--paper); flex-direction:column; padding:24px 32px; border-bottom:1px solid var(--line); gap:20px;';
+});
+</script>
+
+</body>
+</html>
