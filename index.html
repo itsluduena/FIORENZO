@@ -30,6 +30,38 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 h1,h2,h3{font-family:var(--font-display);font-weight:500;}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:3px;font-weight:600;font-size:14px;min-height:46px;transition:.2s;}
 .btn-primary{background:var(--ink);color:var(--paper);}
+.<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Fiorenzo — Perfumería Árabe &amp; de Diseñador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0C201A; --ink-soft:#163A2F; --paper:#F4EFE0; --paper-dim:#EAE1C7;
+  --graphite:#22302A; --graphite-soft:#5b6b60; --gold:#B8863D; --gold-bright:#E8CE9A;
+  --line:rgba(34,48,42,0.14); --line-dark:rgba(244,239,224,0.14);
+  --font-display:'Fraunces',serif; --font-body:'Inter',sans-serif; --font-mono:'IBM Plex Mono',monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--graphite);font-family:var(--font-body);font-size:15px;line-height:1.5;overflow-x:hidden;}
+img{display:block;max-width:100%;height:auto;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+.container{max-width:1120px;margin:0 auto;padding:0 20px;}
+
+.eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;display:inline-flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;}
+.section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite-soft);}
+
+h1,h2,h3{font-family:var(--font-display);font-weight:500;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:3px;font-weight:600;font-size:14px;min-height:46px;transition:.2s;}
+.btn-primary{background:var(--ink);color:var(--paper);}
 .btn-primary:hover{background:var(--gold);color:var(--ink);}
 .btn-ghost{border:1px solid var(--line);color:var(--graphite);}
 .btn-ghost:hover{border-color:var(--graphite);}
@@ -86,11 +118,78 @@ section{padding:70px 0;}
 .catalog-brand{font-family:var(--font-mono);font-size:11px;color:var(--gold);text-transform:uppercase;}
 .catalog-price{font-family:var(--font-display);font-size:18px;margin:8px 0;}
 
-/* MODALES */
+/* MODALES BASE */
 .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(12,32,26,.8);backdrop-filter:blur(4px);}
 .modal.open{display:flex;}
 .modal-panel{background:var(--ink);color:var(--paper);border:1px solid var(--line-dark);border-radius:8px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative;}
 .modal-close{position:absolute;top:12px;right:12px;color:var(--paper);font-size:24px;}
+
+/* POPUP BIENVENIDA CON ANIMACIÓN ELEGANTE */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(12, 32, 26, 0.6);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+}
+
+.welcome-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.welcome-card {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 32px 28px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.welcome-overlay.show .welcome-card {
+  transform: translateY(0) scale(1);
+}
+
+.welcome-overlay.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+}
+
+.welcome-overlay.hide .welcome-card {
+  transform: translateY(-20px) scale(0.95);
+}
+
+.welcome-card h3 {
+  font-size: 1.8rem;
+  color: var(--paper);
+  margin: 8px 0 12px;
+}
+
+.welcome-card h3 em {
+  font-style: italic;
+  color: var(--gold-bright);
+}
+
+.welcome-card p {
+  color: #b3c0b8;
+  font-size: 14px;
+  line-height: 1.6;
+}
 
 /* PRECIOS DECANTS */
 .plan-card{background:var(--paper);border:1px solid var(--line);padding:24px;border-radius:6px;}
@@ -126,7 +225,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
     <div>
       <span class="eyebrow">100% original · Lote verificado</span>
       <h1>El perfume correcto no se elige al azar. <em>Se calcula.</em></h1>
-      <p>Fragancias Árabes y perfumería de Diseñador, decants de 5ml para probar antes de de decidir cuál elegir con nosotros.</p>
+      <p>Fragancias árabes de lujo y perfumería de diseñador con ficha técnica por frasco y decants de 5ml para probar antes de comprar.</p>
       <div class="hero-ctas">
         <a href="#catalogo" class="btn btn-primary">Ver catálogo completo →</a>
         <a href="#coleccion" class="btn btn-ghost">Precios Decants (5ml)</a>
@@ -136,6 +235,7 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
         <span>✓ Hasta 6 cuotas</span>
       </div>
     </div>
+    
     <div style="display: flex; justify-content: center; align-items: center;">
       <img 
         src="https://lh3.googleusercontent.com/d/1K7LvR3cqziv9RsjNor0iPE1bYmXUrfk1" 
@@ -248,6 +348,16 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
   </div>
 </div>
 
+<!-- POP-UP DE BIENVENIDA AUTOMÁTICO -->
+<div class="welcome-overlay" id="welcomePopup">
+  <div class="welcome-card">
+    <button class="modal-close" onclick="closeWelcomePopup()">&times;</button>
+    <span class="eyebrow" style="margin-bottom:8px;">Bienvenido a Fiorenzo</span>
+    <h3>Encontrá tu <em>esencia ideal</em></h3>
+    <p>Descubrí nuestra colección exclusiva de perfumería árabe y decants de prueba 100% originales.</p>
+  </div>
+</div>
+
 <script>
 const perfumes = [
   {brand:'Lattafa', name:'Khamrah Duhqan', style:'Gourmand ahumado · Unisex', img:'https://www.lattafa-usa.com/cdn/shop/files/Khamrah-Dukhan-2_95db2a2a-cf00-4719-8a90-68095d059420.png?v=1747416848&width=1500', price:'$55.000', decant:'$6.000', gender:'Unisex', dur:'10+ horas', why:'Evolución ahumada y profunda de Khamrah con notas de tabaco y praliné.'},
@@ -306,6 +416,31 @@ function openDecantsModal() {
 
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+
+// LÓGICA POP-UP BIENVENIDA
+let autoCloseTimer;
+
+function closeWelcomePopup() {
+  const popup = document.getElementById('welcomePopup');
+  if (popup.classList.contains('show')) {
+    popup.classList.remove('show');
+    popup.classList.add('hide');
+    clearTimeout(autoCloseTimer);
+  }
+}
+
+window.addEventListener('load', () => {
+  // Aparece a los 3 segundos (3000ms)
+  setTimeout(() => {
+    const popup = document.getElementById('welcomePopup');
+    popup.classList.add('show');
+    
+    // Se cierra automáticamente después de 5 segundos de mostrarse (5000ms)
+    autoCloseTimer = setTimeout(() => {
+      closeWelcomePopup();
+    }, 5000);
+  }, 3000);
+});
 
 renderCatalog();
 </script>
