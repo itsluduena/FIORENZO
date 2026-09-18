@@ -310,33 +310,34 @@ section{padding:50px 0;position:relative;z-index:1;}
   .catalogo-container { padding: 16px; }
 }
 
-/* FILTROS CON LIQUID GLASS */
+/* FILTROS COMPACTOS CON LIQUID GLASS */
 .filter-bar {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
   background: rgba(244, 239, 224, 0.55);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 18px;
+  padding: 10px 14px;
   border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 4px 16px rgba(0,0,0,0.04), inset 0 0 10px rgba(255, 255, 255, 0.4);
 }
-.filter-group { display: flex; flex-direction: column; gap: 4px; }
-.filter-group label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--graphite-soft); }
+.filter-group { display: flex; flex-direction: column; gap: 2px; }
+.filter-group label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; color: var(--graphite-soft); }
 .filter-group select, .filter-group input {
-  padding: 10px 14px;
+  padding: 6px 10px;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(34, 48, 42, 0.15);
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(4px);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--ink);
   outline: none;
   transition: all 0.2s ease;
+  height: 32px;
 }
 .filter-group select:focus, .filter-group input:focus {
   border-color: var(--gold);
@@ -695,7 +696,7 @@ footer{background:var(--ink);color:#9c968b;padding:50px 0 30px;font-size:13px;bo
       <span class="section-label">Catálogo Oficial</span>
       <h2 style="font-size:2rem;margin-bottom:16px;color:var(--ink);">Fragancias Seleccionadas</h2>
       
-      <!-- BARRA DE FILTROS -->
+      <!-- BARRA DE FILTROS COMPACTA -->
       <div class="filter-bar">
         <div class="filter-group">
           <label for="filterBrand">Marca</label>
