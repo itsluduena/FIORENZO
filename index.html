@@ -112,7 +112,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 section{padding:50px 0;position:relative;z-index:1;}
 
 .catalog-window {
-  max-height: 600px;
+  max-height: 750px;
   overflow-y: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -121,15 +121,15 @@ section{padding:50px 0;position:relative;z-index:1;}
 }
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
 }
 
 .catalog-card{background:rgba(244,239,224,0.95);backdrop-filter:blur(4px);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:100%;}
-.catalog-img{aspect-ratio:1;background:rgba(234,225,199,0.5);position:relative;display:flex;align-items:center;justify-content:center;padding:12px;}
-.catalog-img img{max-height:140px;object-fit:contain;}
+.catalog-img{aspect-ratio:1;background:rgba(234,225,199,0.5);position:relative;display:flex;align-items:center;justify-content:center;padding:16px;height:240px;}
+.catalog-img img{max-height:210px;width:100%;object-fit:contain;}
 .badge-gender{position:absolute;top:8px;right:8px;background:var(--ink);color:var(--gold-bright);font-family:var(--font-mono);font-size:9px;padding:3px 6px;border-radius:10px;}
-.catalog-body{padding:12px;display:flex;flex-direction:column;flex:1;justify-content:space-between;}
+.catalog-body{padding:14px;display:flex;flex-direction:column;flex:1;justify-content:space-between;}
 .catalog-brand{font-family:var(--font-mono);font-size:10px;color:var(--gold);text-transform:uppercase;}
 
 .add-buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;}
@@ -422,22 +422,46 @@ function logout() {
   renderCatalog();
 }
 
-async function loadProducts() {
-  try {
-    const res = await fetch(API_URL, { redirect: 'follow' });
-    perfumes = await res.json();
-    renderCatalog();
-  } catch (err) {
-    document.getElementById('catalogGrid').innerHTML = '<p style="color:red;">Error al cargar catálogo.</p>';
-  }
-}
-
 /* MAPEADOR DE VARIABLES PARA PREVENIR ERRORES DE DATOS VACÍOS */
 function getProp(p, keys, fallback = '') {
   for (let key of keys) {
     if (p[key] !== undefined && p[key] !== null && p[key] !== '') return p[key];
   }
   return fallback;
+}
+
+async function loadProducts() {
+  const catalogGrid = document.getElementById('catalogGrid');
+
+  // 1. Intentar cargar inmediatamente desde la memoria del navegador (Caché)
+  const cachedData = localStorage.getItem('fiorenzo_catalog');
+  if (cachedData) {
+    try {
+      perfumes = JSON.parse(cachedData);
+      renderCatalog(); // Carga instantánea
+    } catch (e) {
+      console.error("Error leyendo caché", e);
+    }
+  } else {
+    catalogGrid.innerHTML = '<p style="text-align:center; padding: 20px;">Cargando catálogo...</p>';
+  }
+
+  // 2. Traer los datos actualizados desde Google Apps Script en segundo plano
+  try {
+    const res = await fetch(API_URL, { redirect: 'follow' });
+    const freshData = await res.json();
+    
+    if (Array.isArray(freshData) && freshData.length > 0) {
+      perfumes = freshData;
+      localStorage.setItem('fiorenzo_catalog', JSON.stringify(freshData));
+      renderCatalog(); // Actualiza visualmente si hubo cambios
+    }
+  } catch (err) {
+    console.error('Error al actualizar catálogo desde la API:', err);
+    if (!cachedData) {
+      catalogGrid.innerHTML = '<p style="color:red; text-align:center;">Error al cargar el catálogo. Intenta nuevamente.</p>';
+    }
+  }
 }
 
 function renderCatalog() {
@@ -453,19 +477,24 @@ function renderCatalog() {
     const gender = getProp(p, ['gender', 'Genero', 'genero'], 'Unisex');
     const price = getProp(p, ['price', 'Precio', 'precio', 'precioFrasco'], 'Consultar');
     const decant = getProp(p, ['decant', 'Decant', 'decantPrice', 'precioDecant'], 'Consultar');
-    const img = getProp(p, ['img', 'Imagen', 'imagen', 'fileData'], 'https://via.placeholder.com/300');
+    let img = getProp(p, ['img', 'Imagen', 'imagen', 'fileData'], 'https://via.placeholder.com/300');
+
+    // Optimizar imagen de Google Drive para mayor calidad (600px)
+    if (img.includes('googleusercontent.com')) {
+      img = img.replace(/=s\d+/, '') + '=w600';
+    }
 
     return `
       <div class="catalog-card">
         <div class="catalog-img">
           <span class="badge-gender">${gender}</span>
-          <img src="${img}" alt="${name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300';">
+          <img src="${img}" alt="${name}" loading="lazy" decoding="async" onerror="this.src='https://via.placeholder.com/300';">
         </div>
         <div class="catalog-body">
           <div>
             <span class="catalog-brand">${brand}</span>
-            <h3 style="font-size:15px;color:var(--ink);">${name}</h3>
-            <p style="font-size:13px;font-weight:600;margin-top:4px;">Frasco: ${price}</p>
+            <h3 style="font-size:16px;color:var(--ink);">${name}</h3>
+            <p style="font-size:14px;font-weight:600;margin-top:4px;">Frasco: ${price}</p>
             <p style="font-size:12px;color:var(--gold);">Decant 5ml: ${decant}</p>
           </div>
           <div>
@@ -489,10 +518,6 @@ async function saveProduct(event) {
   const fileInput = document.getElementById('pFile');
   const file = fileInput.files[0];
   const urlInput = document.getElementById('pImg').value.trim();
-
-  // Limpiar la memoria del navegador para obligar a descargar los datos actualizados
-localStorage.removeItem('fiorenzo_catalog');
-await loadProducts();
 
   if (!file && !urlInput) {
     statusDiv.innerHTML = '<span style="color:#ff6b6b;">Sube un archivo o ingresa una URL.</span>';
@@ -536,38 +561,27 @@ await loadProducts();
   }
 }
 
-async function loadProducts() {
-  const catalogGrid = document.getElementById('catalogGrid');
+async function sendPayload(payload) {
+  const statusDiv = document.getElementById('adminStatus');
+  const saveBtn = document.getElementById('saveBtn');
 
-  // 1. Intentar cargar inmediatamente desde la memoria del navegador (Caché)
-  const cachedData = localStorage.getItem('fiorenzo_catalog');
-  if (cachedData) {
-    try {
-      perfumes = JSON.parse(cachedData);
-      renderCatalog(); // Se dibuja en pantalla al instante
-    } catch (e) {
-      console.error("Error leyendo caché", e);
-    }
-  } else {
-    catalogGrid.innerHTML = '<p style="text-align:center; padding: 20px;">Cargando catálogo...</p>';
-  }
-
-  // 2. Traer los datos actualizados desde Google Apps Script en segundo plano
   try {
-    const res = await fetch(API_URL, { redirect: 'follow' });
-    const freshData = await res.json();
+    await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
     
-    if (Array.isArray(freshData) && freshData.length > 0) {
-      perfumes = freshData;
-      // Guardar en la memoria local para la próxima visita
-      localStorage.setItem('fiorenzo_catalog', JSON.stringify(freshData));
-      renderCatalog(); // Actualizar si hubo cambios
-    }
+    statusDiv.innerHTML = '<span style="color:#25D366;">✓ Producto cargado exitosamente.</span>';
+    document.getElementById('addProductForm').reset();
+
+    // Limpiar caché y recargar catálogo
+    localStorage.removeItem('fiorenzo_catalog');
+    await loadProducts();
+
   } catch (err) {
-    console.error('Error al actualizar catálogo desde la API:', err);
-    if (!cachedData) {
-      catalogGrid.innerHTML = '<p style="color:red; text-align:center;">Error al cargar el catálogo. Intenta nuevamente.</p>';
-    }
+    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error al guardar producto.</span>';
+  } finally {
+    saveBtn.disabled = false;
   }
 }
 
@@ -679,7 +693,7 @@ function openInfoModal(i) {
   const gender = getProp(p, ['gender', 'Genero', 'genero'], 'Unisex');
   const price = getProp(p, ['price', 'Precio', 'precio'], '');
   const decant = getProp(p, ['decant', 'Decant', 'precioDecant'], '');
-  const img = getProp(p, ['img', 'Imagen', 'imagen'], 'https://via.placeholder.com/300');
+  let img = getProp(p, ['img', 'Imagen', 'imagen'], 'https://via.placeholder.com/300');
   const dur = getProp(p, ['dur', 'Duracion', 'duracion'], 'Alta duración');
   const estela = getProp(p, ['estela', 'Estela'], '');
   
@@ -694,6 +708,10 @@ function openInfoModal(i) {
 
   const bottleInfo = getProp(p, ['bottleInfo', 'FrascoCaja'], '');
   const highlights = getProp(p, ['highlights', 'PorQueDestaca'], '');
+
+  if (img.includes('googleusercontent.com')) {
+    img = img.replace(/=s\d+/, '') + '=w600';
+  }
 
   document.getElementById('modalImgBox').innerHTML = `
     <img src="${img}" alt="${name}" loading="lazy" decoding="async" onerror="this.src='https://via.placeholder.com/300';">
