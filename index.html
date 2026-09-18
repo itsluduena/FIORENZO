@@ -100,7 +100,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
   .nav-toggle{display:block;}
 }
 
-.hero{padding:40px 0;position:relative;z-index:1;}
+.hero{padding:40px 0 20px;position:relative;z-index:1;}
 .hero-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:30px;align-items:center;}
 @media (max-width:850px){
   .hero-grid{grid-template-columns:1fr;text-align:center;}
@@ -109,6 +109,65 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.15;color:var(--ink);margin:16px 0;}
 .hero h1 em{font-style:italic;color:var(--gold);}
 .hero p{font-size:15px;color:var(--graphite);margin:0 auto 24px;max-width:540px;}
+
+/* BANNER DE OFERTA DECANTS */
+.promo-section {
+  padding: 20px 0 30px;
+  position: relative;
+  z-index: 1;
+}
+.promo-card {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(12, 32, 26, 0.15);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.promo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gold);
+}
+.promo-content h3 {
+  font-size: 1.5rem;
+  color: var(--gold-bright);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.promo-content p {
+  font-size: 14px;
+  color: #EAE1C7;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.promo-content .promo-action {
+  font-size: 13px;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  margin-top: 6px;
+}
+@media (max-width: 650px) {
+  .promo-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 20px;
+  }
+  .promo-card::before {
+    width: 100%;
+    height: 4px;
+  }
+}
 
 section{padding:50px 0;position:relative;z-index:1;}
 
@@ -305,6 +364,22 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
   </div>
 </section>
 
+<!-- VENTANA INFORMATIVA DE OFERTA DECANTS -->
+<div class="promo-section">
+  <div class="container">
+    <div class="promo-card">
+      <div class="promo-content">
+        <h3>✨ 3 DECANTS = 20% OFF ✨</h3>
+        <p>Llevando 3 decants de 5 ml, del mismo perfume o combinando diferentes fragancias, obtenés 20% de descuento en el total de tu compra.</p>
+        <div class="promo-action">Elegí tus 3, confirmá tu pedido y disfrutá el descuento.</div>
+      </div>
+      <div>
+        <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Ver Decants</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CATÁLOGO Y FILTROS -->
 <section id="catalogo" style="background:rgba(234,225,199,0.7);backdrop-filter:blur(4px);">
   <div class="container">
@@ -499,7 +574,6 @@ function getProp(p, keys, fallback = '') {
   return fallback;
 }
 
-// Extrae un array limpio de etiquetas unificando style y la columna etiquetas
 function getProductTags(p) {
   const rawStyle = getProp(p, ['style', 'Style', 'estilo'], '');
   const rawTags = getProp(p, ['etiquetas', 'Etiquetas', 'tags'], '');
@@ -507,14 +581,12 @@ function getProductTags(p) {
   const combined = `${rawStyle} / ${rawTags}`;
   const items = combined.split(/[\/\,\;]/).map(s => s.trim()).filter(Boolean);
   
-  // Retorna sin duplicados
   return [...new Set(items)];
 }
 
 async function loadProducts() {
   const catalogGrid = document.getElementById('catalogGrid');
 
-  // 1. Intentar cargar desde Caché
   const cachedData = localStorage.getItem('fiorenzo_catalog');
   if (cachedData) {
     try {
@@ -529,7 +601,6 @@ async function loadProducts() {
     catalogGrid.innerHTML = '<p style="text-align:center; padding: 20px;">Cargando catálogo...</p>';
   }
 
-  // 2. Cargar datos frescos desde Google Apps Script
   try {
     const res = await fetch(API_URL, { redirect: 'follow' });
     const freshData = await res.json();
@@ -549,7 +620,6 @@ async function loadProducts() {
   }
 }
 
-// Genera dinámicamente las opciones de Marca y Etiquetas para los desplegables
 function populateFilterOptions() {
   const brandSelect = document.getElementById('filterBrand');
   const tagSelect = document.getElementById('filterTag');
@@ -619,7 +689,6 @@ function renderCatalog() {
   }
   
   catalogGrid.innerHTML = filteredPerfumes.map((p) => {
-    // Buscamos el índice original en el arreglo completo de perfumes
     const originalIndex = perfumes.indexOf(p);
 
     const brand = getProp(p, ['brand', 'Marca', 'marca'], 'FIORENZO');
@@ -646,7 +715,6 @@ function renderCatalog() {
             <span class="catalog-brand">${brand}</span>
             <h3 style="font-size:16px;color:var(--ink);">${name}</h3>
             
-            <!-- BADGES DE ETIQUETAS / ESTACIÓN -->
             <div style="margin: 4px 0 8px 0;">
               ${tags.map(t => `<span class="tag-badge">${t}</span>`).join('')}
             </div>
