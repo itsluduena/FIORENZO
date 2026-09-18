@@ -325,6 +325,65 @@ section{padding:50px 0;position:relative;z-index:1;}
 
 footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:30px;}
+  .promo-card {
+  position: relative;
+}
+
+.promo-slide {
+  display: none;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+}
+
+.promo-slide.active {
+  display: grid;
+}
+
+.promo-controls {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.promo-nav-btn {
+  background: rgba(232, 206, 154, 0.2);
+  color: var(--gold-bright);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.promo-nav-btn:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+@media (max-width: 650px) {
+  .promo-slide {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .promo-controls {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+  
 </style>
 </head>
 <body>
@@ -364,34 +423,41 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
   </div>
 </section>
 
-<!-- VENTANA INFORMATIVA DE OFERTA DECANTS -->
+<!-- BANNER DE OFERTAS CARRUSEL -->
 <div class="promo-section">
   <div class="container">
-    <div class="promo-card">
-      <div class="promo-content">
-        <h3>3 DECANTS = 20% OFF</h3>
-        <p>Llevando 3 decants (5 ml), del mismo perfume o combinando diferentes fragancias, obtenés 20% de descuento en el total de tu compra.</p>
-        <div class="promo-action">Elegí tus 3, confirmá tu pedido y disfrutá el descuento.</div>
+    <div class="promo-card" id="promoCarousel">
+      
+      <!-- Oferta 1 -->
+      <div class="promo-slide active">
+        <div class="promo-content">
+          <h3>3 DECANTS = 20% OFF</h3>
+          <p>Llevando 3 decants (5 ml), del mismo perfume o combinando diferentes fragancias, obtenés 20% de descuento en el total de tu compra.</p>
+          <div class="promo-action">Elegí tus 3, confirmá tu pedido y disfrutá el descuento.</div>
+        </div>
+        <div>
+          <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Ver Decants</a>
+        </div>
       </div>
-      <div>
-        <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Ver Decants</a>
-      </div>
-    </div>
-  </div>
-</div>
 
-  <!-- BANNER DE SEGUNDA OFERTA: DECANTS REEMBOLSABLES -->
-<div class="promo-section">
-  <div class="container">
-    <div class="promo-card">
-      <div class="promo-content">
-        <h3>¡PROBALO EN TU PIEL ANTES DEL FRASCO!</h3>
-        <p>Comprá tu decant de 5 ml para asegurarte de que es tu fragancia ideal. Si decides llevar el frasco de 100 ml, ¡te descontamos el costo total del decant!</p>
-        <div class="promo-action">Primero probás. Después decidís. Tu decant te sale gratis al llevar el frasco.</div>
+      <!-- Oferta 2 -->
+      <div class="promo-slide">
+        <div class="promo-content">
+          <h3>¡PROBALO ANTES DE COMPRAR EL FRASCO!</h3>
+          <p>Comprá tu decant de 5 ml, probá la fragancia y asegurate de que sea para vos. ¿Te encantó y decidís llevar el frasco de 100 ml? ¡Te descontamos del precio del frasco el valor que pagaste por tu decant!</p>
+          <div class="promo-action">Primero probás. Después decidís. Y si comprás, ¡tu decant se descuenta!</div>
+        </div>
+        <div>
+          <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Probar Fragancias</a>
+        </div>
       </div>
-      <div>
-        <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Elegir Decants</a>
+
+      <!-- Botones de Navegación -->
+      <div class="promo-controls">
+        <button type="button" class="promo-nav-btn" onclick="prevPromoSlide()" aria-label="Oferta anterior">❮</button>
+        <button type="button" class="promo-nav-btn" onclick="nextPromoSlide()" aria-label="Siguiente oferta">❯</button>
       </div>
+
     </div>
   </div>
 </div>
@@ -1016,6 +1082,44 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 
 window.onload = loadProducts;
+
+  let currentPromoIndex = 0;
+let promoTimer = null;
+
+function showPromoSlide(index) {
+  const slides = document.querySelectorAll('.promo-slide');
+  if (!slides.length) return;
+
+  slides.forEach(slide => slide.classList.remove('active'));
+
+  if (index >= slides.length) currentPromoIndex = 0;
+  else if (index < 0) currentPromoIndex = slides.length - 1;
+  else currentPromoIndex = index;
+
+  slides[currentPromoIndex].classList.add('active');
+  resetPromoTimer();
+}
+
+function nextPromoSlide() {
+  showPromoSlide(currentPromoIndex + 1);
+}
+
+function prevPromoSlide() {
+  showPromoSlide(currentPromoIndex - 1);
+}
+
+function resetPromoTimer() {
+  clearInterval(promoTimer);
+  promoTimer = setInterval(() => {
+    nextPromoSlide();
+  }, 5000); // Cambia cada 5 segundos
+}
+
+// Iniciar la rotación automática al cargar
+document.addEventListener('DOMContentLoaded', () => {
+  resetPromoTimer();
+});
+  
 </script>
 </body>
 </html>
