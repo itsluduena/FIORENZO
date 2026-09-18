@@ -31,7 +31,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
+
+  .promo-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.promo-slide {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(40px) scale(0.98);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.6s ease;
+  pointer-events: none;
+}
+
+.promo-slide.active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+.promo-slide.exit-left {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-40px) scale(0.98);
+}
+
+.promo-slide.enter-left {
+  transform: translateX(-40px) scale(0.98);
+}
+
+.promo-slide.enter-right {
+  transform: translateX(40px) scale(0.98);
+}
+  
+  <style>
 :root {
   --ink:#0C201A; --ink-soft:#163A2F; --paper:#F4EFE0; --paper-dim:#EAE1C7;
   --graphite:#22302A; --graphite-soft:#5b6b60; --gold:#B8863D; --gold-bright:#E8CE9A;
@@ -615,27 +661,29 @@ footer{background:var(--ink);color:#9c968b;padding:50px 0 30px;font-size:13px;bo
   <div class="container">
     <div class="promo-card" id="promoCarousel">
       
-      <!-- Oferta 1 -->
-      <div class="promo-slide active">
-        <div class="promo-content">
-          <h3>3 DECANTS = 20% OFF</h3>
-          <p>Llevando 3 decants (5 ml), del mismo perfume o combinando diferentes fragancias, obtenés 20% de descuento en el total de tu compra.</p>
-          <div class="promo-action">Elegí tus 3, confirmá tu pedido y disfrutá el descuento.</div>
+      <div class="promo-wrapper">
+        <!-- Oferta 1 -->
+        <div class="promo-slide active">
+          <div class="promo-content">
+            <h3>3 DECANTS = 20% OFF</h3>
+            <p>Llevando 3 decants (5 ml), del mismo perfume o combinando diferentes fragancias, obtenés 20% de descuento en el total de tu compra.</p>
+            <div class="promo-action">Elegí tus 3, confirmá tu pedido y disfrutá el descuento.</div>
+          </div>
+          <div>
+            <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Ver Decants</a>
+          </div>
         </div>
-        <div>
-          <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Ver Decants</a>
-        </div>
-      </div>
 
-      <!-- Oferta 2 -->
-      <div class="promo-slide">
-        <div class="promo-content">
-          <h3>¡PROBALO ANTES DE COMPRAR EL FRASCO!</h3>
-          <p>Comprá tu decant de 5 ml, probá la fragancia y asegurate de que sea para vos. ¿Te encantó y decidís llevar el frasco de 100 ml? ¡Te descontamos del precio del frasco el valor que pagaste por tu decant!</p>
-          <div class="promo-action">Primero probás. Después decidís. Y si comprás, ¡tu decant se descuenta!</div>
-        </div>
-        <div>
-          <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Probar Fragancias</a>
+        <!-- Oferta 2 -->
+        <div class="promo-slide">
+          <div class="promo-content">
+            <h3>¡PROBALO ANTES DE COMPRAR EL FRASCO!</h3>
+            <p>Comprá tu decant de 5 ml, probá la fragancia y asegurate de que sea para vos. ¿Te encantó y decidís llevar el frasco de 100 ml? ¡Te descontamos del precio del frasco el valor que pagaste por tu decant!</p>
+            <div class="promo-action">Primero probás. Después decidís. Y si comprás, ¡tu decant se descuenta!</div>
+          </div>
+          <div>
+            <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Probar Fragancias</a>
+          </div>
         </div>
       </div>
 
@@ -1326,6 +1374,77 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(section);
   });
 });
+
+  let currentPromoIndex = 0;
+let promoTimer = null;
+let isAnimating = false;
+
+function showPromoSlide(targetIndex, direction = 'next') {
+  if (isAnimating) return;
+
+  const slides = document.querySelectorAll('.promo-slide');
+  if (!slides.length) return;
+
+  const totalSlides = slides.length;
+  let nextIndex = targetIndex;
+
+  if (nextIndex >= totalSlides) nextIndex = 0;
+  if (nextIndex < 0) nextIndex = totalSlides - 1;
+
+  if (nextIndex === currentPromoIndex) return;
+
+  isAnimating = true;
+
+  const currentSlide = slides[currentPromoIndex];
+  const nextSlide = slides[nextIndex];
+
+  slides.forEach(slide => {
+    slide.classList.remove('enter-left', 'enter-right', 'exit-left');
+  });
+
+  if (direction === 'next') {
+    nextSlide.classList.add('enter-right');
+  } else {
+    nextSlide.classList.add('enter-left');
+  }
+
+  void nextSlide.offsetWidth; // Forzado de reflow
+
+  if (direction === 'next') {
+    currentSlide.classList.add('exit-left');
+  } else {
+    currentSlide.classList.add('enter-right');
+  }
+  currentSlide.classList.remove('active');
+
+  nextSlide.classList.remove('enter-left', 'enter-right');
+  nextSlide.classList.add('active');
+
+  currentPromoIndex = nextIndex;
+
+  setTimeout(() => {
+    slides.forEach(slide => slide.classList.remove('exit-left', 'enter-left', 'enter-right'));
+    isAnimating = false;
+  }, 600);
+
+  resetPromoTimer();
+}
+
+function nextPromoSlide() {
+  showPromoSlide(currentPromoIndex + 1, 'next');
+}
+
+function prevPromoSlide() {
+  showPromoSlide(currentPromoIndex - 1, 'prev');
+}
+
+function resetPromoTimer() {
+  clearInterval(promoTimer);
+  promoTimer = setInterval(() => {
+    nextPromoSlide();
+  }, 5000);
+}
+  
 </script>
 </body>
 </html>
