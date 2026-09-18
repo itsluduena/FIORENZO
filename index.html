@@ -21,75 +21,6 @@
   --radius-pill: 50px;
 }
 
-*{box-sizing:border-box;ma<!DOCTYPE html>
-<html lang="es-AR">
-<head>
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/itsluduena/FIORENZO/refs/heads/main/favicon.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Fiorenzo — Perfumería Árabe &amp; de Diseñador</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  .promo-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.promo-slide {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 20px;
-  align-items: center;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(40px) scale(0.98);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-              visibility 0.6s ease;
-  pointer-events: none;
-}
-
-.promo-slide.active {
-  position: relative;
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0) scale(1);
-  pointer-events: auto;
-}
-
-.promo-slide.exit-left {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-40px) scale(0.98);
-}
-
-.promo-slide.enter-left {
-  transform: translateX(-40px) scale(0.98);
-}
-
-.promo-slide.enter-right {
-  transform: translateX(40px) scale(0.98);
-}
-  
-  <style>
-:root {
-  --ink:#0C201A; --ink-soft:#163A2F; --paper:#F4EFE0; --paper-dim:#EAE1C7;
-  --graphite:#22302A; --graphite-soft:#5b6b60; --gold:#B8863D; --gold-bright:#E8CE9A;
-  --line:rgba(34,48,42,0.12); --line-dark:rgba(244,239,224,0.14);
-  --font-display:'Fraunces',serif; --font-body:'Inter',sans-serif; --font-mono:'IBM Plex Mono',monospace;
-  --whatsapp:#25D366; --whatsapp-dark:#1EBE5D;
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-pill: 50px;
-}
-
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 
@@ -661,29 +592,27 @@ footer{background:var(--ink);color:#9c968b;padding:50px 0 30px;font-size:13px;bo
   <div class="container">
     <div class="promo-card" id="promoCarousel">
       
-      <div class="promo-wrapper">
-        <!-- Oferta 1 -->
-        <div class="promo-slide active">
-          <div class="promo-content">
-            <h3>3 DECANTS = 20% OFF</h3>
-            <p>Llevando 3 decants (5 ml), del mismo perfume o combinando diferentes fragancias, obtenés 20% de descuento en el total de tu compra.</p>
-            <div class="promo-action">Elegí tus 3, confirmá tu pedido y disfrutá el descuento.</div>
-          </div>
-          <div>
-            <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Ver Decants</a>
-          </div>
+      <!-- Oferta 1 -->
+      <div class="promo-slide active">
+        <div class="promo-content">
+          <h3>3 DECANTS = 20% OFF</h3>
+          <p>Llevando 3 decants (5 ml), del mismo perfume o combinando diferentes fragancias, obtenés 20% de descuento en el total de tu compra.</p>
+          <div class="promo-action">Elegí tus 3, confirmá tu pedido y disfrutá el descuento.</div>
         </div>
+        <div>
+          <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Ver Decants</a>
+        </div>
+      </div>
 
-        <!-- Oferta 2 -->
-        <div class="promo-slide">
-          <div class="promo-content">
-            <h3>¡PROBALO ANTES DE COMPRAR EL FRASCO!</h3>
-            <p>Comprá tu decant de 5 ml, probá la fragancia y asegurate de que sea para vos. ¿Te encantó y decidís llevar el frasco de 100 ml? ¡Te descontamos del precio del frasco el valor que pagaste por tu decant!</p>
-            <div class="promo-action">Primero probás. Después decidís. Y si comprás, ¡tu decant se descuenta!</div>
-          </div>
-          <div>
-            <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Probar Fragancias</a>
-          </div>
+      <!-- Oferta 2 -->
+      <div class="promo-slide">
+        <div class="promo-content">
+          <h3>¡PROBALO ANTES DE COMPRAR EL FRASCO!</h3>
+          <p>Comprá tu decant de 5 ml, probá la fragancia y asegurate de que sea para vos. ¿Te encantó y decidís llevar el frasco de 100 ml? ¡Te descontamos del precio del frasco el valor que pagaste por tu decant!</p>
+          <div class="promo-action">Primero probás. Después decidís. Y si comprás, ¡tu decant se descuenta!</div>
+        </div>
+        <div>
+          <a href="#catalogo" class="btn btn-primary" style="background:var(--gold);color:var(--ink);white-space:nowrap;">Probar Fragancias</a>
         </div>
       </div>
 
@@ -1322,7 +1251,59 @@ function openInfoModal(i) {
 
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
-  
+
+/* CARRUSEL DE PROMOS Y ANIMACIONES DE DESPLAZAMIENTO */
+let currentPromoIndex = 0;
+let promoTimer = null;
+
+function showPromoSlide(index) {
+  const slides = document.querySelectorAll('.promo-slide');
+  if (!slides.length) return;
+
+  slides.forEach(slide => slide.classList.remove('active'));
+
+  if (index >= slides.length) currentPromoIndex = 0;
+  else if (index < 0) currentPromoIndex = slides.length - 1;
+  else currentPromoIndex = index;
+
+  slides[currentPromoIndex].classList.add('active');
+  resetPromoTimer();
+}
+
+function nextPromoSlide() {
+  showPromoSlide(currentPromoIndex + 1);
+}
+
+function prevPromoSlide() {
+  showPromoSlide(currentPromoIndex - 1);
+}
+
+function resetPromoTimer() {
+  clearInterval(promoTimer);
+  promoTimer = setInterval(() => {
+    nextPromoSlide();
+  }, 5000);
+}
+
+// Observer para animaciones de entrada progresiva (Fade In)
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', () => {
+  resetPromoTimer();
+  loadProducts();
+
+  document.querySelectorAll('.fade-in-section').forEach(section => {
+    observer.observe(section);
+  });
+});
 </script>
 </body>
 </html>
+
