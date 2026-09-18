@@ -490,6 +490,10 @@ async function saveProduct(event) {
   const file = fileInput.files[0];
   const urlInput = document.getElementById('pImg').value.trim();
 
+  // Limpiar la memoria del navegador para obligar a descargar los datos actualizados
+localStorage.removeItem('fiorenzo_catalog');
+await loadProducts();
+
   if (!file && !urlInput) {
     statusDiv.innerHTML = '<span style="color:#ff6b6b;">Sube un archivo o ingresa una URL.</span>';
     return;
@@ -532,23 +536,38 @@ async function saveProduct(event) {
   }
 }
 
-async function sendPayload(payload) {
-  const statusDiv = document.getElementById('adminStatus');
-  const saveBtn = document.getElementById('saveBtn');
+async function loadProducts() {
+  const catalogGrid = document.getElementById('catalogGrid');
 
+  // 1. Intentar cargar inmediatamente desde la memoria del navegador (Caché)
+  const cachedData = localStorage.getItem('fiorenzo_catalog');
+  if (cachedData) {
+    try {
+      perfumes = JSON.parse(cachedData);
+      renderCatalog(); // Se dibuja en pantalla al instante
+    } catch (e) {
+      console.error("Error leyendo caché", e);
+    }
+  } else {
+    catalogGrid.innerHTML = '<p style="text-align:center; padding: 20px;">Cargando catálogo...</p>';
+  }
+
+  // 2. Traer los datos actualizados desde Google Apps Script en segundo plano
   try {
-    await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
+    const res = await fetch(API_URL, { redirect: 'follow' });
+    const freshData = await res.json();
     
-    statusDiv.innerHTML = '<span style="color:#25D366;">✓ Producto cargado exitosamente.</span>';
-    document.getElementById('addProductForm').reset();
-    await loadProducts();
+    if (Array.isArray(freshData) && freshData.length > 0) {
+      perfumes = freshData;
+      // Guardar en la memoria local para la próxima visita
+      localStorage.setItem('fiorenzo_catalog', JSON.stringify(freshData));
+      renderCatalog(); // Actualizar si hubo cambios
+    }
   } catch (err) {
-    statusDiv.innerHTML = '<span style="color:#ff6b6b;">Error al guardar producto.</span>';
-  } finally {
-    saveBtn.disabled = false;
+    console.error('Error al actualizar catálogo desde la API:', err);
+    if (!cachedData) {
+      catalogGrid.innerHTML = '<p style="color:red; text-align:center;">Error al cargar el catálogo. Intenta nuevamente.</p>';
+    }
   }
 }
 
@@ -677,7 +696,7 @@ function openInfoModal(i) {
   const highlights = getProp(p, ['highlights', 'PorQueDestaca'], '');
 
   document.getElementById('modalImgBox').innerHTML = `
-    <img src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/300';">
+    <img src="${img}" alt="${name}" loading="lazy" decoding="async" onerror="this.src='https://via.placeholder.com/300';">
   `;
 
   document.getElementById('modalContent').innerHTML = `
