@@ -111,6 +111,42 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 section{padding:50px 0;position:relative;z-index:1;}
 
+/* SISTEMA DE FILTROS Y ETIQUETAS */
+.filter-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+  background: rgba(244, 239, 224, 0.8);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+.filter-group { display: flex; flex-direction: column; gap: 4px; }
+.filter-group label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--graphite-soft); }
+.filter-group select, .filter-group input {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.tag-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(184, 134, 61, 0.15);
+  color: var(--ink);
+  border: 1px solid rgba(184, 134, 61, 0.3);
+  margin-right: 4px;
+  margin-top: 4px;
+}
+
 .catalog-window {
   max-height: 750px;
   overflow-y: auto;
@@ -268,12 +304,44 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
   </div>
 </section>
 
-<!-- CATÁLOGO -->
+<!-- CATÁLOGO Y FILTROS -->
 <section id="catalogo" style="background:rgba(234,225,199,0.7);backdrop-filter:blur(4px);">
   <div class="container">
     <span class="section-label">Catálogo Oficial</span>
-    <h2 style="font-size:2rem;margin-bottom:24px;color:var(--ink);">Fragancias Seleccionadas</h2>
+    <h2 style="font-size:2rem;margin-bottom:16px;color:var(--ink);">Fragancias Seleccionadas</h2>
     
+    <!-- BARRA DE FILTROS -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="filterBrand">Marca</label>
+        <select id="filterBrand" onchange="filterCatalog()">
+          <option value="">Todas las marcas</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filterTag">Estación / Ocasión</label>
+        <select id="filterTag" onchange="filterCatalog()">
+          <option value="">Todas las estaciones/etiquetas</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filterGender">Género</label>
+        <select id="filterGender" onchange="filterCatalog()">
+          <option value="">Todos los géneros</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Unisex">Unisex</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filterSearch">Buscar</label>
+        <input type="text" id="filterSearch" placeholder="Nombre, notas..." oninput="filterCatalog()">
+      </div>
+    </div>
+
     <div class="catalog-window">
       <div class="catalog-grid" id="catalogGrid">Cargando catálogo desde la base de datos...</div>
     </div>
@@ -301,11 +369,12 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
         </div>
         
         <form class="admin-form" id="addProductForm" onsubmit="saveProduct(event)">
-          <input type="text" id="pBrand" placeholder="Marca (ej: Lattafa)" required>
-          <input type="text" id="pName" placeholder="Nombre (ej: Khamrah Duhqan)" required>
-          <input type="text" id="pStyle" placeholder="Estilo (ej: Gourmand ahumado oriental)" required>
-          <input type="text" id="pPrice" placeholder="Precio Frasco ($55.000)" required>
-          <input type="text" id="pDecant" placeholder="Precio Decant ($6.000)" required>
+          <input type="text" id="pBrand" placeholder="Marca (ej: ARMAF, AFNAN)" required>
+          <input type="text" id="pName" placeholder="Nombre (ej: Mandarin Sky)" required>
+          <input type="text" id="pStyle" placeholder="Estilo (ej: Invierno / Noche)" required>
+          <input type="text" id="pEtiquetas" placeholder="Etiquetas separadas por coma (ej: Invierno, Noche, Dulce)">
+          <input type="text" id="pPrice" placeholder="Precio Frasco ($60,000)" required>
+          <input type="text" id="pDecant" placeholder="Precio Decant ($6,000)" required>
           <select id="pGender">
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
@@ -316,23 +385,22 @@ footer{background:var(--ink);color:#9c968b;padding:40px 0 20px;font-size:13px;}
           <div style="grid-column: 1 / -1; background: var(--ink-soft); padding: 12px; border-radius: 4px; display: grid; gap: 8px;">
             <p style="font-size:12px;color:var(--gold-bright);font-weight:bold;">Ficha Técnica / Notas Olfativas:</p>
             <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px;">
-              <input type="text" id="pSalida" placeholder="Notas de Salida (ej: Especias, mandarina)">
+              <input type="text" id="pSalida" placeholder="Notas de Salida (ej: Mandarina, Naranja)">
               <input type="number" id="pSalidaPct" placeholder="% Salida (ej: 60)" min="0" max="100">
             </div>
             <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px;">
-              <input type="text" id="pCorazon" placeholder="Notas de Corazón (ej: Incienso, azahar)">
+              <input type="text" id="pCorazon" placeholder="Notas de Corazón (ej: Caramelo, Haba Tonka)">
               <input type="number" id="pCorazonPct" placeholder="% Corazón (ej: 80)" min="0" max="100">
             </div>
             <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px;">
-              <input type="text" id="pFondo" placeholder="Notas de Fondo (ej: Tabaco, ámbar)">
-              <input type="number" id="pFondoPct" placeholder="% Fondo (ej: 95)" min="0" max="100">
+              <input type="text" id="pFondo" placeholder="Notas de Fondo (ej: Ambroxan, Cedro)">
+              <input type="number" id="pFondoPct" placeholder="% Fondo (ej: 60)" min="0" max="100">
             </div>
-            <input type="text" id="pBottleInfo" placeholder="Descripción Frasco/Caja (ej: Frasco oscuro de lujo)">
-            <input type="text" id="pHighlights" placeholder="Por qué destaca (ej: Evolución profunda y ahumada)">
+            <input type="text" id="pBottleInfo" placeholder="Descripción Frasco/Caja (ej: Caja naranja intensa)">
+            <input type="text" id="pHighlights" placeholder="Por qué destaca (ej: Se destaca por su combinación cítrica)">
           </div>
 
-          <input type="text" id="pDur" placeholder="Duración (ej: 10+ horas)" required>
-          <input type="text" id="pEstela" placeholder="Estela (ej: Estela muy alta)">
+          <input type="text" id="pDur" placeholder="Duración (ej: 8 - 10 Hs)" required>
           
           <div class="file-upload-box">
             <label style="font-size:12px;color:var(--gold-bright);display:block;margin-bottom:6px;">
@@ -393,6 +461,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbw9Zn--Ob6VJZEAUqaWV6D4
 const PHONE_NUMBER = '5493644363749';
 
 let perfumes = [];
+let filteredPerfumes = [];
 let cart = [];
 let isAuthenticated = false;
 
@@ -422,7 +491,6 @@ function logout() {
   renderCatalog();
 }
 
-/* MAPEADOR DE VARIABLES PARA PREVENIR ERRORES DE DATOS VACÍOS */
 function getProp(p, keys, fallback = '') {
   for (let key of keys) {
     if (p[key] !== undefined && p[key] !== null && p[key] !== '') return p[key];
@@ -430,15 +498,29 @@ function getProp(p, keys, fallback = '') {
   return fallback;
 }
 
+// Extrae un array limpio de etiquetas unificando style y la columna etiquetas
+function getProductTags(p) {
+  const rawStyle = getProp(p, ['style', 'Style', 'estilo'], '');
+  const rawTags = getProp(p, ['etiquetas', 'Etiquetas', 'tags'], '');
+  
+  const combined = `${rawStyle} / ${rawTags}`;
+  const items = combined.split(/[\/\,\;]/).map(s => s.trim()).filter(Boolean);
+  
+  // Retorna sin duplicados
+  return [...new Set(items)];
+}
+
 async function loadProducts() {
   const catalogGrid = document.getElementById('catalogGrid');
 
-  // 1. Intentar cargar inmediatamente desde la memoria del navegador (Caché)
+  // 1. Intentar cargar desde Caché
   const cachedData = localStorage.getItem('fiorenzo_catalog');
   if (cachedData) {
     try {
       perfumes = JSON.parse(cachedData);
-      renderCatalog(); // Carga instantánea
+      filteredPerfumes = [...perfumes];
+      populateFilterOptions();
+      renderCatalog();
     } catch (e) {
       console.error("Error leyendo caché", e);
     }
@@ -446,43 +528,111 @@ async function loadProducts() {
     catalogGrid.innerHTML = '<p style="text-align:center; padding: 20px;">Cargando catálogo...</p>';
   }
 
-  // 2. Traer los datos actualizados desde Google Apps Script en segundo plano
+  // 2. Cargar datos frescos desde Google Apps Script
   try {
     const res = await fetch(API_URL, { redirect: 'follow' });
     const freshData = await res.json();
     
     if (Array.isArray(freshData) && freshData.length > 0) {
       perfumes = freshData;
+      filteredPerfumes = [...perfumes];
       localStorage.setItem('fiorenzo_catalog', JSON.stringify(freshData));
-      renderCatalog(); // Actualiza visualmente si hubo cambios
+      populateFilterOptions();
+      renderCatalog();
     }
   } catch (err) {
     console.error('Error al actualizar catálogo desde la API:', err);
     if (!cachedData) {
-      catalogGrid.innerHTML = '<p style="color:red; text-align:center;">Error al cargar el catálogo. Intenta nuevamente.</p>';
+      catalogGrid.innerHTML = '<p style="color:red; text-align:center;">Error al cargar el catálogo.</p>';
     }
   }
 }
 
+// Genera dinámicamente las opciones de Marca y Etiquetas para los desplegables
+function populateFilterOptions() {
+  const brandSelect = document.getElementById('filterBrand');
+  const tagSelect = document.getElementById('filterTag');
+
+  const currentBrand = brandSelect.value;
+  const currentTag = tagSelect.value;
+
+  const brands = new Set();
+  const tags = new Set();
+
+  perfumes.forEach(p => {
+    const b = getProp(p, ['brand', 'Marca', 'marca'], '').trim();
+    if (b) brands.add(b);
+
+    getProductTags(p).forEach(t => tags.add(t));
+  });
+
+  brandSelect.innerHTML = '<option value="">Todas las marcas</option>' + 
+    Array.from(brands).sort().map(b => `<option value="${b}">${b}</option>`).join('');
+
+  tagSelect.innerHTML = '<option value="">Todas las estaciones/etiquetas</option>' + 
+    Array.from(tags).sort().map(t => `<option value="${t}">${t}</option>`).join('');
+
+  brandSelect.value = currentBrand;
+  tagSelect.value = currentTag;
+}
+
+function filterCatalog() {
+  const selectedBrand = document.getElementById('filterBrand').value.toLowerCase();
+  const selectedTag = document.getElementById('filterTag').value.toLowerCase();
+  const selectedGender = document.getElementById('filterGender').value.toLowerCase();
+  const searchText = document.getElementById('filterSearch').value.toLowerCase();
+
+  filteredPerfumes = perfumes.filter(p => {
+    const brand = getProp(p, ['brand', 'Marca', 'marca'], '').toLowerCase();
+    const gender = getProp(p, ['gender', 'Genero', 'genero'], '').toLowerCase();
+    const name = getProp(p, ['name', 'Nombre', 'nombre'], '').toLowerCase();
+    const salida = getProp(p, ['salida', 'Salida'], '').toLowerCase();
+    const corazon = getProp(p, ['corazon', 'Corazon'], '').toLowerCase();
+    const fondo = getProp(p, ['fondo', 'Fondo'], '').toLowerCase();
+
+    const productTags = getProductTags(p).map(t => t.toLowerCase());
+
+    const matchBrand = !selectedBrand || brand === selectedBrand;
+    const matchTag = !selectedTag || productTags.includes(selectedTag);
+    const matchGender = !selectedGender || gender === selectedGender;
+    
+    const matchSearch = !searchText || 
+      name.includes(searchText) || 
+      brand.includes(searchText) || 
+      salida.includes(searchText) || 
+      corazon.includes(searchText) || 
+      fondo.includes(searchText) ||
+      productTags.some(t => t.includes(searchText));
+
+    return matchBrand && matchTag && matchGender && matchSearch;
+  });
+
+  renderCatalog();
+}
+
 function renderCatalog() {
   const catalogGrid = document.getElementById('catalogGrid');
-  if(!perfumes || !perfumes.length) {
-    catalogGrid.innerHTML = '<p>No hay productos disponibles.</p>';
+  if(!filteredPerfumes || !filteredPerfumes.length) {
+    catalogGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No se encontraron productos con los filtros seleccionados.</p>';
     return;
   }
   
-  catalogGrid.innerHTML = perfumes.map((p, i) => {
+  catalogGrid.innerHTML = filteredPerfumes.map((p) => {
+    // Buscamos el índice original en el arreglo completo de perfumes
+    const originalIndex = perfumes.indexOf(p);
+
     const brand = getProp(p, ['brand', 'Marca', 'marca'], 'FIORENZO');
     const name = getProp(p, ['name', 'Nombre', 'nombre'], 'Perfume');
     const gender = getProp(p, ['gender', 'Genero', 'genero'], 'Unisex');
-    const price = getProp(p, ['price', 'Precio', 'precio', 'precioFrasco'], 'Consultar');
-    const decant = getProp(p, ['decant', 'Decant', 'decantPrice', 'precioDecant'], 'Consultar');
+    const price = getProp(p, ['price', 'Precio', 'precio'], 'Consultar');
+    const decant = getProp(p, ['decant', 'Decant', 'precioDecant'], 'Consultar');
     let img = getProp(p, ['img', 'Imagen', 'imagen', 'fileData'], 'https://via.placeholder.com/300');
 
-    // Optimizar imagen de Google Drive para mayor calidad (600px)
     if (img.includes('googleusercontent.com')) {
       img = img.replace(/=s\d+/, '') + '=w600';
     }
+
+    const tags = getProductTags(p);
 
     return `
       <div class="catalog-card">
@@ -494,15 +644,21 @@ function renderCatalog() {
           <div>
             <span class="catalog-brand">${brand}</span>
             <h3 style="font-size:16px;color:var(--ink);">${name}</h3>
+            
+            <!-- BADGES DE ETIQUETAS / ESTACIÓN -->
+            <div style="margin: 4px 0 8px 0;">
+              ${tags.map(t => `<span class="tag-badge">${t}</span>`).join('')}
+            </div>
+
             <p style="font-size:14px;font-weight:600;margin-top:4px;">Frasco: ${price}</p>
             <p style="font-size:12px;color:var(--gold);">Decant 5ml: ${decant}</p>
           </div>
           <div>
             <div class="add-buttons">
-              <button class="btn btn-primary" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Frasco 100ml', '${price}')">+ Frasco</button>
-              <button class="btn btn-ghost" style="font-size:10px;padding:6px;" onclick="addToCart(${i}, 'Decant 5ml', '${decant}')">+ Decant</button>
+              <button class="btn btn-primary" style="font-size:10px;padding:6px;" onclick="addToCart(${originalIndex}, 'Frasco 100ml', '${price}')">+ Frasco</button>
+              <button class="btn btn-ghost" style="font-size:10px;padding:6px;" onclick="addToCart(${originalIndex}, 'Decant 5ml', '${decant}')">+ Decant</button>
             </div>
-            <button class="btn btn-ghost" onclick="openInfoModal(${i})" style="width:100%;font-size:11px;padding:6px;margin-top:6px;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
+            <button class="btn btn-ghost" onclick="openInfoModal(${originalIndex})" style="width:100%;font-size:11px;padding:6px;margin-top:6px;">Detalles ${isAuthenticated ? '/ Editar' : ''}</button>
           </div>
         </div>
       </div>
@@ -531,6 +687,7 @@ async function saveProduct(event) {
     brand: document.getElementById('pBrand').value,
     name: document.getElementById('pName').value,
     style: document.getElementById('pStyle').value,
+    etiquetas: document.getElementById('pEtiquetas').value,
     price: document.getElementById('pPrice').value,
     decant: document.getElementById('pDecant').value,
     gender: document.getElementById('pGender').value,
@@ -543,7 +700,6 @@ async function saveProduct(event) {
     bottleInfo: document.getElementById('pBottleInfo').value,
     highlights: document.getElementById('pHighlights').value,
     dur: document.getElementById('pDur').value,
-    estela: document.getElementById('pEstela').value,
     img: urlInput || ''
   };
 
@@ -574,7 +730,6 @@ async function sendPayload(payload) {
     statusDiv.innerHTML = '<span style="color:#25D366;">✓ Producto cargado exitosamente.</span>';
     document.getElementById('addProductForm').reset();
 
-    // Limpiar caché y recargar catálogo
     localStorage.removeItem('fiorenzo_catalog');
     await loadProducts();
 
@@ -683,7 +838,7 @@ function sendCartToWhatsApp() {
   window.open(waUrl, '_blank');
 }
 
-/* MODAL & DETALLES (FICHA TÉCNICA VISUAL) */
+/* MODAL & DETALLES */
 function openInfoModal(i) {
   const p = perfumes[i];
   
@@ -695,7 +850,6 @@ function openInfoModal(i) {
   const decant = getProp(p, ['decant', 'Decant', 'precioDecant'], '');
   let img = getProp(p, ['img', 'Imagen', 'imagen'], 'https://via.placeholder.com/300');
   const dur = getProp(p, ['dur', 'Duracion', 'duracion'], 'Alta duración');
-  const estela = getProp(p, ['estela', 'Estela'], '');
   
   const salida = getProp(p, ['salida', 'Salida'], 'Notas cítricas, especias ligeras');
   const salidaPct = getProp(p, ['salidaPct'], '60');
@@ -761,7 +915,6 @@ function openInfoModal(i) {
 
     <div style="margin-top:20px;">
       ${dur ? `<span class="tech-badge">${dur}</span>` : ''}
-      ${estela ? `<span class="tech-badge">${estela}</span>` : ''}
       ${decant ? `<span class="tech-badge" style="background:var(--gold);color:var(--ink);font-weight:bold;">Decant 5ml: ${decant}</span>` : ''}
     </div>
 
