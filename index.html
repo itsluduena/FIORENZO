@@ -252,6 +252,25 @@ section{padding:50px 0;position:relative;z-index:1;}
   .catalogo-header { flex-direction: column; align-items: flex-start; }
 }
 
+/* SECCIÓN INSTAGRAM EMBEBIDO */
+#instagram-section { padding: 20px 0 40px 0; }
+.instagram-container { padding: 30px; text-align: center; }
+.instagram-embed-wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+.instagram-embed-wrapper iframe {
+  width: 100%;
+  max-width: 500px;
+  height: 520px;
+  border: 0;
+  border-radius: var(--radius-md);
+}
+
 /* BOTÓN DESPLEGABLE Y FILTROS */
 .btn-toggle-search {
   display: inline-flex;
@@ -594,6 +613,7 @@ footer{background:var(--ink);color:#9c968b;padding:50px 0 30px;font-size:13px;bo
     <div class="nav-right">
       <div class="nav-links" id="navLinks">
         <a href="#catalogo" onclick="toggleNav()">Catálogo</a>
+        <a href="#instagram-section" onclick="toggleNav()">Instagram</a>
         <a href="javascript:void(0)" onclick="toggleAdminPanel(); toggleNav();" style="color:var(--gold);">Admin</a>
       </div>
       <button class="cart-icon-btn" id="cartBtn" onclick="openCartDrawer()">
@@ -716,6 +736,21 @@ footer{background:var(--ink);color:#9c968b;padding:50px 0 30px;font-size:13px;bo
 
       <div class="catalog-window">
         <div class="catalog-grid" id="catalogGrid">Cargando catálogo desde la base de datos...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN INSTAGRAM EMBEBIDO -->
+<section id="instagram-section" class="fade-in-section">
+  <div class="container">
+    <div class="liquid-glass-card instagram-container">
+      <span class="section-label">Redes Sociales</span>
+      <h2 style="font-size:1.8rem;color:var(--ink);margin-top:4px;">Síguenos en Instagram</h2>
+      <p style="font-size:14px;color:var(--graphite-soft);margin-top:6px;">Entérate de las últimas novedades, ingresos y contenido exclusivo.</p>
+      
+      <div class="instagram-embed-wrapper">
+        <iframe src="https://www.instagram.com/fiorenzoshop/embed" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
       </div>
     </div>
   </div>
